@@ -1,0 +1,70 @@
+<div class="header--wrapper">
+  <div class="header--content">
+    <div class="header--row header--row-1">
+      <div class="header--hamburguer-menu" style="display: none;">
+        <button class="hamburguer-menu--button" aria-controls="main-menu">
+          <img src="./assets/hamburguer-menu.svg" class="hamburguer-menu--image" aria-label="true" />
+          <span class="only-sr">Abrir Menu</span>
+        </button>
+      </div>
+
+      <div class="header--search">
+        <!-- Barra de busca -->
+        <input type="search" placeholder="Digite aqui sua busca" autocomplete="off" />
+      </div>
+
+      <div class="header--logo">
+        <a href="/" target="_self" class="logo--link"><img src="./assets/logo.svg"
+            title="Voltar para a página principal" class="logo--image" /></a>
+      </div>
+
+      <div class="header--cart">
+        <button class="cart--button" aria-controls="cart--drawer">
+          <img src="./assets/minicart.svg" title="Voltar para a página principal" class="cart--image" />
+          <!-- Mostra q quantidade de itens no carrinho -->
+          <span class="cart--badge"><span class="cart--counter">0</span></span></span>
+        </button>
+
+        <div class="cart--drawer cart--isClosed" aria-hidden="true" style="display: none;" id="cart--drawer">
+
+        </div>
+      </div>
+
+    </div>
+
+    <div class="header--row header--row-2">
+      <div class="header--menu" id="main-menu">
+        <nav class="menu--wrapper">
+          <!-- Itens do menu -->
+          <ul class="menu--list">
+            <li class="menu--item"><a href="" target="_self" class="menu--itemLink">Pijamas</a></li>
+            <li class="menu--item"><a href="" target="_self" class="menu--itemLink">Acessórios</a></li>
+            <li class="menu--item"><a href="" target="_self" class="menu--itemLink">Moda Praia</a></li>
+            <li class="menu--item"><a href="" target="_self" class="menu--itemLink">Meias</a></li>
+            <li class="menu--item"><a href="" target="_self" class="menu--itemLink">Lingeries</a></li>
+            <li class="menu--item"><a href="" target="_self" class="menu--itemLink">Roupas</a></li>
+            <li class="menu--item"><a href="" target="_self" class="menu--itemLink">Pets</a></li>
+            <li class="menu--item"><a href="" target="_self" class="menu--itemLink">Liquidação</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+
+    <div class="header--row header--row-3">
+      <!-- Informações da Loja Acessada -->
+      <div class="header--locale">
+        <div class="locale--icon">
+          <img src="./assets/store.svg" class="locale--image" aria-hidden="true" />
+        </div>
+
+        <div class="locale--store">
+          Loja do Coração
+        </div>
+
+        <div class="locale--location">
+          Puket Morumbi
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
