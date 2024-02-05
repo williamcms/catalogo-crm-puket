@@ -1,0 +1,7 @@
+{
+  "extends": ["prettier"],
+  "root": true,
+  "env": {
+    "node": true,
+  },
+}
