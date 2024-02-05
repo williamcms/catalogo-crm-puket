@@ -3,7 +3,7 @@
     <div class="header--row header--row-1">
       <div class="header--hamburguer-menu" style="display: none;">
         <button class="hamburguer-menu--button" aria-controls="main-menu">
-          <img src="./assets/hamburguer-menu.svg" class="hamburguer-menu--image" aria-label="true" />
+          <img src="./assets/hamburguer-menu.svg" class="hamburguer-menu--image" aria-hidden="true" />
           <span class="only-sr">Abrir Menu</span>
         </button>
       </div>
@@ -35,6 +35,13 @@
     <div class="header--row header--row-2">
       <div class="header--menu" id="main-menu">
         <nav class="menu--wrapper">
+          <div class="mobile-only menu--header">
+            <button class="menu--closeButton" id="close-menu" aria-controls="main-menu">
+              <span aria-hidden>&times;</span>
+              <span class="only-sr">Fechar Menu</span>
+            </button>
+            <div class="menu--headerText">Menu</div>
+          </div>
           <!-- Itens do menu -->
           <ul class="menu--list">
             <li class="menu--item"><a href="" target="_self" class="menu--itemLink">Pijamas</a></li>

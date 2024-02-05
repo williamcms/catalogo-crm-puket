@@ -6,7 +6,6 @@
   .header--content {
     display: flex;
     flex-direction: column;
-    position: sticky;
     background-color: $c-cyan-500;
     width: 100%;
     padding: 0.625rem 0 0 0;
@@ -88,6 +87,7 @@
             .cart--badge {
               position: absolute;
               display: flex;
+              flex-direction: row;
               justify-content: center;
               align-items: center;
               background-color: $c-orange;
@@ -121,13 +121,59 @@
         .header--menu {
           @include mobile {
             display: none;
+
+            &.isOpen {
+              position: absolute;
+              top: 0;
+              width: 100%;
+              height: 100%;
+              background-color: $c-black-20;
+            }
           }
 
           .menu--wrapper {
+            @include mobile {
+              background-color: $c-background-base;
+              height: 100%;
+              width: 100%;
+            }
+
+            .menu--header {
+              @include mobile {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                background-color: $c-purple;
+                padding: 0.875rem 1rem;
+              }
+
+              .menu--closeButton {
+                position: absolute;
+                left: 1rem;
+                background-color: transparent;
+                border: none;
+                outline: none;
+                padding: 0 10px;
+              }
+
+              .menu--closeButton span,
+              .menu--headerText {
+                font-size: 20px;
+                font-weight: 600;
+                color: $c-white;
+              }
+            }
+
             .menu--list {
               display: flex;
+              flex-direction: row;
               justify-content: center;
               gap: 1rem;
+
+              @include mobile {
+                flex-direction: column;
+              }
 
               .menu--item {
                 list-style: none;
@@ -136,6 +182,10 @@
                   font-size: 0.9375rem;
                   text-decoration: none;
                   color: $c-white;
+
+                  @include mobile {
+                    color: $c-black;
+                  }
 
                   &:hover {
                     color: $c-orange;
@@ -164,6 +214,7 @@
 
           .locale--icon {
             display: flex;
+            flex-direction: row;
           }
 
           .locale--store {
