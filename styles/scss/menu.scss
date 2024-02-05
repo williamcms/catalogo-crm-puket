@@ -31,15 +31,17 @@
           padding: 0 1.25rem;
         }
 
-        .header--hamburguer-menu {
-          display: block !important;
+        .header--hamburger-menu {
+          @include mobile {
+            display: block !important;
+          }
 
-          .hamburguer-menu--button {
+          .hamburger-menu--button {
             background-color: transparent;
             border: none;
             outline: none;
 
-            .hamburguer-menu--image {
+            .hamburger-menu--image {
             }
           }
         }
