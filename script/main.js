@@ -22,7 +22,7 @@ function init() {
     const menu = document?.querySelector('#main-menu')
     const menuIcon = document?.querySelector('.hamburguer-menu--button')
 
-    if (menu.style.display === '') {
+    if (menu.style.display === '' && isMobile()) {
       menu.style.display = 'none'
       menuIcon.setAttribute('aria-expanded', 'false')
     }
