@@ -1,0 +1,41 @@
+// @media (min-width:320px)  { smartphones, iPhone, portrait 480x320 phones }
+// @media (min-width:481px)  { portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. }
+// @media (min-width:641px)  { portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones }
+// @media (min-width:961px)  { tablet, landscape iPad, lo-res laptops ands desktops }
+// @media (min-width:1025px) { big landscape tablets, laptops, and desktops }
+// @media (min-width:1281px) { hi-res laptops and desktops }
+
+$desktop-min-width: 1025px;
+
+$mobile-max-width: 961px;
+$mobile-min-width: 320px;
+
+$tablet-max-width: 1025px;
+$tablet-min-width: 641px;
+
+$phone-max-width: 641px;
+$phone-min-width: 320px;
+
+@mixin desktop {
+  @media only screen and (min-width: $desktop-min-width) {
+    @content;
+  }
+}
+
+@mixin mobile {
+  @media only screen and (min-width: $mobile-min-width) and (max-width: $mobile-max-width) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media only screen and (min-width: $tablet-min-width) and (max-width: $tablet-max-width) {
+    @content;
+  }
+}
+
+@mixin phone {
+  @media only screen and (min-width: $phone-min-width) and (max-width: $phone-max-width) {
+    @content;
+  }
+}

@@ -1,17 +1,16 @@
 {
   "name": "catalogo-crm-puket",
   "version": "0.0.1",
-  "main": "index.js",
   "scripts": {
     "start": "concurrently \"npm:sass\"",
     "sass": "sass --watch --no-source-map styles/scss:styles/css --style compressed"
   },
   "dependencies": {},
   "devDependencies": {
-    "concurrently": "^8.2.2",
+    "concurrently": "^8.0.1",
     "eslint": "^8.56.0",
     "prettier": "^3.2.5",
-    "sass": "^1.70.0"
+    "sass": "^1.52.1"
   },
   "repository": "https://github.com/williamcms/catalogo-crm-puket",
   "author": "William Di Biasi Bogik <williamcms_@outlook.com>",
