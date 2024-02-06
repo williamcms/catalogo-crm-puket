@@ -20,7 +20,7 @@ function init() {
   // Mobile menu - set aria-expanded
   ;(() => {
     const menu = document?.querySelector('#main-menu')
-    const menuIcon = document?.querySelector('.hamburguer-menu--button')
+    const menuIcon = document?.querySelector('.hamburger-menu--button')
 
     if (menu.style.display === '' && isMobile()) {
       menu.style.display = 'none'
@@ -29,14 +29,14 @@ function init() {
   })()
 
   // Handle menu state
-  document?.querySelector('.hamburguer-menu--button').addEventListener('mousedown', (e) => handleMenu(e))
+  document?.querySelector('.hamburger-menu--button').addEventListener('mousedown', (e) => handleMenu(e))
   document?.querySelector('#close-menu').addEventListener('mousedown', (e) => handleMenu(e))
 
   const handleMenu = (e) => {
     if (e.button === 2) return
 
-    const menu = document?.getElementById('main-menu')
-    const menuState = menu.style.display === 'none'
+    const menu = document?.querySelector('#main-menu')
+    const menuState = menu.style.display === 'none' || menu.style.display === ''
 
     menu.style.display = menuState ? 'block' : 'none'
     menu.classList.add('isOpen')
