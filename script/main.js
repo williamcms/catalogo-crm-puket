@@ -17,34 +17,40 @@ const isMobile = () => {
 }
 
 function init() {
-  // Mobile menu - set aria-expanded
-  ;(() => {
-    const menu = document?.querySelector('#main-menu')
-    const menuIcon = document?.querySelector('.hamburger-menu--button')
+  // Handle overlay states
+  const overlayButtons = document.querySelectorAll('.overlay--button')
+  overlayButtons.forEach((item) => item.addEventListener('mousedown', (e) => handleMenu(e)))
+  // Set aria-expanded for overlays
+  if (isMobile()) {
+    overlayButtons.forEach((item) => {
+      const target = item.getAttribute('aria-controls')
+      const overlay = document.querySelector(`#${target}`)
 
-    if (menu.style.display === '' && isMobile()) {
-      menu.style.display = 'none'
-      menuIcon.setAttribute('aria-expanded', 'false')
-    }
-  })()
+      if (!overlay?.style.display === '') return
 
-  // Handle menu state
-  document?.querySelector('.hamburger-menu--button').addEventListener('mousedown', (e) => handleMenu(e))
-  document?.querySelector('#close-menu').addEventListener('mousedown', (e) => handleMenu(e))
+      if (overlay) overlay.style.display = 'none'
+      item.setAttribute('aria-expanded', 'false')
+    })
+  }
+
+  const closeButtons = document?.querySelectorAll('.overlay--close')
+  closeButtons.forEach((item) => item.addEventListener('mousedown', (e) => handleMenu(e)))
 
   const handleMenu = (e) => {
     if (e.button === 2) return
 
-    const menu = document?.querySelector('#main-menu')
-    const menuState = menu.style.display === 'none' || menu.style.display === ''
+    const targetToOpen = e?.currentTarget.getAttribute('aria-controls')
 
-    menu.style.display = menuState ? 'block' : 'none'
-    menu.classList.add('isOpen')
-    e.currentTarget.setAttribute('aria-expanded', menuState)
+    const overlay = document.querySelector(`#${targetToOpen}`)
+    const overlayState = overlay.style.display === 'none' || overlay.style.display === ''
+
+    overlay.style.display = overlayState ? 'block' : 'none'
+    overlay.classList.add('isOpen')
+    e.currentTarget.setAttribute('aria-expanded', overlayState)
   }
 
   // Check if elm is in viewport
-  function isInViewport(elm) {
+  const isInViewport = (elm) => {
     const rect = elm.getBoundingClientRect()
 
     return (
@@ -56,7 +62,7 @@ function init() {
   }
 
   // Handle images lazyload
-  function lazyLoadImages() {
+  const lazyLoadImages = () => {
     const imagesToOptimize = document.querySelectorAll('img[data-src][data-load="false"]')
 
     imagesToOptimize.forEach((elm) => {
@@ -73,7 +79,5 @@ function init() {
   lazyLoadImages()
 
   // Continuously call the function when the user scrolls the page
-  window.addEventListener('scroll', () => {
-    lazyLoadImages()
-  })
+  window.addEventListener('scroll', () => lazyLoadImages())
 }
