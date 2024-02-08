@@ -1,4 +1,4 @@
-document?.addEventListener('DOMContentLoaded', init, false)
+document?.addEventListener('includeHTMLLoaded', init, false)
 
 const isMobile = () => {
   var isMobile = false
@@ -79,5 +79,5 @@ function init() {
   lazyLoadImages()
 
   // Continuously call the function when the user scrolls the page
-  window.addEventListener('scroll', () => lazyLoadImages())
+  window.addEventListener('scroll resize', () => lazyLoadImages())
 }
