@@ -42,4 +42,38 @@ function init() {
     menu.classList.add('isOpen')
     e.currentTarget.setAttribute('aria-expanded', menuState)
   }
+
+  // Check if elm is in viewport
+  function isInViewport(elm) {
+    const rect = elm.getBoundingClientRect()
+
+    return (
+      rect.top >= 0 &&
+      rect.left >= 0 &&
+      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+      rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    )
+  }
+
+  // Handle images lazyload
+  function lazyLoadImages() {
+    const imagesToOptimize = document.querySelectorAll('img[data-src][data-load="false"]')
+
+    imagesToOptimize.forEach((elm) => {
+      if (!isMobile() && elm.classList.contains('mobile-only')) return
+
+      if (isInViewport(elm)) {
+        elm.setAttribute('src', elm.dataset.src)
+        elm.setAttribute('data-load', 'true')
+        elm.removeAttribute('data-src')
+      }
+    })
+  }
+
+  lazyLoadImages()
+
+  // Continuously call the function when the user scrolls the page
+  window.addEventListener('scroll', () => {
+    lazyLoadImages()
+  })
 }
