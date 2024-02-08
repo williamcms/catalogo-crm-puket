@@ -15,7 +15,7 @@
       xhttp.onreadystatechange = function () {
         if (this.readyState == 4) {
           if (this.status == 200) {
-            elm.innerHTML = this.responseText
+            elm.outerHTML = this.responseText
           }
           if (this.status == 404) {
             elm.innerHTML = 'Page not found.'
