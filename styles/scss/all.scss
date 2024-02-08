@@ -52,6 +52,12 @@ img {
   max-width: 100%;
 }
 
+.sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+}
+
 .centerContent {
   max-width: 90vw;
   margin: 0 auto;

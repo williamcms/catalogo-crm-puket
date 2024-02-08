@@ -1,0 +1,77 @@
+@use './config/colors' as *;
+@use './config/fonts' as *;
+@use './config/mixins' as *;
+
+.products--wrapper {
+  .products--content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    .product--count {
+      .product-count-text {
+        font-size: 14px;
+
+        strong {
+          font-weight: 700;
+          color: $c-purple;
+        }
+      }
+    }
+
+    .product--controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 1rem;
+      background-color: $c-white;
+      margin-left: -1rem;
+      margin-right: -1rem;
+
+      select,
+      button {
+        appearance: none;
+        border-radius: 2px;
+        color: $c-text;
+        background-color: transparent;
+        border: none;
+        max-width: 7.5rem;
+        padding-top: 2px;
+        padding-bottom: 2px;
+        box-shadow: none;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+
+        &.product-controls-orderBy {
+          font-weight: 700;
+        }
+
+        &.product-controls-size {
+          width: 5.5rem;
+        }
+
+        &.filter--button {
+          border: 1px solid $c-purple;
+          border-radius: 12.5rem;
+          padding: 0.4375rem 1rem;
+
+          .filter--buttonText {
+            font-weight: 700;
+            color: $c-purple;
+          }
+        }
+      }
+
+      select {
+        background-image: url(../../assets/arrow-down.svg);
+        background-position: center right;
+        background-repeat: no-repeat;
+      }
+    }
+
+    .products--listage {
+      height: 200vh;
+    }
+  }
+}
