@@ -89,7 +89,13 @@ img {
     z-index: 99;
   }
 
-  .overlay--content {
+  & > form {
+    display: unset;
+  }
+
+  .overlay--container {
+    display: flex;
+    flex-direction: column;
     background-color: $c-background-base;
     min-height: 100%;
     width: 100%;
@@ -118,6 +124,14 @@ img {
         font-weight: 600;
         color: $c-white;
       }
+    }
+
+    .overlay-content {
+      height: 100%;
+    }
+
+    .overlay--footer {
+      margin-top: auto;
     }
   }
 }

@@ -3,7 +3,7 @@
 @use './config/mixins' as *;
 
 .header--wrapper {
-  .header--content {
+  .header--container {
     display: flex;
     flex-direction: column;
     background-color: $c-cyan-500;
@@ -124,7 +124,7 @@
             overflow-y: initial;
           }
 
-          .menu--content {
+          .menu--container {
             @include desktop {
               background-color: transparent;
             }

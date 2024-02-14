@@ -3,7 +3,7 @@
 @use './config/mixins' as *;
 
 .products--wrapper {
-  .products--content {
+  .products--container {
     display: flex;
     flex-direction: column;
     gap: 1rem;
