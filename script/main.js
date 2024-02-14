@@ -128,4 +128,16 @@ function init() {
   // Continuously call the function when the user scrolls the page
   window.addEventListener('scroll', () => lazyLoadImages())
   window.addEventListener('resize', () => lazyLoadImages())
+
+  const handleFormClear = (e) => {
+    e.preventDefault()
+
+    const target = e.currentTarget.getAttribute('aria-controls')
+    const form = document.getElementById(target)
+
+    form.reset()
+  }
+
+  document.querySelector('.button--clear').addEventListener('click', (e) => handleFormClear(e))
+  document.querySelector('.button--clear').addEventListener('keyup', (e) => handleFormClear(e))
 }

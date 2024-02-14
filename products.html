@@ -31,15 +31,191 @@
       </div>
       <div class="product-controls--filter">
         <button class="filter--button overlay--button" aria-controls="filter-list" aria-label="Abrir Filtros"
-          aria-expanded="false">
+          aria-expanded="false" id="filter-button">
           <span class="filter--buttonText">Filtrar</span>
           <img src="./assets/filter.svg" class="filter--image" aria-hidden="true" />
         </button>
-
-        <div class="filter--list filter--isClosed" style="display: none;" id="filter-list">
-
-        </div>
       </div>
+    </div>
+
+    <div class="filter--list overlay--wrapper" style="display: none;" id="filter-list"
+      aria-controlledby="filter-button">
+      <form method="POST" id="filter-form">
+        <div class="filter-list--container overlay--container">
+          <div class="filter-list--header overlay--header">
+            <button class="overlay--close" id="close-filter" aria-controls="filter-list">
+              <span aria-hidden>&times;</span>
+              <span class="only-sr">Fechar Filtros</span>
+            </button>
+            <div class="overlay--headerText" aria-hidden>Filtrar por</div>
+          </div>
+          <div class="filter-list--items overlay-content">
+            <details class="filter--listItem">
+              <summary class="filter--itemName">Categoria</summary>
+              <div class="filter--listOptions">
+                <!-- 
+                Filtros 
+                @ID: filter - tipo/nome do filtro - número/index
+                @TEXTO: Nome do filtro (número de itens)
+              -->
+                <div class="filter--optionItem">
+                  <input type="checkbox" name="" id="filter-categoria-1" />
+                  <label for="filter-categoria-1">Meia (999)</label>
+                </div>
+                <div class="filter--optionItem">
+                  <input type="checkbox" name="" id="filter-categoria-2" />
+                  <label for="filter-categoria-2">Pijamas (999)</label>
+                </div>
+                <div class="filter--optionItem">
+                  <input type="checkbox" name="" id="filter-categoria-3" />
+                  <label for="filter-categoria-3">Lingeries (999)</label>
+                </div>
+                <div class="filter--optionItem">
+                  <input type="checkbox" name="" id="filter-categoria-4" />
+                  <label for="filter-categoria-4">Moda Praia (999)</label>
+                </div>
+                <div class="filter--optionItem">
+                  <input type="checkbox" name="" id="filter-categoria-5" />
+                  <label for="filter-categoria-5">Acessórios (999)</label>
+                </div>
+              </div>
+            </details>
+            <details class="filter--listItem">
+              <summary class="filter--itemName">Modelo</summary>
+              <div class="filter--listOptions">
+                <div class="filter--optionItem">
+                  <input type="checkbox" name="" id="filter-modelo-1" />
+                  <label for="filter-modelo-1">Filtro 1 (999)</label>
+                </div>
+                <div class="filter--optionItem">
+                  <input type="checkbox" name="" id="filter-modelo-2" />
+                  <label for="filter-modelo-2">Filtro 2 (999)</label>
+                </div>
+                <div class="filter--optionItem">
+                  <input type="checkbox" name="" id="filter-modelo-3" />
+                  <label for="filter-modelo-3">Filtro 3 (999)</label>
+                </div>
+                <div class="filter--optionItem">
+                  <input type="checkbox" name="" id="filter-modelo-4" />
+                  <label for="filter-modelo-4">Filtro 4 (999)</label>
+                </div>
+                <div class="filter--optionItem">
+                  <input type="checkbox" name="" id="filter-modelo-5" />
+                  <label for="filter-modelo-5">Filtro 5 (999)</label>
+                </div>
+              </div>
+            </details>
+            <details class="filter--listItem">
+              <summary class="filter--itemName">Tamanho</summary>
+              <div class="filter--listOptions">
+                <div class="filter--optionItem">
+                  <input type="checkbox" name="" id="filter-tamanho-1" />
+                  <label for="filter-tamanho-1">Filtro 1 (999)</label>
+                </div>
+                <div class="filter--optionItem">
+                  <input type="checkbox" name="" id="filter-tamanho-2" />
+                  <label for="filter-tamanho-2">Filtro 2 (999)</label>
+                </div>
+                <div class="filter--optionItem">
+                  <input type="checkbox" name="" id="filter-tamanho-3" />
+                  <label for="filter-tamanho-3">Filtro 3 (999)</label>
+                </div>
+                <div class="filter--optionItem">
+                  <input type="checkbox" name="" id="filter-tamanho-4" />
+                  <label for="filter-tamanho-4">Filtro 4 (999)</label>
+                </div>
+                <div class="filter--optionItem">
+                  <input type="checkbox" name="" id="filter-tamanho-5" />
+                  <label for="filter-tamanho-5">Filtro 5 (999)</label>
+                </div>
+              </div>
+            </details>
+            <details class="filter--listItem">
+              <summary class="filter--itemName">Sexo</summary>
+              <div class="filter--listOptions">
+                <div class="filter--optionItem">
+                  <input type="checkbox" name="" id="filter-sexo-1" />
+                  <label for="filter-sexo-1">Filtro 1 (999)</label>
+                </div>
+                <div class="filter--optionItem">
+                  <input type="checkbox" name="" id="filter-sexo-2" />
+                  <label for="filter-sexo-2">Filtro 2 (999)</label>
+                </div>
+                <div class="filter--optionItem">
+                  <input type="checkbox" name="" id="filter-sexo-3" />
+                  <label for="filter-sexo-3">Filtro 3 (999)</label>
+                </div>
+                <div class="filter--optionItem">
+                  <input type="checkbox" name="" id="filter-sexo-4" />
+                  <label for="filter-sexo-4">Filtro 4 (999)</label>
+                </div>
+                <div class="filter--optionItem">
+                  <input type="checkbox" name="" id="filter-sexo-5" />
+                  <label for="filter-sexo-5">Filtro 5 (999)</label>
+                </div>
+              </div>
+            </details>
+            <details class="filter--listItem">
+              <summary class="filter--itemName">Cores</summary>
+              <div class="filter--listOptions">
+                <div class="filter--optionItem">
+                  <input type="checkbox" name="" id="filter-cores-1" />
+                  <label for="filter-cores-1">Filtro 1 (999)</label>
+                </div>
+                <div class="filter--optionItem">
+                  <input type="checkbox" name="" id="filter-cores-2" />
+                  <label for="filter-cores-2">Filtro 2 (999)</label>
+                </div>
+                <div class="filter--optionItem">
+                  <input type="checkbox" name="" id="filter-cores-3" />
+                  <label for="filter-cores-3">Filtro 3 (999)</label>
+                </div>
+                <div class="filter--optionItem">
+                  <input type="checkbox" name="" id="filter-cores-4" />
+                  <label for="filter-cores-4">Filtro 4 (999)</label>
+                </div>
+                <div class="filter--optionItem">
+                  <input type="checkbox" name="" id="filter-cores-5" />
+                  <label for="filter-cores-5">Filtro 5 (999)</label>
+                </div>
+              </div>
+            </details>
+            <details class="filter--listItem">
+              <summary class="filter--itemName">Personagem</summary>
+              <div class="filter--listOptions">
+                <div class="filter--optionItem">
+                  <input type="checkbox" name="" id="filter-personagem-1" />
+                  <label for="filter-personagem-1">Filtro 1 (999)</label>
+                </div>
+                <div class="filter--optionItem">
+                  <input type="checkbox" name="" id="filter-personagem-2" />
+                  <label for="filter-personagem-2">Filtro 2 (999)</label>
+                </div>
+                <div class="filter--optionItem">
+                  <input type="checkbox" name="" id="filter-personagem-3" />
+                  <label for="filter-personagem-3">Filtro 3 (999)</label>
+                </div>
+                <div class="filter--optionItem">
+                  <input type="checkbox" name="" id="filter-personagem-4" />
+                  <label for="filter-personagem-4">Filtro 4 (999)</label>
+                </div>
+                <div class="filter--optionItem">
+                  <input type="checkbox" name="" id="filter-personagem-5" />
+                  <label for="filter-personagem-5">Filtro 5 (999)</label>
+                </div>
+              </div>
+            </details>
+          </div>
+          <div class="filter-list--footer overlay--footer">
+            <button class="form--button button--clear" type="reset" aria-controls="filter-form" id="clear-filter">
+              <span class="form--buttonText">Limpar Filtros</span>
+            </button>
+            <button class="form--button button--apply" type="submit" aria-controls="filter-form" id="apply-filter">
+              <span class="form--buttonText">Aplicar Filtro</span>
+            </button>
+          </div>
+        </div>
+      </form>
     </div>
 
     <div class="products--listage">
