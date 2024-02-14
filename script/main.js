@@ -45,7 +45,7 @@ function init() {
     const overlayState = overlay.style.display === 'none' || overlay.style.display === ''
 
     overlay.style.display = overlayState ? 'block' : 'none'
-    overlay.classList.add('isOpen')
+    overlay.classList.toggle('isOpen')
     e.currentTarget.setAttribute('aria-expanded', overlayState)
   }
 
