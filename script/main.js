@@ -83,7 +83,7 @@ function init() {
   const closeTopMostOverlay = (e) => {
     const { elm: overlay } = getTopOverlay()
 
-    if (e.key === 'Escape' && overlay && overlay?.getAttribute('aria-hidden') === 'false') {
+    if ((e.key === 'Escape' || e.button !== 2) && overlay && overlay?.getAttribute('aria-hidden') === 'false') {
       const body = document.querySelector('body')
       const openingBttn = document.getElementById(overlay.getAttribute('aria-controlledby'))
 
@@ -97,6 +97,14 @@ function init() {
   }
 
   window.addEventListener('keyup', (e) => closeTopMostOverlay(e))
+
+  const overlayWrappers = document?.querySelectorAll('.overlay--wrapper')
+  overlayWrappers.forEach((item) => {
+    item.addEventListener('click', (e) => {
+      if (!e.target.classList.contains('isOpen')) return
+      closeTopMostOverlay(e)
+    })
+  })
 
   // Check if elm is in viewport
   const isInViewport = (elm) => {
