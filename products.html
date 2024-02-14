@@ -29,10 +29,15 @@
         </select>
       </div>
       <div class="product-controls--filter">
-        <button class="filter--button overlay--button" aria-controls="filter-list" aria-label="Abrir Filtros">
+        <button class="filter--button overlay--button" aria-controls="filter-list" aria-label="Abrir Filtros"
+          aria-expanded="false">
           <span class="filter--buttonText">Filtrar</span>
           <img src="./assets/filter.svg" class="filter--image" aria-hidden="true" />
         </button>
+
+        <div class="filter--list filter--isClosed" style="display: none;" id="filter-list">
+
+        </div>
       </div>
     </div>
 

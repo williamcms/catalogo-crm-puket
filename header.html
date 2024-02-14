@@ -19,13 +19,15 @@
       </div>
 
       <div class="header--cart">
-        <button class="cart--button" aria-controls="cart--drawer">
-          <img src="./assets/minicart.svg" title="Voltar para a página principal" class="cart--image" />
+        <button class="cart--button overlay--button" aria-controls="cart--drawer" aria-expanded="false">
+          <img src="./assets/minicart.svg" title="Minicart" class="cart--image" aria-hidden="true" />
           <!-- Mostra q quantidade de itens no carrinho -->
+          <span class="only-sr">Abrir Sacola de itens, você tem</span>
           <span class="cart--badge"><span class="cart--counter">0</span></span></span>
+          <span class="only-sr">produtos na sacola</span>
         </button>
 
-        <div class="cart--drawer cart--isClosed" aria-hidden="true" style="display: none;" id="cart--drawer">
+        <div class="cart--drawer cart--isClosed" style="display: none;" id="cart--drawer">
 
         </div>
       </div>
