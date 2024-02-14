@@ -55,6 +55,7 @@ function init() {
 
     overlay.style.display = overlayState ? 'block' : 'none'
     overlay.classList.toggle('isOpen', overlayState)
+    overlay.classList.toggle('isClosed', !overlayState)
     body.classList.toggle('noscroll', overlayState)
 
     e.currentTarget.setAttribute('aria-expanded', overlayState)
@@ -89,6 +90,7 @@ function init() {
       overlay.style.display = 'none'
       overlay.setAttribute('aria-hidden', 'true')
       overlay.classList.remove('isOpen')
+      overlay.classList.add('isClosed')
       body.classList.toggle('noscroll', false)
       openingBttn.focus()
     }
