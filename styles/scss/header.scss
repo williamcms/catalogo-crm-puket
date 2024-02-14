@@ -119,50 +119,9 @@
         .header--menu {
           @include mobile {
             display: none;
-
-            &.isOpen {
-              position: absolute;
-              top: 0;
-              width: 100%;
-              height: 100%;
-              background-color: $c-black-20;
-            }
           }
 
-          .menu--wrapper {
-            @include mobile {
-              background-color: $c-background-base;
-              height: 100%;
-              width: 100%;
-            }
-
-            .menu--header {
-              @include mobile {
-                display: flex;
-                flex-direction: row;
-                justify-content: center;
-                align-items: center;
-                background-color: $c-purple;
-                padding: 0.875rem 1rem;
-              }
-
-              .menu--closeButton {
-                position: absolute;
-                left: 1rem;
-                background-color: transparent;
-                border: none;
-                outline: none;
-                padding: 0 10px;
-              }
-
-              .menu--closeButton span,
-              .menu--headerText {
-                font-size: 20px;
-                font-weight: 600;
-                color: $c-white;
-              }
-            }
-
+          .menu--content {
             .menu--list {
               display: flex;
               flex-direction: row;
@@ -175,6 +134,10 @@
 
               .menu--item {
                 list-style: none;
+
+                @include mobile {
+                  padding: 0.5rem 1rem;
+                }
 
                 .menu--itemLink {
                   font-size: 0.9375rem;

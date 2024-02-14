@@ -39,14 +39,18 @@ function init() {
   const handleMenu = (e) => {
     if (e.button === 2) return
 
+    const body = document.querySelector('body')
     const targetToOpen = e?.currentTarget.getAttribute('aria-controls')
 
     const overlay = document.querySelector(`#${targetToOpen}`)
     const overlayState = overlay.style.display === 'none' || overlay.style.display === ''
 
     overlay.style.display = overlayState ? 'block' : 'none'
-    overlay.classList.toggle('isOpen')
+    overlay.classList.toggle('isOpen', overlayState)
+    body.classList.toggle('noscroll', overlayState)
+
     e.currentTarget.setAttribute('aria-expanded', overlayState)
+    overlay.setAttribute('aria-hidden', !overlayState)
   }
 
   // Check if elm is in viewport
