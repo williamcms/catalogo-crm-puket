@@ -45,20 +45,39 @@
 
         &.product-controls-orderBy {
           font-weight: 700;
+          cursor: pointer;
         }
 
         &.product-controls-size {
           width: 5.5rem;
+          cursor: pointer;
         }
 
         &.filter--button {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 0.5rem;
           border: 1px solid $c-purple;
           border-radius: 12.5rem;
           padding: 0.4375rem 1rem;
+          cursor: pointer;
 
           .filter--buttonText {
             font-weight: 700;
             color: $c-purple;
+          }
+
+          &:hover {
+            background-color: $c-purple;
+
+            .filter--buttonText {
+              color: $c-white;
+            }
+
+            .filter--image {
+              filter: invert(100%) saturate(0%) brightness(200%) contrast(200%);
+            }
           }
         }
       }
