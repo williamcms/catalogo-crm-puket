@@ -2,7 +2,7 @@
   <div class="header--content">
     <div class="header--row header--row-1">
       <div class="header--hamburger-menu" style="display: none;">
-        <button class="hamburger-menu--button overlay--button" aria-controls="main-menu">
+        <button class="hamburger-menu--button overlay--button" aria-controls="main-menu" id="hamburger-menu-button">
           <img src="./assets/hamburger-menu.svg" class="hamburger-menu--image" aria-hidden="true" />
           <span class="only-sr">Abrir Menu</span>
         </button>
@@ -19,7 +19,8 @@
       </div>
 
       <div class="header--cart">
-        <button class="cart--button overlay--button" aria-controls="cart--drawer" aria-expanded="false">
+        <button class="cart--button overlay--button" aria-controls="cart--drawer" aria-expanded="false"
+          id="cart-button">
           <img src="./assets/minicart.svg" title="Minicart" class="cart--image" aria-hidden="true" />
           <!-- Mostra a quantidade de itens no carrinho -->
           <span class="only-sr">Abrir Sacola de itens, você tem</span>
@@ -27,7 +28,8 @@
           <span class="only-sr">produtos na sacola</span>
         </button>
 
-        <div class="cart--drawer" style="display: none;" id="cart--drawer">
+        <div class="cart--drawer overlay--wrapper" style="display: none;" id="cart--drawer"
+          aria-controlledby="cart-button">
 
         </div>
       </div>
@@ -35,14 +37,16 @@
     </div>
 
     <div class="header--row header--row-2">
-      <div class="header--menu overlay--wrapper" id="main-menu">
+      <div class="header--menu overlay--wrapper" id="main-menu" aria-controlledby="hamburger-menu-button">
         <nav class="menu--content overlay--content">
           <div class="mobile-only overlay--header">
             <button class="overlay--close" id="close-menu" aria-controls="main-menu">
               <span aria-hidden>&times;</span>
               <span class="only-sr">Fechar Menu</span>
             </button>
-            <div class="overlay--headerText">Menu</div>
+            <div class="overlay--headerText">
+              <h2>Menu</h2>
+            </div>
           </div>
           <!-- Itens do menu -->
           <ul class="menu--list">

@@ -8,8 +8,12 @@
     .banners--item {
       flex: 1 1 0px;
 
-      .banners--image {
-        width: 100%;
+      .banners--itemLink {
+        display: block;
+
+        .banners--image {
+          width: 100%;
+        }
       }
     }
   }

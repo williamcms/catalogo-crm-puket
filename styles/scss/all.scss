@@ -12,6 +12,11 @@
   box-sizing: border-box;
 }
 
+*:focus {
+  outline: 2px $c-orange solid;
+  outline-offset: 1px;
+}
+
 body {
   position: relative;
   background-color: $c-background-base;
@@ -35,16 +40,16 @@ body {
 }
 
 .mobile-only {
-  display: none;
+  display: none !important;
 
   @include mobile {
-    display: block;
+    display: block !important;
   }
 }
 
 .desktop-only {
   @include mobile {
-    display: none;
+    display: none !important;
   }
 }
 
@@ -85,29 +90,26 @@ img {
   }
 
   .overlay--content {
-    @include mobile {
-      background-color: $c-background-base;
-      min-height: 100%;
-      width: 100%;
-    }
+    background-color: $c-background-base;
+    min-height: 100%;
+    width: 100%;
 
     .overlay--header {
-      @include mobile {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        background-color: $c-purple;
-        padding: 0.875rem 1rem;
-      }
+      position: relative;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      background-color: $c-purple;
+      padding: 0.875rem 1rem;
 
       .overlay--close {
         position: absolute;
         left: 1rem;
         background-color: transparent;
         border: none;
-        outline: none;
         padding: 0 10px;
+        cursor: pointer;
       }
 
       .overlay--close span,

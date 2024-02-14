@@ -19,7 +19,11 @@ const isMobile = () => {
 function init() {
   // Handle overlay states
   const overlayButtons = document.querySelectorAll('.overlay--button')
-  overlayButtons.forEach((item) => item.addEventListener('mousedown', (e) => handleMenu(e)))
+  overlayButtons.forEach((item) => {
+    item.addEventListener('mousedown', (e) => handleOverlay(e))
+    item.addEventListener('keyup', (e) => handleOverlay(e))
+  })
+
   // Set aria-expanded for overlays
   if (isMobile()) {
     overlayButtons.forEach((item) => {
@@ -34,16 +38,20 @@ function init() {
   }
 
   const closeButtons = document?.querySelectorAll('.overlay--close')
-  closeButtons.forEach((item) => item.addEventListener('mousedown', (e) => handleMenu(e)))
+  closeButtons.forEach((item) => {
+    item.addEventListener('mousedown', (e) => handleOverlay(e))
+    item.addEventListener('keyup', (e) => handleOverlay(e))
+  })
 
-  const handleMenu = (e) => {
-    if (e.button === 2) return
+  const handleOverlay = (e) => {
+    if (e.button !== 0 && e.button !== 1 && e.key !== 'Enter' && e.key !== ' ') return
 
     const body = document.querySelector('body')
     const targetToOpen = e?.currentTarget.getAttribute('aria-controls')
 
-    const overlay = document.querySelector(`#${targetToOpen}`)
+    const overlay = document.getElementById(targetToOpen)
     const overlayState = overlay.style.display === 'none' || overlay.style.display === ''
+    const openingBttn = document.getElementById(overlay.getAttribute('aria-controlledby'))
 
     overlay.style.display = overlayState ? 'block' : 'none'
     overlay.classList.toggle('isOpen', overlayState)
@@ -51,7 +59,42 @@ function init() {
 
     e.currentTarget.setAttribute('aria-expanded', overlayState)
     overlay.setAttribute('aria-hidden', !overlayState)
+
+    if (!overlayState) openingBttn.focus()
+    else overlay.focus()
   }
+
+  const getTopOverlay = () => {
+    const most = Array.from(document.querySelectorAll('.overlay--wrapper.isOpen')).reduce(
+      (acc, current) => {
+        const zIndex = window.getComputedStyle(current, null).getPropertyValue('z-index')
+
+        if (zIndex !== null && zIndex !== 'auto' && zIndex >= acc?.zIndex) {
+          return { elm: current, zIndex }
+        }
+      },
+      { elm: null, zIndex: 0 }
+    )
+
+    return most ?? null
+  }
+
+  const closeTopMostOverlay = (e) => {
+    const { elm: overlay } = getTopOverlay()
+
+    if (e.key === 'Escape' && overlay && overlay?.getAttribute('aria-hidden') === 'false') {
+      const body = document.querySelector('body')
+      const openingBttn = document.getElementById(overlay.getAttribute('aria-controlledby'))
+
+      overlay.style.display = 'none'
+      overlay.setAttribute('aria-hidden', 'true')
+      overlay.classList.remove('isOpen')
+      body.classList.toggle('noscroll', false)
+      openingBttn.focus()
+    }
+  }
+
+  window.addEventListener('keyup', (e) => closeTopMostOverlay(e))
 
   // Check if elm is in viewport
   const isInViewport = (elm) => {
@@ -83,5 +126,6 @@ function init() {
   lazyLoadImages()
 
   // Continuously call the function when the user scrolls the page
-  window.addEventListener('scroll resize', () => lazyLoadImages())
+  window.addEventListener('scroll', () => lazyLoadImages())
+  window.addEventListener('resize', () => lazyLoadImages())
 }
