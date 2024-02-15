@@ -132,7 +132,13 @@ img {
     }
 
     .overlay--footer {
+      background-color: $c-white;
       margin-top: auto;
+
+      &.sticky {
+        bottom: 0;
+        top: unset;
+      }
     }
   }
 }
