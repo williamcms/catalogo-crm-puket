@@ -10,7 +10,7 @@
 
     .product--count {
       .product-count-text {
-        font-size: 14px;
+        font-size: 0.875rem;
 
         strong {
           font-weight: 700;
@@ -25,13 +25,20 @@
       align-items: center;
       padding: 1.25rem 1rem;
       background-color: $c-white;
-      margin-left: -1rem;
-      margin-right: -1rem;
+
+      @include desktop {
+        border-radius: 0.25rem;
+      }
+
+      @include mobile {
+        margin-left: -1rem;
+        margin-right: -1rem;
+      }
 
       select,
       button {
         appearance: none;
-        border-radius: 2px;
+        border-radius: 0.125rem;
         color: $c-text;
         background-color: transparent;
         border: none;
@@ -59,7 +66,7 @@
           justify-content: center;
           align-items: center;
           gap: 0.5rem;
-          border: 1px solid $c-purple;
+          border: 0.0625rem solid $c-purple;
           border-radius: 12.5rem;
           padding: 0.4375rem 1rem;
           cursor: pointer;
@@ -174,7 +181,7 @@
           padding: 0.75rem 1.5rem;
           border-radius: 12.5rem;
           background-color: $c-white;
-          border: 1px solid $c-purple;
+          border: 0.0625rem solid $c-purple;
           cursor: pointer;
 
           .form--buttonText {
@@ -199,6 +206,9 @@
       flex-wrap: wrap;
       justify-content: center;
       align-items: center;
+      padding: 0.5rem;
+      background-color: $c-white;
+      border-radius: 0.25rem;
 
       @include desktop {
         --cols: 4;
@@ -278,7 +288,8 @@
               }
 
               .summary-item--name {
-                padding: 0 8px;
+                padding: 0 0.5rem;
+                min-height: 2.625rem;
 
                 .summary-item--nameText {
                   font-size: 0.875rem;
@@ -304,7 +315,8 @@
                 align-items: center;
                 gap: 0.25rem;
                 text-align: center;
-                padding: 0 8px;
+                min-height: 2.25rem;
+                padding: 0 0.5rem;
 
                 .summary-item-price--listPrice {
                   font-size: 0.8125rem;
@@ -333,7 +345,8 @@
 
               .summary-item--installments {
                 text-align: center;
-                padding: 0 8px;
+                min-height: 1.125rem;
+                padding: 0 0.5rem;
 
                 .summary-item-installmentsText {
                   font-size: 0.75rem;
