@@ -7,6 +7,7 @@
     </div>
 
     <div class="product--controls sticky">
+      <!-- Altera a ordem dos produtos de acordo com a seleção de ordenação -->
       <div class="product-controls--orderBy">
         <label class="only-sr">Ordernar por</label>
         <select name="order" class="orderBy--select">
@@ -18,6 +19,8 @@
           <option value="OrderByReleaseDateDESC">Data de Lançamento</option>
         </select>
       </div>
+
+      <!-- Altera a seleção de produtos exibidos de acordo com o tamanho -->
       <div class="product-controls--size">
         <label class="only-sr">Tamanho</label>
         <select name="size" class="size--select">
@@ -29,6 +32,7 @@
           <option value="GG">GG</option>
         </select>
       </div>
+
       <div class="product-controls--filter">
         <button
           class="filter--button overlay--button"
@@ -44,6 +48,13 @@
     </div>
 
     <div class="filter--list overlay--wrapper" style="display: none" id="filter-list" aria-controlledby="filter-button">
+      <!-- 
+        Altera a seleção de produtos exibidos de acordo com os filtros selecionados
+        Sugestão:
+        @ID: filter-{ tipo/nome do filtro }-{ nome } => filter-categoria-meias
+        @FOR: mesmo valor de @ID
+        @TEXTO: Nome do filtro (número de itens) 
+      -->
       <form method="POST" id="filter-form">
         <div class="filter-list--container overlay--container">
           <div class="filter-list--header overlay--header">
@@ -54,36 +65,33 @@
             <div class="overlay--headerText" aria-hidden>Filtrar por</div>
           </div>
           <div class="filter-list--items overlay-content">
+            <!-- Filtro Categoria -->
             <details class="filter--listItem">
               <summary class="filter--itemName">Categoria</summary>
               <div class="filter--listOptions">
-                <!-- 
-                Filtros 
-                @ID: filter - tipo/nome do filtro - número/index
-                @TEXTO: Nome do filtro (número de itens)
-              -->
                 <div class="filter--optionItem">
-                  <input type="checkbox" name="" id="filter-categoria-1" />
-                  <label for="filter-categoria-1">Meia (999)</label>
+                  <input type="checkbox" name="filter-categoria-meias" id="filter-categoria-meias" />
+                  <label for="filter-categoria-meias">Meias (999)</label>
                 </div>
                 <div class="filter--optionItem">
-                  <input type="checkbox" name="" id="filter-categoria-2" />
-                  <label for="filter-categoria-2">Pijamas (999)</label>
+                  <input type="checkbox" name="filter-categoria-pijamas" id="filter-categoria-pijamas" />
+                  <label for="filter-categoria-pijamas">Pijamas (999)</label>
                 </div>
                 <div class="filter--optionItem">
-                  <input type="checkbox" name="" id="filter-categoria-3" />
-                  <label for="filter-categoria-3">Lingeries (999)</label>
+                  <input type="checkbox" name="filter-categoria-lingeries" id="filter-categoria-lingeries" />
+                  <label for="filter-categoria-lingeries">Lingeries (999)</label>
                 </div>
                 <div class="filter--optionItem">
-                  <input type="checkbox" name="" id="filter-categoria-4" />
-                  <label for="filter-categoria-4">Moda Praia (999)</label>
+                  <input type="checkbox" name="filter-categoria-moda-praia" id="filter-categoria-moda-praia" />
+                  <label for="filter-categoria-moda-praia">Moda Praia (999)</label>
                 </div>
                 <div class="filter--optionItem">
-                  <input type="checkbox" name="" id="filter-categoria-5" />
-                  <label for="filter-categoria-5">Acessórios (999)</label>
+                  <input type="checkbox" name="filter-categoria-acessorios" id="filter-categoria-acessorios" />
+                  <label for="filter-categoria-acessorios">Acessórios (999)</label>
                 </div>
               </div>
             </details>
+            <!-- Filtro Modelo -->
             <details class="filter--listItem">
               <summary class="filter--itemName">Modelo</summary>
               <div class="filter--listOptions">
@@ -109,6 +117,7 @@
                 </div>
               </div>
             </details>
+            <!-- Filtro Tamanho -->
             <details class="filter--listItem">
               <summary class="filter--itemName">Tamanho</summary>
               <div class="filter--listOptions">
@@ -134,6 +143,7 @@
                 </div>
               </div>
             </details>
+            <!-- Filtro Sexo -->
             <details class="filter--listItem">
               <summary class="filter--itemName">Sexo</summary>
               <div class="filter--listOptions">
@@ -159,6 +169,7 @@
                 </div>
               </div>
             </details>
+            <!-- Filtro Cores -->
             <details class="filter--listItem">
               <summary class="filter--itemName">Cores</summary>
               <div class="filter--listOptions">
@@ -184,6 +195,7 @@
                 </div>
               </div>
             </details>
+            <!-- Filtro Personagem -->
             <details class="filter--listItem">
               <summary class="filter--itemName">Personagem</summary>
               <div class="filter--listOptions">
@@ -209,6 +221,7 @@
                 </div>
               </div>
             </details>
+            <!-- ...outros filtros, caso existam -->
           </div>
           <div class="filter-list--footer overlay--footer">
             <button class="form--button button--clear" type="reset" aria-controls="filter-form" id="clear-filter">
