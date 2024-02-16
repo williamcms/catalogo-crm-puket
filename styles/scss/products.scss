@@ -237,7 +237,9 @@
             }
           }
 
-          &:hover {
+          &:hover,
+          &:focus,
+          &:focus-within {
             .summary-item--floating {
               .summary-item--floatingItem-addToCart {
                 display: block;
@@ -248,6 +250,9 @@
 
         .summary-item--container {
           .summary-item--link {
+            text-decoration: none;
+            cursor: pointer;
+
             .summary--item {
               display: flex;
               flex-direction: column;
