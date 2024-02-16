@@ -150,4 +150,23 @@ function init() {
 
   document.querySelector('.button--clear').addEventListener('click', (e) => handleFormClear(e))
   document.querySelector('.button--clear').addEventListener('keyup', (e) => handleFormClear(e))
+
+  // Handle sku click
+  const handleSKUSelection = (e) => {
+    const current = e.target.classList
+
+    if (!current.contains('summary-item--skuItem')) return
+    if (current.contains('selected') || current.contains('disabled')) return
+    if (e.button !== 0 && e.button !== 1 && e.key !== 'Enter' && e.key !== ' ') return
+
+    const container = e.target.parentNode
+    const previous = container.querySelector('.selected')?.classList
+
+    if (previous) previous.remove('selected')
+
+    current.add('selected')
+  }
+
+  document.addEventListener('click', (e) => handleSKUSelection(e))
+  document.addEventListener('keyup', (e) => handleSKUSelection(e))
 }
