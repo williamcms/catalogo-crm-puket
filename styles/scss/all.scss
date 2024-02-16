@@ -117,13 +117,20 @@ img {
         border: none;
         padding: 0 10px;
         cursor: pointer;
+
+        span {
+          font-size: 30px;
+        }
       }
 
       .overlay--close span,
       .overlay--headerText {
-        font-size: 20px;
         font-weight: 600;
         color: $c-white;
+      }
+
+      .overlay--headerText {
+        font-size: 20px;
       }
     }
 

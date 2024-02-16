@@ -22,6 +22,12 @@ function init() {
   overlayButtons.forEach((item) => {
     item.addEventListener('mousedown', (e) => handleOverlay(e))
     item.addEventListener('keyup', (e) => handleOverlay(e))
+
+    if (item.getAttribute('data-dynamicId') === 'true') {
+      const customId = `custom-id-${(Math.random() + 1).toString(36).substring(2, 10)}`
+
+      item.setAttribute('id', customId)
+    }
   })
 
   // Set aria-expanded for overlays
@@ -46,10 +52,18 @@ function init() {
   const handleOverlay = (e) => {
     if (e.button !== 0 && e.button !== 1 && e.key !== 'Enter' && e.key !== ' ') return
 
+    const currentElm = e?.currentTarget
+
     const body = document.querySelector('body')
-    const targetToOpen = e?.currentTarget.getAttribute('aria-controls')
+    const targetToOpen = currentElm.getAttribute('aria-controls')
 
     const overlay = document.getElementById(targetToOpen)
+
+    if (currentElm.getAttribute('data-dynamicId') === 'true') {
+      const customId = currentElm.getAttribute('id')
+      overlay.setAttribute('aria-controlledby', customId)
+    }
+
     const overlayState = overlay.style.display === 'none' || overlay.style.display === ''
     const openingBttn = document.getElementById(overlay.getAttribute('aria-controlledby'))
 
@@ -58,7 +72,7 @@ function init() {
     overlay.classList.toggle('isClosed', !overlayState)
     body.classList.toggle('noscroll', overlayState)
 
-    e.currentTarget.setAttribute('aria-expanded', overlayState)
+    currentElm.setAttribute('aria-expanded', overlayState)
     overlay.setAttribute('aria-hidden', !overlayState)
 
     if (!overlayState) openingBttn.focus()
@@ -95,6 +109,10 @@ function init() {
       overlay.classList.add('isClosed')
       body.classList.toggle('noscroll', false)
       openingBttn.focus()
+
+      if (openingBttn.getAttribute('data-dynamicId') === 'true') {
+        overlay.removeAttribute('aria-controlledby')
+      }
     }
   }
 
