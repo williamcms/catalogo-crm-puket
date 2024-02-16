@@ -83,7 +83,9 @@ function init() {
   const closeTopMostOverlay = (e) => {
     const { elm: overlay } = getTopOverlay()
 
-    if ((e.key === 'Escape' || e.button !== 2) && overlay && overlay?.getAttribute('aria-hidden') === 'false') {
+    if (e.button !== 0 && e.button !== 1 && e.key !== 'Escape' && e.key !== ' ') return
+
+    if (overlay && overlay?.getAttribute('aria-hidden') === 'false') {
       const body = document.querySelector('body')
       const openingBttn = document.getElementById(overlay.getAttribute('aria-controlledby'))
 
