@@ -153,18 +153,61 @@ function init() {
 
   // Handle sku click
   const handleSKUSelection = (e) => {
-    const current = e.target.classList
+    const current = e.target
 
-    if (!current.contains('summary-item--skuItem')) return
-    if (current.contains('selected') || current.contains('disabled')) return
-    if (e.button !== 0 && e.button !== 1 && e.key !== 'Enter' && e.key !== ' ') return
+    if (!current.classList.contains('summary-item--skuItem')) return
+    if (
+      e.button !== 0 &&
+      e.button !== 1 &&
+      e.key !== 'Enter' &&
+      e.key !== ' ' &&
+      e.key !== 'Tab' &&
+      e.key !== 'ArrowRight' &&
+      e.key !== 'ArrowLeft'
+    )
+      return
 
     const container = e.target.parentNode
-    const previous = container.querySelector('.selected')?.classList
+    const previous = container.querySelector('[aria-checked="true"]')
 
-    if (previous) previous.remove('selected')
+    const availableElm = container.querySelectorAll('button:not([aria-disabled])')
+    const minElm = 0
+    const maxElm = availableElm.length - 1
 
-    current.add('selected')
+    let currentElm
+
+    Array.from(availableElm).filter((item, i) => {
+      if (item.getAttribute('aria-checked') === 'true') return (currentElm = i)
+    })
+
+    if (previous) previous.setAttribute('aria-checked', 'false')
+
+    if (e.key === 'ArrowRight') {
+      const index = currentElm < maxElm ? currentElm + 1 : minElm
+
+      availableElm[index].setAttribute('aria-checked', 'true')
+      availableElm[index].focus()
+
+      return
+    }
+
+    if (e.key === 'ArrowLeft') {
+      const index = currentElm > minElm ? currentElm - 1 : maxElm
+
+      availableElm[index].setAttribute('aria-checked', 'true')
+      availableElm[index].focus()
+
+      return
+    }
+
+    if (current.getAttribute('aria-disabled') === null) {
+      current.setAttribute('aria-checked', 'true')
+      current.focus()
+    }
+
+    if (!container.querySelector('[aria-checked="true"]')) {
+      previous.setAttribute('aria-checked', 'true')
+    }
   }
 
   document.addEventListener('click', (e) => handleSKUSelection(e))

@@ -262,13 +262,20 @@
               </div>
 
               <div class="summary-item--sku">
-                <div class="summary-item--skuList">
+                <div class="summary-item--skuList" role="radiogroup">
                   <label class="only-sr">Selecione o tamanho do seu produto</label>
-                  <div role="button" tabindex="0" class="summary-item--skuItem selected">PP</div>
-                  <div role="button" tabindex="0" class="summary-item--skuItem disabled">P</div>
-                  <div role="button" tabindex="0" class="summary-item--skuItem disabled">M</div>
-                  <div role="button" tabindex="0" class="summary-item--skuItem">G</div>
-                  <div role="button" tabindex="0" class="summary-item--skuItem">GG</div>
+                  <!-- 
+                    Adicionar aria-checked como true para o primeiro item disponível
+                    Adicionar aria-checked como false para demais itens
+                    Adicionar aria-disabled para itens indisponíveis
+                    
+                    aria-checked="true" não é definido com aria-disabled
+                   -->
+                  <button role="radio" aria-checked="false" class="summary-item--skuItem" aria-disabled>PP</button>
+                  <button role="radio" aria-checked="false" class="summary-item--skuItem" aria-disabled>P</button>
+                  <button role="radio" aria-checked="false" class="summary-item--skuItem" aria-disabled>M</button>
+                  <button role="radio" aria-checked="true" class="summary-item--skuItem">G</button>
+                  <button role="radio" aria-checked="false" class="summary-item--skuItem">GG</button>
                 </div>
               </div>
 
@@ -319,12 +326,19 @@
               </div>
 
               <div class="summary-item--sku">
-                <div class="summary-item--skuList">
+                <div class="summary-item--skuList" role="radiogroup">
                   <label class="only-sr">Selecione o tamanho do seu produto</label>
-                  <div role="button" tabindex="0" class="summary-item--skuItem selected">8</div>
-                  <div role="button" tabindex="0" class="summary-item--skuItem disabled">10</div>
-                  <div role="button" tabindex="0" class="summary-item--skuItem">12</div>
-                  <div role="button" tabindex="0" class="summary-item--skuItem">14</div>
+                  <!-- 
+                    Adicionar aria-checked como true para o primeiro item disponível
+                    Adicionar aria-checked como false para demais itens
+                    Adicionar aria-disabled para itens indisponíveis
+                    
+                    aria-checked="true" não é definido com aria-disabled
+                   -->
+                  <button role="radio" aria-checked="false" class="summary-item--skuItem" aria-disabled>8</button>
+                  <button role="radio" aria-checked="false" class="summary-item--skuItem" aria-disabled>10</button>
+                  <button role="radio" aria-checked="false" class="summary-item--skuItem" aria-disabled>12</button>
+                  <button role="radio" aria-checked="false" class="summary-item--skuItem" aria-disabled>14</button>
                 </div>
               </div>
 
@@ -372,13 +386,20 @@
               </div>
 
               <div class="summary-item--sku">
-                <div class="summary-item--skuList">
+                <div class="summary-item--skuList" role="radiogroup">
                   <label class="only-sr">Selecione o tamanho do seu produto</label>
-                  <div role="button" tabindex="0" class="summary-item--skuItem selected">PP</div>
-                  <div role="button" tabindex="0" class="summary-item--skuItem disabled">P</div>
-                  <div role="button" tabindex="0" class="summary-item--skuItem disabled">M</div>
-                  <div role="button" tabindex="0" class="summary-item--skuItem">G</div>
-                  <div role="button" tabindex="0" class="summary-item--skuItem">GG</div>
+                  <!-- 
+                    Adicionar aria-checked como true para o primeiro item disponível
+                    Adicionar aria-checked como false para demais itens
+                    Adicionar aria-disabled para itens indisponíveis
+                    
+                    aria-checked="true" não é definido com aria-disabled
+                   -->
+                  <button role="radio" aria-checked="true" class="summary-item--skuItem">PP</button>
+                  <button role="radio" aria-checked="false" class="summary-item--skuItem" aria-disabled>P</button>
+                  <button role="radio" aria-checked="false" class="summary-item--skuItem" aria-disabled>M</button>
+                  <button role="radio" aria-checked="false" class="summary-item--skuItem">G</button>
+                  <button role="radio" aria-checked="false" class="summary-item--skuItem">GG</button>
                 </div>
               </div>
 
@@ -429,12 +450,19 @@
               </div>
 
               <div class="summary-item--sku">
-                <div class="summary-item--skuList">
+                <div class="summary-item--skuList" role="radiogroup">
                   <label class="only-sr">Selecione o tamanho do seu produto</label>
-                  <div role="button" tabindex="0" class="summary-item--skuItem selected">8</div>
-                  <div role="button" tabindex="0" class="summary-item--skuItem disabled">10</div>
-                  <div role="button" tabindex="0" class="summary-item--skuItem">12</div>
-                  <div role="button" tabindex="0" class="summary-item--skuItem">14</div>
+                  <!-- 
+                    Adicionar aria-checked como true para o primeiro item disponível
+                    Adicionar aria-checked como false para demais itens
+                    Adicionar aria-disabled para itens indisponíveis
+                    
+                    aria-checked="true" não é definido com aria-disabled
+                   -->
+                  <button role="radio" aria-checked="true" class="summary-item--skuItem">8</button>
+                  <button role="radio" aria-checked="false" class="summary-item--skuItem" aria-disabled>10</button>
+                  <button role="radio" aria-checked="false" class="summary-item--skuItem">12</button>
+                  <button role="radio" aria-checked="false" class="summary-item--skuItem">14</button>
                 </div>
               </div>
 
@@ -482,13 +510,20 @@
               </div>
 
               <div class="summary-item--sku">
-                <div class="summary-item--skuList">
+                <div class="summary-item--skuList" role="radiogroup">
                   <label class="only-sr">Selecione o tamanho do seu produto</label>
-                  <div role="button" tabindex="0" class="summary-item--skuItem selected">PP</div>
-                  <div role="button" tabindex="0" class="summary-item--skuItem disabled">P</div>
-                  <div role="button" tabindex="0" class="summary-item--skuItem disabled">M</div>
-                  <div role="button" tabindex="0" class="summary-item--skuItem">G</div>
-                  <div role="button" tabindex="0" class="summary-item--skuItem">GG</div>
+                  <!-- 
+                    Adicionar aria-checked como true para o primeiro item disponível
+                    Adicionar aria-checked como false para demais itens
+                    Adicionar aria-disabled para itens indisponíveis
+                    
+                    aria-checked="true" não é definido com aria-disabled
+                   -->
+                  <button role="radio" aria-checked="true" class="summary-item--skuItem">PP</button>
+                  <button role="radio" aria-checked="false" class="summary-item--skuItem" aria-disabled>P</button>
+                  <button role="radio" aria-checked="false" class="summary-item--skuItem" aria-disabled>M</button>
+                  <button role="radio" aria-checked="false" class="summary-item--skuItem">G</button>
+                  <button role="radio" aria-checked="false" class="summary-item--skuItem">GG</button>
                 </div>
               </div>
 
@@ -539,12 +574,19 @@
               </div>
 
               <div class="summary-item--sku">
-                <div class="summary-item--skuList">
+                <div class="summary-item--skuList" role="radiogroup">
                   <label class="only-sr">Selecione o tamanho do seu produto</label>
-                  <div role="button" tabindex="0" class="summary-item--skuItem selected">8</div>
-                  <div role="button" tabindex="0" class="summary-item--skuItem disabled">10</div>
-                  <div role="button" tabindex="0" class="summary-item--skuItem">12</div>
-                  <div role="button" tabindex="0" class="summary-item--skuItem">14</div>
+                  <!-- 
+                    Adicionar aria-checked como true para o primeiro item disponível
+                    Adicionar aria-checked como false para demais itens
+                    Adicionar aria-disabled para itens indisponíveis
+                    
+                    aria-checked="true" não é definido com aria-disabled
+                   -->
+                  <button role="radio" aria-checked="true" class="summary-item--skuItem">8</button>
+                  <button role="radio" aria-checked="false" class="summary-item--skuItem" aria-disabled>10</button>
+                  <button role="radio" aria-checked="false" class="summary-item--skuItem">12</button>
+                  <button role="radio" aria-checked="false" class="summary-item--skuItem">14</button>
                 </div>
               </div>
 
@@ -592,13 +634,20 @@
               </div>
 
               <div class="summary-item--sku">
-                <div class="summary-item--skuList">
+                <div class="summary-item--skuList" role="radiogroup">
                   <label class="only-sr">Selecione o tamanho do seu produto</label>
-                  <div role="button" tabindex="0" class="summary-item--skuItem selected">PP</div>
-                  <div role="button" tabindex="0" class="summary-item--skuItem disabled">P</div>
-                  <div role="button" tabindex="0" class="summary-item--skuItem disabled">M</div>
-                  <div role="button" tabindex="0" class="summary-item--skuItem">G</div>
-                  <div role="button" tabindex="0" class="summary-item--skuItem">GG</div>
+                  <!-- 
+                    Adicionar aria-checked como true para o primeiro item disponível
+                    Adicionar aria-checked como false para demais itens
+                    Adicionar aria-disabled para itens indisponíveis
+                    
+                    aria-checked="true" não é definido com aria-disabled
+                   -->
+                  <button role="radio" aria-checked="true" class="summary-item--skuItem">PP</button>
+                  <button role="radio" aria-checked="false" class="summary-item--skuItem" aria-disabled>P</button>
+                  <button role="radio" aria-checked="false" class="summary-item--skuItem" aria-disabled>M</button>
+                  <button role="radio" aria-checked="false" class="summary-item--skuItem">G</button>
+                  <button role="radio" aria-checked="false" class="summary-item--skuItem">GG</button>
                 </div>
               </div>
 
@@ -649,12 +698,19 @@
               </div>
 
               <div class="summary-item--sku">
-                <div class="summary-item--skuList">
+                <div class="summary-item--skuList" role="radiogroup">
                   <label class="only-sr">Selecione o tamanho do seu produto</label>
-                  <div role="button" tabindex="0" class="summary-item--skuItem selected">8</div>
-                  <div role="button" tabindex="0" class="summary-item--skuItem disabled">10</div>
-                  <div role="button" tabindex="0" class="summary-item--skuItem">12</div>
-                  <div role="button" tabindex="0" class="summary-item--skuItem">14</div>
+                  <!-- 
+                    Adicionar aria-checked como true para o primeiro item disponível
+                    Adicionar aria-checked como false para demais itens
+                    Adicionar aria-disabled para itens indisponíveis
+                    
+                    aria-checked="true" não é definido com aria-disabled
+                   -->
+                  <button role="radio" aria-checked="true" class="summary-item--skuItem">8</button>
+                  <button role="radio" aria-checked="false" class="summary-item--skuItem" aria-disabled>10</button>
+                  <button role="radio" aria-checked="false" class="summary-item--skuItem">12</button>
+                  <button role="radio" aria-checked="false" class="summary-item--skuItem">14</button>
                 </div>
               </div>
 
