@@ -17,19 +17,6 @@ const isMobile = () => {
 }
 
 function init() {
-  // Handle overlay states
-  const overlayButtons = document.querySelectorAll('.overlay--button')
-  overlayButtons.forEach((item) => {
-    item.addEventListener('mousedown', (e) => handleOverlay(e))
-    item.addEventListener('keyup', (e) => handleOverlay(e))
-
-    if (item.getAttribute('data-dynamicId') === 'true') {
-      const customId = `custom-id-${(Math.random() + 1).toString(36).substring(2, 10)}`
-
-      item.setAttribute('id', customId)
-    }
-  })
-
   // Set aria-expanded for overlays
   if (isMobile()) {
     overlayButtons.forEach((item) => {
@@ -43,11 +30,13 @@ function init() {
     })
   }
 
-  const closeButtons = document?.querySelectorAll('.overlay--close')
-  closeButtons.forEach((item) => {
-    item.addEventListener('mousedown', (e) => handleOverlay(e))
-    item.addEventListener('keyup', (e) => handleOverlay(e))
-  })
+  // Handle overlay opening
+  $(document).on('mousedown', '.overlay--button', (e) => handleOverlay(e))
+  $(document).on('keyup', '.overlay--button', (e) => handleOverlay(e))
+
+  // Handle overlay close
+  $(document).on('mousedown', '.overlay--close', (e) => handleOverlay(e))
+  $(document).on('keyup', '.overlay--close', (e) => handleOverlay(e))
 
   const handleOverlay = (e) => {
     if (e.button !== 0 && e.button !== 1 && e.key !== 'Enter' && e.key !== ' ') return
@@ -59,13 +48,13 @@ function init() {
 
     const overlay = document.getElementById(targetToOpen)
 
+    const overlayState = overlay.style.display === 'none' || overlay.style.display === ''
+    const openingBttn = document.getElementById(overlay.getAttribute('aria-controlledby'))
+
     if (currentElm.getAttribute('data-dynamicId') === 'true') {
       const customId = currentElm.getAttribute('id')
       overlay.setAttribute('aria-controlledby', customId)
     }
-
-    const overlayState = overlay.style.display === 'none' || overlay.style.display === ''
-    const openingBttn = document.getElementById(overlay.getAttribute('aria-controlledby'))
 
     overlay.style.display = overlayState ? 'block' : 'none'
     overlay.classList.toggle('isOpen', overlayState)
@@ -118,12 +107,10 @@ function init() {
 
   window.addEventListener('keyup', (e) => closeTopMostOverlay(e))
 
-  const overlayWrappers = document?.querySelectorAll('.overlay--wrapper')
-  overlayWrappers.forEach((item) => {
-    item.addEventListener('click', (e) => {
-      if (!e.target.classList.contains('isOpen')) return
-      closeTopMostOverlay(e)
-    })
+  $(document).on('click', '.overlay--wrapper', (e) => {
+    const target = e.target
+    if (!target.classList.contains('isOpen')) return
+    closeTopMostOverlay(e)
   })
 
   // Check if elm is in viewport
@@ -168,8 +155,8 @@ function init() {
     form.reset()
   }
 
-  document.querySelector('.button--clear').addEventListener('click', (e) => handleFormClear(e))
-  document.querySelector('.button--clear').addEventListener('keyup', (e) => handleFormClear(e))
+  $('.button--clear').on('click', (e) => handleFormClear(e))
+  $('.button--clear').on('keyup', (e) => handleFormClear(e))
 
   // Handle sku click
   const handleSKUSelection = (e) => {
