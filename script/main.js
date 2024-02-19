@@ -17,8 +17,9 @@ const isMobile = () => {
 }
 
 function init() {
-  // Set aria-expanded for overlays
+  // Set aria-expanded for needed overlays
   if (isMobile()) {
+    const overlayButtons = document.querySelectorAll('.overlay--button')
     overlayButtons.forEach((item) => {
       const target = item.getAttribute('aria-controls')
       const overlay = document.querySelector(`#${target}`)
