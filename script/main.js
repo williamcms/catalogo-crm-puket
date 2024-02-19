@@ -265,6 +265,7 @@ function init() {
     } = productData
 
     // Modal fields
+    const _elmScript = modal.querySelector('script[type="application/ld+json"]')
     const _elmImages = modal.querySelector('.product-quickview--images')
     const _elmName = modal.querySelector('.product-quickview--nameText')
     const _elmRef = modal.querySelector('.product-quickview--refText')
@@ -301,6 +302,9 @@ function init() {
         },
       ],
     }
+
+    // Set a copy of the JSON data
+    _elmScript.textContent = JSON.stringify(productData)
 
     // Handle Images
     $(productImages)
@@ -370,6 +374,7 @@ function init() {
   const unmountQuickView = () => {
     const modal = document.getElementById('product-quickview')
 
+    const _elmScript = modal.querySelector('script[type="application/ld+json"]')
     const _elmImages = modal.querySelector('.product-quickview--images')
     const _elmName = modal.querySelector('.product-quickview--nameText')
     const _elmRef = modal.querySelector('.product-quickview--refText')
@@ -382,6 +387,7 @@ function init() {
 
     $(_elmImages).slick('unslick')
 
+    _elmScript.innerHTML = ''
     _elmImages.innerHTML = ''
     _elmName.innerHTML = ''
     _elmRef.innerHTML = ''
