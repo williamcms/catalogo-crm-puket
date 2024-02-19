@@ -16,6 +16,9 @@ $tablet-min-width: 641px;
 $phone-max-width: 641px;
 $phone-min-width: 320px;
 
+$fold-max-width: 320px;
+$fold-min-width: 280px;
+
 @mixin desktop {
   @media only screen and (min-width: $desktop-min-width) {
     @content;
@@ -36,6 +39,12 @@ $phone-min-width: 320px;
 
 @mixin phone {
   @media only screen and (min-width: $phone-min-width) and (max-width: $phone-max-width) {
+    @content;
+  }
+}
+
+@mixin fold {
+  @media only screen and (min-width: $fold-min-width) and (max-width: $fold-max-width) {
     @content;
   }
 }

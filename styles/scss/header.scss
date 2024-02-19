@@ -30,8 +30,18 @@
           padding: 0 1.25rem;
         }
 
+        @include fold {
+          flex-wrap: wrap;
+          gap: 0.3125rem;
+          padding: 0 1.25rem;
+        }
+
         .header--hamburger-menu {
           @include mobile {
+            display: block !important;
+          }
+
+          @include fold {
             display: block !important;
           }
 
@@ -49,6 +59,11 @@
 
           @include mobile {
             order: 4;
+            min-width: 90vw;
+          }
+
+          @include fold {
+            order: 3;
             min-width: 90vw;
           }
 
