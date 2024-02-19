@@ -65,6 +65,8 @@ function init() {
     currentElm.setAttribute('aria-expanded', overlayState)
     overlay.setAttribute('aria-hidden', !overlayState)
 
+    if (targetToOpen === 'product-quickview' && !overlayState) dismountQuickView()
+
     if (!overlayState) openingBttn.focus()
     else overlay.focus()
   }
@@ -111,6 +113,7 @@ function init() {
   $(document).on('click', '.overlay--wrapper', (e) => {
     const target = e.target
     if (!target.classList.contains('isOpen')) return
+    if (target.id === 'product-quickview') dismountQuickView()
     closeTopMostOverlay(e)
   })
 
@@ -163,7 +166,6 @@ function init() {
   const handleSKUSelection = (e) => {
     const current = e.target
 
-    if (!current.classList.contains('summary-item--skuItem')) return
     if (
       e.button !== 0 &&
       e.button !== 1 &&
@@ -218,6 +220,153 @@ function init() {
     }
   }
 
-  document.addEventListener('click', (e) => handleSKUSelection(e))
-  document.addEventListener('keyup', (e) => handleSKUSelection(e))
+  $(document).on('click', '.summary-item--skuItem', (e) => handleSKUSelection(e))
+  $(document).on('keyup', '.summary-item--skuItem', (e) => handleSKUSelection(e))
+
+  $(document).on('click', '.product-quickview--skuItem', (e) => handleSKUSelection(e))
+  $(document).on('keyup', '.product-quickview--skuItem', (e) => handleSKUSelection(e))
+
+  // Handle Product Quick-view
+  const mountQuickView = (e) => {
+    if (e.button !== 0 && e.button !== 1 && e.key !== 'Enter' && e.key !== ' ') return
+
+    const trigger = e?.currentTarget
+    const modal = document.getElementById('product-quickview')
+
+    // Product data
+    const scriptElement = trigger.querySelector('script[type="application/ld+json"]')
+    const productData = JSON.parse(scriptElement.textContent.trim())
+
+    // Desctructuring of productData
+    const {
+      productName,
+      productId,
+      productVariations,
+      price,
+      listPrice,
+      bestInstallment,
+      productImages,
+      productDetails,
+    } = productData
+
+    // Modal fields
+    const _elmImages = modal.querySelector('.product-quickview--images')
+    const _elmName = modal.querySelector('.product-quickview--nameText')
+    const _elmRef = modal.querySelector('.product-quickview--refText')
+    const _elmPrice = modal.querySelector('.product-quickview--productPrice')
+    const _elmSku = modal.querySelector('.product-quickview--skuList')
+    const _elmDescription = modal.querySelector('.product-quickview--descriptionText')
+
+    // Slick settings
+    const settings = {
+      infinite: true,
+      slidesToShow: 2,
+      responsive: [
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: 2,
+          },
+        },
+        {
+          breakpoint: 300,
+          settings: {
+            slidesToShow: 1,
+          },
+        },
+      ],
+    }
+
+    // Handle Images
+    $(productImages)
+      .each((i, item) => {
+        let elm = new Image()
+
+        elm.src = item
+        elm.alt = `Imagem ${i} do produto ${productName}`
+        elm.className = 'product-quickview--imageElement'
+
+        _elmImages.appendChild(elm)
+      })
+      // Handle slick
+      .promise()
+      .done(() => {
+        setTimeout(() => {
+          // Additional check to initialized sliders
+          if ($(_elmImages).hasClass('slick-initialized')) $(_elmImages).slick('unslick')
+
+          $(_elmImages)
+            .not('.slick-initialized')
+            .slick({ ...settings })
+        }, 1000)
+      })
+
+    // Handle Name
+    _elmName.textContent = productName
+
+    // Handle Ref
+    _elmRef.textContent = `Ref: #${productId}`
+
+    // Handle Prices
+    const _listPrice = _elmPrice.querySelector('.product-quickview--listPrice')
+    const _sellingPrice = _elmPrice.querySelector('.product-quickview--sellingPrice')
+    const _installments = _elmPrice.querySelector('.product-quickview--installments')
+
+    _listPrice.textContent = listPrice
+    _sellingPrice.textContent = price
+    _installments.textContent = bestInstallment
+
+    if (String(listPrice).trim() !== '' && listPrice !== null) _sellingPrice.classList.add('hasListPrice')
+
+    // Handle SKU
+    let first = null
+
+    $(productVariations).each((i, item) => {
+      let elm = document.createElement('button')
+
+      if (item.isAvailable && first === null) {
+        elm.setAttribute('aria-checked', 'true')
+        first = item
+      }
+
+      if (!item.isAvailable) elm.setAttribute('aria-disabled', 'true')
+
+      elm.setAttribute('role', 'radio')
+      elm.textContent = item.name
+      elm.className = 'product-quickview--skuItem'
+
+      _elmSku.appendChild(elm)
+    })
+
+    // Handle Description
+    _elmDescription.innerHTML = productDetails
+  }
+
+  const dismountQuickView = () => {
+    const modal = document.getElementById('product-quickview')
+
+    const _elmImages = modal.querySelector('.product-quickview--images')
+    const _elmName = modal.querySelector('.product-quickview--nameText')
+    const _elmRef = modal.querySelector('.product-quickview--refText')
+    const _elmPrice = modal.querySelector('.product-quickview--productPrice')
+    const _elmSku = modal.querySelector('.product-quickview--skuList')
+    const _listPrice = _elmPrice.querySelector('.product-quickview--listPrice')
+    const _sellingPrice = _elmPrice.querySelector('.product-quickview--sellingPrice')
+    const _installments = _elmPrice.querySelector('.product-quickview--installments')
+    const _elmDescription = modal.querySelector('.product-quickview--descriptionText')
+
+    $(_elmImages).slick('unslick')
+
+    _elmImages.innerHTML = ''
+    _elmName.innerHTML = ''
+    _elmRef.innerHTML = ''
+    _listPrice.innerHTML = ''
+    _sellingPrice.innerHTML = ''
+    _installments.innerHTML = ''
+    _elmSku.innerHTML = ''
+    _elmDescription.innerHTML = ''
+  }
+
+  $(document).on('mousedown', 'a.summary-item--link', (e) => mountQuickView(e))
+  $(document).on('keyup', 'a.summary-item--link', (e) => mountQuickView(e))
 }
