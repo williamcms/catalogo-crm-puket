@@ -442,8 +442,10 @@
               }
 
               .summary-item--installments {
-                text-align: center;
-                min-height: 1.125rem;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 1.25rem;
                 padding: 0 0.5rem;
 
                 .summary-item-installmentsText {
@@ -498,12 +500,16 @@
           }
 
           .product-quickview--productImage {
+            margin-left: -1rem;
+            margin-right: -1rem;
+
             .product-quickview--images {
               display: flex;
 
               .product-quickview--imageElement {
                 flex: 0 1 0px;
                 max-width: 43%;
+                padding: 0 0.5rem;
               }
             }
           }

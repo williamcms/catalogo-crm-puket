@@ -261,6 +261,7 @@ function init() {
     const settings = {
       infinite: true,
       slidesToShow: 2,
+      centerMode: true,
       responsive: [
         {
           breakpoint: 1024,
