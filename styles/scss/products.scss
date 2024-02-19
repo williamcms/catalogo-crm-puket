@@ -486,7 +486,7 @@
         border-radius: 1.25rem 1.25rem 0 0;
 
         @include desktop {
-          max-width: 60%;
+          max-width: 50%;
           margin-right: auto;
           margin-left: auto;
         }
@@ -525,6 +525,26 @@
             margin-right: -1rem;
 
             .product-quickview--images {
+              display: flex;
+
+              @include desktop {
+                justify-content: center;
+              }
+
+              &:not(.slick-initialized) {
+                .product-quickview--imageElement {
+                  max-width: 19.25rem;
+
+                  @include mobile {
+                    max-width: 21.375rem;
+                  }
+
+                  @include fold {
+                    max-width: 14.125rem;
+                  }
+                }
+              }
+
               .product-quickview--imageElement {
                 padding: 0 0.5rem;
 

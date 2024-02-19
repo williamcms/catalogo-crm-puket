@@ -133,6 +133,10 @@
             display: none;
           }
 
+          @include fold {
+            display: none;
+          }
+
           @include desktop {
             position: initial;
             background-color: transparent;
@@ -150,6 +154,12 @@
               }
             }
 
+            @include fold {
+              .overlay--header {
+                display: flex !important;
+              }
+            }
+
             .menu--list {
               display: flex;
               flex-direction: row;
@@ -160,10 +170,19 @@
                 flex-direction: column;
               }
 
+              @include fold {
+                flex-direction: column;
+                gap: 0.5rem;
+              }
+
               .menu--item {
                 list-style: none;
 
                 @include mobile {
+                  padding: 0.5rem 1rem;
+                }
+
+                @include fold {
                   padding: 0.5rem 1rem;
                 }
 
@@ -173,6 +192,10 @@
                   color: $c-white;
 
                   @include mobile {
+                    color: $c-black;
+                  }
+
+                  @include fold {
                     color: $c-black;
                   }
 
