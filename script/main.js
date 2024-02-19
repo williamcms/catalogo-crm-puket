@@ -47,7 +47,7 @@ function init() {
 
     // Prevent default behavior propagation from affecting interaction elements
     if ($(targetElm).hasClass('summary-item--skuItem')) return
-    if ($(targetElm).hasClass('summary-item--addToCart')) return
+    if ($(targetElm).hasClass('addToCart--button')) return
 
     // Mount quick-view
     if ($(currentElm).hasClass('summary-item--link')) mountQuickView(e)

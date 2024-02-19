@@ -352,10 +352,17 @@
                       bottom: 0.625rem;
                       right: 0.625rem;
 
+                      @include desktop {
+                        bottom: 0;
+                        right: 0;
+                        left: 0;
+                      }
+
                       .addToCart--button {
                         display: flex;
                         justify-content: center;
                         align-items: center;
+                        color: $c-white;
                         appearance: none;
                         background-color: $c-pink;
                         border: none;
@@ -363,6 +370,16 @@
                         width: 2.625rem;
                         height: 2.625rem;
                         cursor: pointer;
+
+                        .summary-item--addToCartImage,
+                        .summary-item--addToCartText {
+                          pointer-events: none;
+                        }
+
+                        @include desktop {
+                          width: 100%;
+                          border-radius: unset;
+                        }
                       }
                     }
                   }

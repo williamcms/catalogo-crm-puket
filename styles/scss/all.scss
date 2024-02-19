@@ -45,10 +45,18 @@ body {
   @include mobile {
     display: block !important;
   }
+
+  @include fold {
+    display: block !important;
+  }
 }
 
 .desktop-only {
   @include mobile {
+    display: none !important;
+  }
+
+  @include fold {
     display: none !important;
   }
 }
