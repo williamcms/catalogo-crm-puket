@@ -42,7 +42,15 @@ function init() {
   const handleOverlay = (e) => {
     if (e.button !== 0 && e.button !== 1 && e.key !== 'Enter' && e.key !== ' ') return
 
-    const currentElm = e?.currentTarget
+    const currentElm = e.currentTarget
+    const targetElm = e.target
+
+    // Prevent default behavior propagation from affecting interaction elements
+    if ($(targetElm).hasClass('summary-item--skuItem')) return
+    if ($(targetElm).hasClass('summary-item--addToCart')) return
+
+    // Mount quick-view
+    if ($(currentElm).hasClass('summary-item--link')) mountQuickView(e)
 
     const body = document.querySelector('body')
     const targetToOpen = currentElm.getAttribute('aria-controls')
@@ -52,6 +60,7 @@ function init() {
     const overlayState = overlay.style.display === 'none' || overlay.style.display === ''
     const openingBttn = document.getElementById(overlay.getAttribute('aria-controlledby'))
 
+    // Assign an id to the targeted overlay when needed
     if (currentElm.getAttribute('data-dynamicId') === 'true') {
       const customId = currentElm.getAttribute('id')
       overlay.setAttribute('aria-controlledby', customId)
@@ -65,8 +74,10 @@ function init() {
     currentElm.setAttribute('aria-expanded', overlayState)
     overlay.setAttribute('aria-hidden', !overlayState)
 
-    if (targetToOpen === 'product-quickview' && !overlayState) dismountQuickView()
+    // Unmount quick-view when the overlay state changes
+    if (targetToOpen === 'product-quickview' && !overlayState) unmountQuickView()
 
+    // Alternate focus between trigger & overlay
     if (!overlayState) openingBttn.focus()
     else overlay.focus()
   }
@@ -102,6 +113,7 @@ function init() {
       body.classList.toggle('noscroll', false)
       openingBttn.focus()
 
+      // Removed assigned id to targeted overlay
       if (openingBttn.getAttribute('data-dynamicId') === 'true') {
         overlay.removeAttribute('aria-controlledby')
       }
@@ -113,7 +125,7 @@ function init() {
   $(document).on('click', '.overlay--wrapper', (e) => {
     const target = e.target
     if (!target.classList.contains('isOpen')) return
-    if (target.id === 'product-quickview') dismountQuickView()
+    if (target.id === 'product-quickview') unmountQuickView()
     closeTopMostOverlay(e)
   })
 
@@ -150,6 +162,7 @@ function init() {
   window.addEventListener('scroll', () => lazyLoadImages())
   window.addEventListener('resize', () => lazyLoadImages())
 
+  // Handle form reset
   const handleFormClear = (e) => {
     e.preventDefault()
 
@@ -162,8 +175,10 @@ function init() {
   $('.button--clear').on('click', (e) => handleFormClear(e))
   $('.button--clear').on('keyup', (e) => handleFormClear(e))
 
-  // Handle sku click
+  // Handle SKU selection
   const handleSKUSelection = (e) => {
+    e.preventDefault()
+
     const current = e.target
 
     if (
@@ -226,7 +241,7 @@ function init() {
   $(document).on('click', '.product-quickview--skuItem', (e) => handleSKUSelection(e))
   $(document).on('keyup', '.product-quickview--skuItem', (e) => handleSKUSelection(e))
 
-  // Handle Product Quick-view
+  // Handle product quick-view
   const mountQuickView = (e) => {
     if (e.button !== 0 && e.button !== 1 && e.key !== 'Enter' && e.key !== ' ') return
 
@@ -260,18 +275,27 @@ function init() {
     // Slick settings
     const settings = {
       infinite: true,
-      slidesToShow: 2,
-      centerMode: true,
+      slidesToShow: 3,
       responsive: [
         {
           breakpoint: 1024,
           settings: {
+            centerMode: true,
+            slidesToShow: 3,
+          },
+        },
+        {
+          breakpoint: 600,
+          settings: {
+            centerMode: true,
             slidesToShow: 2,
           },
         },
         {
-          breakpoint: 300,
+          breakpoint: 480,
           settings: {
+            centerMode: true,
+            centerPadding: '30px',
             slidesToShow: 1,
           },
         },
@@ -343,7 +367,7 @@ function init() {
     _elmDescription.innerHTML = productDetails
   }
 
-  const dismountQuickView = () => {
+  const unmountQuickView = () => {
     const modal = document.getElementById('product-quickview')
 
     const _elmImages = modal.querySelector('.product-quickview--images')
@@ -367,7 +391,4 @@ function init() {
     _elmSku.innerHTML = ''
     _elmDescription.innerHTML = ''
   }
-
-  $(document).on('mousedown', 'a.summary-item--link', (e) => mountQuickView(e))
-  $(document).on('keyup', 'a.summary-item--link', (e) => mountQuickView(e))
 }
