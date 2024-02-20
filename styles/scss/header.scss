@@ -121,12 +121,193 @@
           }
 
           .cart--drawer {
-            &.cart--isOpen {
-            }
-
             .overlay--container {
               width: 30vw;
               float: right;
+              background-color: $c-white;
+              overflow-y: unset;
+
+              @include tablet {
+                width: 60vw;
+              }
+
+              @include phone {
+                width: 90vw;
+              }
+
+              @include fold {
+                width: 100%;
+              }
+
+              .overlay-content {
+                display: flex;
+                flex-direction: column;
+                gap: 1.25rem;
+                padding: 1.1875rem 1.5rem;
+
+                .cart-summary--item {
+                  display: flex;
+                  flex-direction: row;
+                  gap: 0.5rem;
+
+                  @include fold {
+                    flex-direction: column;
+                  }
+
+                  .cart-summary--image {
+                    flex-basis: 30%;
+                  }
+
+                  .cart-summary--info {
+                    flex-basis: 70%;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.375rem;
+
+                    .cart-summary--line {
+                      display: flex;
+                      flex-direction: row;
+                      justify-content: space-between;
+                      align-items: center;
+
+                      .cart-summary--name {
+                        .cart-summary--nameText {
+                          font-size: 0.8125rem;
+                          color: $c-text;
+
+                          @include desktop {
+                            font-size: 0.9375rem;
+                          }
+                        }
+                      }
+
+                      .cart-summary--remove {
+                        margin-left: auto;
+
+                        .cart-summary--removeButton {
+                          background-color: transparent;
+                          border: none;
+                          cursor: pointer;
+
+                          span {
+                            font-size: 1.125rem;
+                          }
+                        }
+                      }
+
+                      .cart-summary--sku {
+                        .cart-summary--skuText {
+                          font-size: 0.6875rem;
+
+                          @include desktop {
+                            font-size: 0.8125rem;
+                          }
+                        }
+                      }
+
+                      .cart-summary--qty {
+                        .cart-summary--qtyGroup {
+                          display: flex;
+                          flex-direction: row;
+                          border: 0.0625rem solid $c-gray;
+                          border-radius: 0.375rem;
+                          padding: 0.3125rem 0.625rem;
+
+                          button,
+                          input {
+                            text-align: center;
+                            background-color: transparent;
+                            border: none;
+                          }
+
+                          button {
+                            padding: 0.3125rem;
+                            cursor: pointer;
+                          }
+
+                          input {
+                            width: 4rem;
+                          }
+                        }
+                      }
+
+                      .cart-summary--price {
+                        .cart-summary--sellingPrice {
+                          font-size: 0.875rem;
+                          font-weight: 700;
+                          color: $c-purple;
+
+                          @include desktop {
+                            font-size: 1rem;
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+
+              .overlay--footer {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+                border-radius: 1rem 1rem 0 0;
+                box-shadow: 0px -2px 10px 0 $c-black-10;
+
+                .cart-drawer--totalizers {
+                  .totalizers--itemCount {
+                    font-size: 0.75rem;
+
+                    @include desktop {
+                      font-size: 0.875rem;
+                    }
+                  }
+
+                  .totalizers--total {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    align-items: center;
+                    gap: 1rem;
+
+                    .totalizers--totalValue,
+                    .totalizers--totalText {
+                      font-size: 1rem;
+                      font-weight: 700;
+
+                      @include desktop {
+                        font-size: 1.125rem;
+                      }
+                    }
+
+                    .totalizers--totalValue {
+                      color: $c-purple;
+                    }
+                  }
+                }
+
+                .form--button {
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  gap: 0.75rem;
+                  background-color: $c-green-whatsapp;
+                  width: 100%;
+                  padding: 0.75rem;
+                  border: none;
+                  border-radius: 12.5rem;
+                  cursor: pointer;
+
+                  .form--buttonImage {
+                    line-height: 0;
+                  }
+
+                  .form--buttonText {
+                    color: $c-white;
+                  }
+                }
+              }
             }
           }
         }

@@ -465,7 +465,15 @@ function init() {
     const cartContainer = document.querySelector('#cart-drawer .cart-drawer--items')
     const cartBadge = document.querySelector('#cart-button .cart--badge > .cart--counter')
 
-    cartBadge.textContent = state.items.length
+    const itemsCount = state.items.length
+
+    const totalizers = document.querySelector('#cart-drawer .cart-drawer--totalizers')
+    const totalizersCount = totalizers.querySelector('.totalizers--itemCount')
+    const totalizersValue = totalizers.querySelector('.totalizers--totalValue')
+
+    cartBadge.textContent = itemsCount
+    totalizersCount.textContent = `${itemsCount} ${itemsCount === 1 ? 'item' : 'itens'}`
+    totalizersValue.textContent = formatPrice(state.totalizers)
 
     state.items.forEach((item) => {
       // Check for existing items
@@ -593,8 +601,6 @@ function init() {
       cartContainer.appendChild(_cartItem)
     })
   }
-
-  const unMountCart = () => {}
 
   $(document).on('click', '.addToCart--button', (e) => handleAddToCart(e))
   $(document).on('keyup', '.addToCart--button', (e) => handleAddToCart(e))
