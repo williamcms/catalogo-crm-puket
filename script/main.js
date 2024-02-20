@@ -566,6 +566,7 @@ function init() {
       const prodQtyMinus = document.createElement('button')
       prodQtyMinus.classList.add('cart-summary--buttonMinus')
       prodQtyMinus.setAttribute('aria-label', 'Diminuir Quantidade')
+      prodQtyMinus.textContent = '-'
       prodQty.appendChild(prodQtyMinus)
 
       const prodInput = document.createElement('input')
@@ -577,6 +578,7 @@ function init() {
       const prodQtyMore = document.createElement('button')
       prodQtyMore.classList.add('cart-summary--buttonMore')
       prodQtyMore.setAttribute('aria-label', 'Aumentar Quantidade')
+      prodQtyMore.textContent = '+'
       prodQty.appendChild(prodQtyMore)
 
       // Product Price
