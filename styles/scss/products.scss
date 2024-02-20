@@ -528,11 +528,13 @@
               }
 
               &:not(.slick-initialized) {
+                overflow-y: scroll;
+
                 .product-quickview--imageElement {
-                  max-width: 19.25rem;
+                  max-width: 33%;
 
                   @include mobile {
-                    max-width: 21.375rem;
+                    max-width: 85%;
                   }
 
                   @include fold {
