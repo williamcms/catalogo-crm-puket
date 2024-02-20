@@ -409,6 +409,8 @@ function init() {
   }
 
   const handleAddToCart = (e) => {
+    if (e.button !== 0 && e.button !== 1 && e.key !== 'Enter' && e.key !== ' ') return
+
     const id = e.currentTarget.getAttribute('aria-controls')
     const trigger = document.getElementById(id)
 
