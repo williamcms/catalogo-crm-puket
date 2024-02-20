@@ -123,6 +123,11 @@
           .cart--drawer {
             &.cart--isOpen {
             }
+
+            .overlay--container {
+              width: 30vw;
+              float: right;
+            }
           }
         }
       }

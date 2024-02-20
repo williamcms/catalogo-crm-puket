@@ -8,13 +8,19 @@ const isMobile = () => {
       navigator.userAgent
     ) ||
     /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(
-      navigator.userAgent.substr(0, 4)
+      navigator.userAgent.substring(0, 4)
     )
   ) {
     isMobile = true
   }
   return isMobile
 }
+
+const { format: formatPrice } = new Intl.NumberFormat('pt-BR', {
+  style: 'currency',
+  currency: 'BRL',
+  minimumFractionDigits: 2,
+})
 
 function init() {
   // Set aria-expanded for needed overlays
@@ -341,11 +347,13 @@ function init() {
     const _sellingPrice = _elmPrice.querySelector('.product-quickview--sellingPrice')
     const _installments = _elmPrice.querySelector('.product-quickview--installments')
 
-    _listPrice.textContent = listPrice
-    _sellingPrice.textContent = price
+    _sellingPrice.textContent = formatPrice(price)
     _installments.textContent = bestInstallment
 
-    if (String(listPrice).trim() !== '' && listPrice !== null) _sellingPrice.classList.add('hasListPrice')
+    if (String(listPrice).trim() !== '' && listPrice !== null) {
+      _listPrice.textContent = formatPrice(listPrice)
+      _sellingPrice.classList.add('hasListPrice')
+    }
 
     // Handle SKU
     let first = null
@@ -397,4 +405,193 @@ function init() {
     _elmSku.innerHTML = ''
     _elmDescription.innerHTML = ''
   }
+
+  const handleAddToCart = (e) => {
+    const id = e.currentTarget.getAttribute('aria-controls')
+    const trigger = document.getElementById(id)
+
+    const scriptElement = trigger.querySelector('script[type="application/ld+json"]')
+    const productData = JSON.parse(scriptElement.textContent.trim())
+
+    const selectedItem = trigger.querySelector('button[aria-checked="true"]')?.textContent
+
+    if (selectedItem) addToCart([{ ...productData, selectedItem, selectedQuantity: 1 }])
+  }
+
+  const addToCart = (items) => {
+    let loop = 0
+
+    items?.forEach((item) => {
+      cartState(item)
+
+      loop++
+      if (loop === items.length) {
+        console.info('MOUNTING MINICART!')
+        mountCart()
+      }
+    })
+  }
+
+  const cartState = (item) => {
+    let state = window?.minicart ?? {}
+
+    if (!state.hasOwnProperty('items')) state = { ...state, items: [] }
+    if (!state.hasOwnProperty('totalizers')) state = { ...state, totalizers: 0 }
+
+    if (item) {
+      const filter = state.items.filter((storedItem) => storedItem.productId === item.productId)
+
+      if (filter.length === 0) {
+        console.info('ADDED NEW ITEM >', item)
+        state.items.push(item)
+      } else if (filter?.[0].selectedItem !== item.selectedItem) {
+        console.info('ADDED NEW VARIATION >', item)
+        state.items.push(item)
+      } else {
+        console.info('UPDATED ITEM >', item)
+        const index = state.items.findIndex((prev) => prev.productId === item.productId)
+        let selectedQuantity = state.items[index].selectedQuantity ?? 1
+
+        state.items[index] = { ...item, selectedQuantity: ++selectedQuantity }
+      }
+
+      state.totalizers = state.items.reduce((acc, item) => acc + item.price, 0)
+    }
+
+    return (window.minicart = state)
+  }
+
+  const mountCart = () => {
+    const state = cartState()
+    const cartContainer = document.querySelector('#cart-drawer .cart-drawer--items')
+
+    state.items.forEach((item) => {
+      // Check for existing items
+      const existingItem = cartContainer.querySelector(
+        `.cart-summary--item[id="${item.productId}"][variation="${item.selectedItem}"]`
+      )
+      if (existingItem) {
+        return existingItem.querySelector('.cart-summary--input').setAttribute('value', item?.selectedQuantity)
+      }
+
+      // Create basic structure
+      const _cartItem = document.createElement('div')
+      _cartItem.classList.add('cart-summary--item')
+
+      const _image = document.createElement('div')
+      _image.classList.add('cart-summary--image')
+      _cartItem.appendChild(_image)
+
+      const _info = document.createElement('div')
+      _info.classList.add('cart-summary--info')
+      _cartItem.appendChild(_info)
+
+      const _line1 = document.createElement('div')
+      _line1.classList.add('cart-summary--line')
+      _info.appendChild(_line1)
+
+      const _name = document.createElement('div')
+      _name.classList.add('cart-summary--name')
+      _line1.appendChild(_name)
+
+      const _removeBttn = document.createElement('div')
+      _removeBttn.classList.add('cart-summary--remove')
+      _line1.appendChild(_removeBttn)
+
+      const _line2 = document.createElement('div')
+      _line2.classList.add('cart-summary--line')
+      _info.appendChild(_line2)
+
+      const _sku = document.createElement('div')
+      _sku.classList.add('cart-summary--sku')
+      _line2.appendChild(_sku)
+
+      const _line3 = document.createElement('div')
+      _line3.classList.add('cart-summary--line')
+      _info.appendChild(_line3)
+
+      const _qty = document.createElement('div')
+      _qty.classList.add('cart-summary--qty')
+      _line3.appendChild(_qty)
+
+      const _price = document.createElement('div')
+      _price.classList.add('cart-summary--price')
+      _line3.appendChild(_price)
+
+      // Feed with product data
+      // Product Item ID
+      _cartItem.setAttribute('id', item.productId)
+      _cartItem.setAttribute('variation', item?.selectedItem)
+
+      // Product Image
+      const prodImage = new Image()
+      prodImage.src = item.productImages?.[0]
+      prodImage.alt = item.productName
+      prodImage.ariaHidden = 'true'
+      _image.appendChild(prodImage)
+
+      // Product Name
+      const prodText = document.createElement('h3')
+      prodText.classList.add('cart-summary--nameText')
+      prodText.textContent = item.productName
+      _name.appendChild(prodText)
+
+      // Button to remove product
+      const prodRemove = document.createElement('button')
+      prodRemove.classList.add('cart-summary--removeButton')
+      prodRemove.setAttribute('product', String(item.productId))
+      _removeBttn.appendChild(prodRemove)
+
+      const prodRemoveText = document.createElement('span')
+      prodRemoveText.classList.add('only-sr')
+      prodRemoveText.textContent = `Remover ${item.productId} da Sacola`
+      prodRemove.appendChild(prodRemoveText)
+
+      const prodRemoveSymbol = document.createElement('span')
+      prodRemoveSymbol.setAttribute('aria-hidden', true)
+      prodRemoveSymbol.innerHTML = '&times;'
+      prodRemove.appendChild(prodRemoveSymbol)
+
+      // Selected SKU
+      const prodSKU = document.createElement('span')
+      prodSKU.classList.add('cart-summary--skuText')
+      prodSKU.textContent = `Tamanho: ${item.productId}`
+      prodRemove.appendChild(prodSKU)
+
+      // Quantity selector
+      const prodQty = document.createElement('div')
+      prodQty.classList.add('cart-summary--qtyGroup')
+      _qty.appendChild(prodQty)
+
+      const prodQtyMinus = document.createElement('button')
+      prodQtyMinus.classList.add('cart-summary--buttonMinus')
+      prodQtyMinus.setAttribute('aria-label', 'Diminuir Quantidade')
+      prodQty.appendChild(prodQtyMinus)
+
+      const prodInput = document.createElement('input')
+      prodInput.classList.add('cart-summary--input')
+      prodInput.setAttribute('type', 'number')
+      prodInput.setAttribute('value', item.selectedQuantity)
+      prodQty.appendChild(prodInput)
+
+      const prodQtyMore = document.createElement('button')
+      prodQtyMore.classList.add('cart-summary--buttonMore')
+      prodQtyMore.setAttribute('aria-label', 'Aumentar Quantidade')
+      prodQty.appendChild(prodQtyMore)
+
+      // Product Price
+      const prodPrice = document.createElement('div')
+      prodPrice.classList.add('cart-summary--sellingPrice')
+      prodPrice.textContent = formatPrice(item.price)
+      _price.appendChild(prodPrice)
+
+      // Create an entry on the minicart
+      cartContainer.appendChild(_cartItem)
+    })
+  }
+
+  const unMountCart = () => {}
+
+  $(document).on('click', '.addToCart--button', (e) => handleAddToCart(e))
+  $(document).on('keyup', '.addToCart--button', (e) => handleAddToCart(e))
 }
