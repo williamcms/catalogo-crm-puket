@@ -156,6 +156,7 @@
 
                   .cart-summary--image {
                     flex-basis: 30%;
+                    line-height: 0;
                   }
 
                   .cart-summary--info {
@@ -169,6 +170,10 @@
                       flex-direction: row;
                       justify-content: space-between;
                       align-items: center;
+
+                      &:last-child {
+                        margin-top: auto;
+                      }
 
                       .cart-summary--name {
                         .cart-summary--nameText {
