@@ -555,7 +555,7 @@ function init() {
       // Selected SKU
       const prodSKU = document.createElement('span')
       prodSKU.classList.add('cart-summary--skuText')
-      prodSKU.textContent = `Tamanho: ${item.productId}`
+      prodSKU.textContent = `Tamanho: ${item.selectedItem}`
       _sku.appendChild(prodSKU)
 
       // Quantity selector
