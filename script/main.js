@@ -108,6 +108,8 @@ function init() {
 
     if (e.button !== 0 && e.button !== 1 && e.key !== 'Escape' && e.key !== ' ') return
 
+    if (overlay.id === 'product-quickview') unmountQuickView()
+
     if (overlay && overlay?.getAttribute('aria-hidden') === 'false') {
       const body = document.querySelector('body')
       const openingBttn = document.getElementById(overlay.getAttribute('aria-controlledby'))
