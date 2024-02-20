@@ -461,6 +461,9 @@ function init() {
   const mountCart = () => {
     const state = cartState()
     const cartContainer = document.querySelector('#cart-drawer .cart-drawer--items')
+    const cartBadge = document.querySelector('#cart-button .cart--badge')
+
+    cartBadge.textContent = state.items.length
 
     state.items.forEach((item) => {
       // Check for existing items
