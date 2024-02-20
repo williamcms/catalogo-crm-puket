@@ -604,4 +604,28 @@ function init() {
 
   $(document).on('click', '.addToCart--button', (e) => handleAddToCart(e))
   $(document).on('keyup', '.addToCart--button', (e) => handleAddToCart(e))
+
+  const sendToWhatsapp = (e) => {
+    if (e.button !== 0 && e.button !== 1 && e.key !== 'Enter' && e.key !== ' ') return
+
+    const number = e.currentTarget.getAttribute('data-whatsapp')
+    const products = cartState()
+
+    let message = ''
+
+    products.items.forEach((item) => {
+      message += `${item.selectedQuantity}x%20`
+      message += `(${item.productId})%20`
+      message += `${item.productName}%20-%20`
+      message += `${item.selectedItem}%20`
+      message += `${item.price}%0a`
+    })
+
+    message += `%0aTotal: ${formatPrice(products.totalizers)}`
+
+    window.open(`https://api.whatsapp.com/send/?phone=${number}&text=${message}`)
+  }
+
+  $('.sendToWhatsapp--button').on('click', (e) => sendToWhatsapp(e))
+  $('.sendToWhatsapp--button').on('keyup', (e) => sendToWhatsapp(e))
 }
