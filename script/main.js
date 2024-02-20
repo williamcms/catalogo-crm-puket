@@ -539,7 +539,7 @@ function init() {
       // Button to remove product
       const prodRemove = document.createElement('button')
       prodRemove.classList.add('cart-summary--removeButton')
-      prodRemove.setAttribute('product', String(item.productId))
+      prodRemove.setAttribute('product', item.productId)
       _removeBttn.appendChild(prodRemove)
 
       const prodRemoveText = document.createElement('span')
