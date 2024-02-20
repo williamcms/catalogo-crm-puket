@@ -48,3 +48,11 @@ $fold-min-width: 280px;
     @content;
   }
 }
+
+@mixin line-clamp($max-line: 2) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: $max-line;
+  -webkit-box-orient: vertical;
+}

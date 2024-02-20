@@ -180,6 +180,8 @@
                           font-size: 0.8125rem;
                           color: $c-text;
 
+                          @include line-clamp(2);
+
                           @include desktop {
                             font-size: 0.9375rem;
                           }
