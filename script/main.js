@@ -463,7 +463,7 @@ function init() {
   const mountCart = () => {
     const state = cartState()
     const cartContainer = document.querySelector('#cart-drawer .cart-drawer--items')
-    const cartBadge = document.querySelector('#cart-button .cart--badge')
+    const cartBadge = document.querySelector('#cart-button .cart--badge > .cart--counter')
 
     cartBadge.textContent = state.items.length
 
