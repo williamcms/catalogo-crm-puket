@@ -90,11 +90,13 @@
 
       @include desktop {
         border-radius: 0.25rem;
+        top: 6.6563rem;
       }
 
       @include mobile {
         margin-left: -1rem;
         margin-right: -1rem;
+        top: 7.8125rem;
       }
 
       @include fold {
@@ -103,6 +105,8 @@
         gap: 0.5rem;
         margin-left: -1rem;
         margin-right: -1rem;
+        padding: 0.625rem 0.5rem;
+        top: 7.7813rem;
       }
 
       select,
@@ -120,6 +124,10 @@
         white-space: nowrap;
         text-overflow: ellipsis;
         overflow: hidden;
+
+        @include fold {
+          font-size: 0.875rem;
+        }
 
         &.orderBy--select {
           font-weight: 700;
