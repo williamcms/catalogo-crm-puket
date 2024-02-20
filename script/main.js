@@ -556,7 +556,7 @@ function init() {
       const prodSKU = document.createElement('span')
       prodSKU.classList.add('cart-summary--skuText')
       prodSKU.textContent = `Tamanho: ${item.productId}`
-      prodRemove.appendChild(prodSKU)
+      _sku.appendChild(prodSKU)
 
       // Quantity selector
       const prodQty = document.createElement('div')
