@@ -439,23 +439,20 @@ function init() {
     if (!state.hasOwnProperty('totalizers')) state = { ...state, totalizers: 0 }
 
     if (item) {
-      const filter = state.items.filter((storedItem) => storedItem.productId === item.productId)
+      const isIdentical = state.items.findIndex(
+        (storedItem) => storedItem.productId === item.productId && storedItem.selectedItem === item.selectedItem
+      )
 
-      if (filter.length === 0) {
+      if (isIdentical === -1) {
         console.info('ADDED NEW ITEM >', item)
-        state.items.push(item)
-      } else if (filter?.[0].selectedItem !== item.selectedItem) {
-        console.info('ADDED NEW VARIATION >', item)
         state.items.push(item)
       } else {
         console.info('UPDATED ITEM >', item)
-        const index = state.items.findIndex((prev) => prev.productId === item.productId)
-        let selectedQuantity = state.items[index].selectedQuantity ?? 1
-
-        state.items[index] = { ...item, selectedQuantity: ++selectedQuantity }
+        let selectedQuantity = state.items[isIdentical].selectedQuantity ?? 1
+        state.items[isIdentical] = { ...item, selectedQuantity: ++selectedQuantity }
       }
 
-      state.totalizers = state.items.reduce((acc, item) => acc + item.price, 0)
+      state.totalizers = state.items.reduce((acc, item) => acc + parseFloat(item.price), 0)
     }
 
     return (window.minicart = state)
