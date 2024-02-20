@@ -625,6 +625,7 @@
             background-color: $c-pink-300;
             padding: 0.75rem;
             width: 100%;
+            cursor: pointer;
 
             @include desktop {
               min-width: 18.75rem;
