@@ -442,6 +442,8 @@ function init() {
     if (!state.hasOwnProperty('items')) state = { ...state, items: [] }
     if (!state.hasOwnProperty('totalizers')) state = { ...state, totalizers: 0 }
 
+    if (!state.items.length) document.dispatchEvent(new Event('OPEN_MINICART', { bubbles: true, cancelable: true }))
+
     if (item) {
       const isIdentical = state.items.findIndex(
         (storedItem) => storedItem.productId === item.productId && storedItem.selectedItem === item.selectedItem
@@ -607,6 +609,7 @@ function init() {
   $(document).on('click', '.addToCart--button', (e) => handleAddToCart(e))
   $(document).on('keyup', '.addToCart--button', (e) => handleAddToCart(e))
 
+  // Handle Whatsapp interaction
   const sendToWhatsapp = (e) => {
     if (e.button !== 0 && e.button !== 1 && e.key !== 'Enter' && e.key !== ' ') return
 
@@ -630,4 +633,25 @@ function init() {
 
   $('.sendToWhatsapp--button').on('click', (e) => sendToWhatsapp(e))
   $('.sendToWhatsapp--button').on('keyup', (e) => sendToWhatsapp(e))
+
+  // Handle Event to open minicart
+  document.addEventListener('OPEN_MINICART', (e) => {
+    const body = document.querySelector('body')
+    const overlay = document.getElementById('cart-drawer')
+
+    const overlayState = overlay.style.display === 'none' || overlay.style.display === ''
+    const openingBttn = document.getElementById(overlay.getAttribute('aria-controlledby'))
+
+    overlay.style.display = overlayState ? 'block' : 'none'
+    overlay.classList.toggle('isOpen', overlayState)
+    overlay.classList.toggle('isClosed', !overlayState)
+    body.classList.toggle('noscroll', overlayState)
+
+    openingBttn.setAttribute('aria-expanded', overlayState)
+    overlay.setAttribute('aria-hidden', !overlayState)
+
+    // Alternate focus between trigger & overlay
+    if (!overlayState) openingBttn.focus()
+    else overlay.focus()
+  })
 }
