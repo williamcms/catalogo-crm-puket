@@ -465,8 +465,8 @@ function init() {
         state.items.splice(isIdentical, 1)
       } else {
         console.info('UPDATED ITEM >', item)
-        let selectedQuantity = state.items[isIdentical].selectedQuantity ?? 1
-        state.items[isIdentical] = { ...item, selectedQuantity: ++selectedQuantity }
+        let prev = state.items[isIdentical]
+        state.items[isIdentical] = { ...prev, ...item, selectedQuantity: item.selectedQuantity }
       }
 
       state.totalizers = state.items.reduce((acc, item) => acc + parseFloat(item.price), 0)
@@ -597,6 +597,7 @@ function init() {
 
       const prodQtyMinus = document.createElement('button')
       prodQtyMinus.classList.add('cart-summary--buttonMinus')
+      prodQtyMinus.classList.add('cart-summary--quantitySelector')
       prodQtyMinus.setAttribute('aria-label', 'Diminuir Quantidade')
       prodQtyMinus.textContent = '-'
       prodQty.appendChild(prodQtyMinus)
@@ -608,7 +609,8 @@ function init() {
       prodQty.appendChild(prodInput)
 
       const prodQtyMore = document.createElement('button')
-      prodQtyMore.classList.add('cart-summary--buttonMore')
+      prodQtyMore.classList.add('cart-summary--buttonPlus')
+      prodQtyMore.classList.add('cart-summary--quantitySelector')
       prodQtyMore.setAttribute('aria-label', 'Aumentar Quantidade')
       prodQtyMore.textContent = '+'
       prodQty.appendChild(prodQtyMore)
@@ -682,4 +684,23 @@ function init() {
     // Focus Overlay
     overlay.focus()
   })
+
+  // Handle quantity selector on minicart
+  const handleQuantity = (e) => {
+    const target = e.currentTarget
+    const container = target.closest('.cart-summary--item')
+    const input = container.querySelector('input.cart-summary--input')
+
+    const productId = container.getAttribute('id')
+    const selectedItem = container.getAttribute('variation')
+    const mode = $(target).hasClass('cart-summary--buttonMinus') ? 'MINUS' : 'PLUS'
+    const value = Number(input.value)
+
+    const selectedQuantity = mode == 'MINUS' ? value - 1 : value + 1
+
+    addToCart([{ productId, selectedItem, selectedQuantity }])
+  }
+
+  $(document).on('click', '.cart-summary--quantitySelector', (e) => handleQuantity(e))
+  $(document).on('keyup', '.cart-summary--quantitySelector', (e) => handleQuantity(e))
 }
