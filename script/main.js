@@ -363,6 +363,14 @@ function init() {
     // Handle SKU
     let first = null
 
+    // Add Label
+    let label = document.createElement('label')
+
+    label.textContent = 'Tamanho:'
+    label.className = 'product-quickview--skuLabel'
+
+    _elmSku.appendChild(label)
+
     $(productVariations).each((i, item) => {
       let elm = document.createElement('button')
 
