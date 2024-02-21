@@ -408,18 +408,25 @@ function init() {
     _elmDescription.innerHTML = ''
   }
 
+  // Handle cart process
   const handleAddToCart = (e) => {
     if (e.button !== 0 && e.button !== 1 && e.key !== 'Enter' && e.key !== ' ') return
 
-    const id = e.currentTarget.getAttribute('aria-controls')
+    const target = e.currentTarget
+
+    const selectedQuantity = $(target).hasClass('cart-summary--removeButton') ? 0 : 1
+
+    const id = target.getAttribute('aria-controls')
     const trigger = document.getElementById(id)
 
-    const scriptElement = trigger.querySelector('script[type="application/ld+json"]')
-    const productData = JSON.parse(scriptElement.textContent.trim())
+    const productId = target.getAttribute('product')
+    const selectedItem =
+      trigger?.querySelector('button[aria-checked="true"]')?.textContent ?? target.getAttribute('variation')
 
-    const selectedItem = trigger.querySelector('button[aria-checked="true"]')?.textContent
+    const scriptElement = trigger?.querySelector('script[type="application/ld+json"]')
+    const productData = scriptElement ? JSON.parse(scriptElement?.textContent.trim()) : { productId }
 
-    if (selectedItem) addToCart([{ ...productData, selectedItem, selectedQuantity: 1 }])
+    if (selectedItem) addToCart([{ ...productData, selectedItem, selectedQuantity }])
   }
 
   const addToCart = (items) => {
@@ -432,6 +439,7 @@ function init() {
       if (loop === items.length) {
         console.info('MOUNTING MINICART!')
         mountCart()
+        if (!item.selectedQuantity) removeItemFromCart(item)
       }
     })
   }
@@ -452,6 +460,9 @@ function init() {
       if (isIdentical === -1) {
         console.info('ADDED NEW ITEM >', item)
         state.items.push(item)
+      } else if (item.selectedQuantity === 0) {
+        console.info('REMOVED ITEM >', item)
+        state.items.splice(isIdentical, 1)
       } else {
         console.info('UPDATED ITEM >', item)
         let selectedQuantity = state.items[isIdentical].selectedQuantity ?? 1
@@ -484,6 +495,7 @@ function init() {
       const existingItem = cartContainer.querySelector(
         `.cart-summary--item[id="${item.productId}"][variation="${item.selectedItem}"]`
       )
+
       if (existingItem) {
         return existingItem.querySelector('.cart-summary--input').setAttribute('value', item?.selectedQuantity)
       }
@@ -554,6 +566,7 @@ function init() {
       const prodRemove = document.createElement('button')
       prodRemove.classList.add('cart-summary--removeButton')
       prodRemove.setAttribute('product', item.productId)
+      prodRemove.setAttribute('variation', item.selectedItem)
       _removeBttn.appendChild(prodRemove)
 
       const prodRemoveText = document.createElement('span')
@@ -606,8 +619,18 @@ function init() {
     })
   }
 
+  const removeItemFromCart = (item) => {
+    const { productId, selectedItem } = item
+    const target = document.querySelector(`.cart-summary--item[id="${productId}"][variation="${selectedItem}"]`)
+
+    target.remove()
+  }
+
   $(document).on('click', '.addToCart--button', (e) => handleAddToCart(e))
   $(document).on('keyup', '.addToCart--button', (e) => handleAddToCart(e))
+
+  $(document).on('click', '.cart-summary--removeButton', (e) => handleAddToCart(e))
+  $(document).on('keyup', '.cart-summary--removeButton', (e) => handleAddToCart(e))
 
   // Handle Whatsapp interaction
   const sendToWhatsapp = (e) => {
