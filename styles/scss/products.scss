@@ -203,8 +203,14 @@
           .filter--itemName {
             display: flex;
             justify-content: space-between;
+            align-items: center;
             list-style: none;
+            border-bottom: 0.0625rem solid $c-gray-300;
             cursor: pointer;
+
+            @include mobile {
+              font-size: 0.875rem;
+            }
 
             &::-webkit-details-marker {
               display: none;
@@ -237,6 +243,12 @@
                 &:checked {
                   background-color: $c-purple;
                   border: 0.0625rem solid $c-purple;
+                }
+              }
+
+              label {
+                @include mobile {
+                  font-size: 0.875rem;
                 }
               }
             }
