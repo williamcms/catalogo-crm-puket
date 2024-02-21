@@ -44,11 +44,12 @@ function init() {
   // Handle overlay close
   $(document).on('mousedown', '.overlay--close', (e) => handleOverlay(e))
   $(document).on('keyup', '.overlay--close', (e) => handleOverlay(e))
+  $(document).on('customtrigger', '.overlay--close', (e) => handleOverlay(e))
 
   const handleOverlay = (e) => {
     e.stopImmediatePropagation()
 
-    if (e.button !== 0 && e.button !== 1 && e.key !== 'Enter' && e.key !== ' ') return
+    if (e.button !== 0 && e.button !== 1 && e.key !== 'Enter' && e.key !== ' ' && e.type !== 'customtrigger') return
 
     const currentElm = e.currentTarget
     const targetElm = e.target
@@ -79,7 +80,7 @@ function init() {
     overlay.classList.toggle('isClosed', !overlayState)
     body.classList.toggle('noscroll', overlayState)
 
-    currentElm.setAttribute('aria-expanded', overlayState)
+    if (!$(currentElm).hasClass('overlay--close')) currentElm.setAttribute('aria-expanded', overlayState)
     overlay.setAttribute('aria-hidden', !overlayState)
 
     // Unmount quick-view when the overlay state changes
@@ -438,7 +439,7 @@ function init() {
     const productData = scriptElement ? JSON.parse(scriptElement?.textContent.trim()) : { productId }
 
     if (selectedItem) addToCart([{ ...productData, selectedItem, selectedQuantity }])
-    if (id === 'product-quickview') handleOverlay(e)
+    if (id === 'product-quickview') $('#close-quickview').trigger('customtrigger')
   }
 
   const addToCart = (items) => {
