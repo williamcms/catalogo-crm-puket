@@ -108,6 +108,7 @@ img {
   }
 
   .overlay--container {
+    position: relative;
     display: flex;
     flex-direction: column;
     background-color: $c-background-base;
@@ -133,7 +134,6 @@ img {
     }
 
     .overlay--header {
-      position: relative;
       display: flex;
       flex-direction: row;
       justify-content: center;
