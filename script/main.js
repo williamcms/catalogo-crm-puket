@@ -405,7 +405,7 @@ function init() {
     })
 
     // Reset scroll
-    modal.scrollTo(0, 0)
+    setTimeout(() => _elmImages.scrollIntoView({ behavior: 'instant', block: 'center' }), 100)
 
     // Handle Description
     _elmDescription.innerHTML = productDetails
