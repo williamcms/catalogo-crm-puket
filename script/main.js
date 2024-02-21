@@ -445,7 +445,7 @@ function init() {
   }
 
   const cartState = (item) => {
-    let state = window?.minicart ?? {}
+    let state = JSON.parse(localStorage.getItem('puket-minicartState')) ?? {}
 
     if (!state.hasOwnProperty('items')) state = { ...state, items: [] }
     if (!state.hasOwnProperty('totalizers')) state = { ...state, totalizers: 0 }
@@ -472,7 +472,9 @@ function init() {
       state.totalizers = state.items.reduce((acc, item) => acc + parseFloat(item.price), 0)
     }
 
-    return (window.minicart = state)
+    localStorage.setItem('puket-minicartState', JSON.stringify(state))
+
+    return state
   }
 
   const mountCart = () => {
@@ -625,6 +627,9 @@ function init() {
       cartContainer.appendChild(_cartItem)
     })
   }
+
+  // Calls initial cart mount
+  mountCart()
 
   const removeItemFromCart = (item) => {
     const { productId, selectedItem } = item
