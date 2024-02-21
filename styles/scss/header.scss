@@ -144,6 +144,32 @@
                 gap: 1.25rem;
                 padding: 1.1875rem 1.5rem;
 
+                @include fold {
+                  padding: 0.5938rem 0.75rem;
+                }
+
+                .cart-drawer--noItems {
+                  text-align: center;
+
+                  .cart-drawer-noItems--headline {
+                    font-size: 1.125rem;
+                    font-weight: 700;
+                    color: $c-purple;
+                  }
+
+                  .cart-drawer-noItems--subText {
+                    font-size: 1rem;
+                    font-weight: 300;
+                    color: $c-text;
+                    width: 80%;
+                    margin: 10px auto;
+
+                    @include fold {
+                      width: 100%;
+                    }
+                  }
+                }
+
                 .cart-summary--item {
                   display: flex;
                   flex-direction: row;

@@ -486,9 +486,14 @@ function init() {
     const totalizersCount = totalizers.querySelector('.totalizers--itemCount')
     const totalizersValue = totalizers.querySelector('.totalizers--totalValue')
 
+    const noItemsMessage = cartContainer.querySelector('.cart-drawer--noItems')
+
     cartBadge.textContent = itemsCount
     totalizersCount.textContent = `${itemsCount} ${itemsCount === 1 ? 'item' : 'itens'}`
     totalizersValue.textContent = formatPrice(state.totalizers)
+
+    if (!itemsCount) noItemsMessage.style.display = 'block'
+    else noItemsMessage.style.display = 'none'
 
     state.items.forEach((item) => {
       // Check for existing items
