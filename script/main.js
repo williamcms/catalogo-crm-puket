@@ -435,6 +435,8 @@ function init() {
   const addToCart = (items) => {
     let loop = 0
 
+    document.dispatchEvent(new Event('OPEN_MINICART', { bubbles: true, cancelable: true }))
+
     items?.forEach((item) => {
       cartState(item)
 
@@ -452,8 +454,6 @@ function init() {
 
     if (!state.hasOwnProperty('items')) state = { ...state, items: [] }
     if (!state.hasOwnProperty('totalizers')) state = { ...state, totalizers: 0 }
-
-    if (!state.items.length) document.dispatchEvent(new Event('OPEN_MINICART', { bubbles: true, cancelable: true }))
 
     if (item) {
       const isIdentical = state.items.findIndex(
