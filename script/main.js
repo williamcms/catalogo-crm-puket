@@ -404,6 +404,9 @@ function init() {
       _elmSku.appendChild(elm)
     })
 
+    // Reset scroll
+    modal.scrollTo(0, 0)
+
     // Handle Description
     _elmDescription.innerHTML = productDetails
   }
