@@ -406,18 +406,47 @@
 
               @include mobile {
                 flex-direction: column;
+                gap: 0;
               }
 
               @include fold {
                 flex-direction: column;
-                gap: 0.5rem;
+                gap: 0;
               }
 
               .menu--item {
                 list-style: none;
+                padding: 0.25rem 0;
+
+                &.menu--allItems {
+                  display: none;
+                }
 
                 @include mobile {
-                  padding: 0.5rem 1rem;
+                  padding: 1.5rem 1rem;
+                  border-bottom: 1px solid $c-gray-300;
+
+                  &.menu--allItems {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    padding: 1rem;
+                    border-bottom: none;
+
+                    .menu--itemLink {
+                      color: $c-purple;
+                      text-align: center;
+                      padding: 0.75rem 0;
+                      width: 100%;
+                      border: 1px solid $c-purple;
+                      border-radius: 12.5rem;
+
+                      &:hover {
+                        color: $c-white;
+                        background-color: $c-purple;
+                      }
+                    }
+                  }
                 }
 
                 @include fold {
@@ -425,7 +454,7 @@
                 }
 
                 .menu--itemLink {
-                  font-size: 0.9375rem;
+                  font-size: 0.875rem;
                   text-decoration: none;
                   color: $c-white;
 
