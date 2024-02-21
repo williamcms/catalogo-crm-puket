@@ -658,23 +658,23 @@ function init() {
   $('.sendToWhatsapp--button').on('keyup', (e) => sendToWhatsapp(e))
 
   // Handle Event to open minicart
-  document.addEventListener('OPEN_MINICART', (e) => {
+  document.addEventListener('OPEN_MINICART', () => {
     const body = document.querySelector('body')
     const overlay = document.getElementById('cart-drawer')
 
     const overlayState = overlay.style.display === 'none' || overlay.style.display === ''
     const openingBttn = document.getElementById(overlay.getAttribute('aria-controlledby'))
 
-    overlay.style.display = overlayState ? 'block' : 'none'
-    overlay.classList.toggle('isOpen', overlayState)
-    overlay.classList.toggle('isClosed', !overlayState)
-    body.classList.toggle('noscroll', overlayState)
+    if (!overlayState) return
 
-    openingBttn.setAttribute('aria-expanded', overlayState)
-    overlay.setAttribute('aria-hidden', !overlayState)
+    overlay.style.display = 'block'
+    overlay.classList.toggle('isOpen', true)
+    body.classList.toggle('noscroll', true)
 
-    // Alternate focus between trigger & overlay
-    if (!overlayState) openingBttn.focus()
-    else overlay.focus()
+    openingBttn.setAttribute('aria-expanded', true)
+    overlay.setAttribute('aria-hidden', false)
+
+    // Focus Overlay
+    overlay.focus()
   })
 }
