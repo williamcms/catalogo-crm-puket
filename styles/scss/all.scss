@@ -117,20 +117,11 @@ img {
     overflow-x: clip;
     overflow-y: inherit;
 
-    scrollbar-gutter: stable;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 
     &::-webkit-scrollbar {
-      width: 10px;
-    }
-
-    &::-webkit-scrollbar-track {
-      background-color: $c-gray;
-      border-radius: 1.25rem 1.25rem 0 0;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background-color: $c-pink;
-      border-radius: 1.25rem 1.25rem 0 0;
+      display: none;
     }
 
     .overlay--header {
