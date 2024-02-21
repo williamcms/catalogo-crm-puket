@@ -46,6 +46,8 @@ function init() {
   $(document).on('keyup', '.overlay--close', (e) => handleOverlay(e))
 
   const handleOverlay = (e) => {
+    e.stopImmediatePropagation()
+
     if (e.button !== 0 && e.button !== 1 && e.key !== 'Enter' && e.key !== ' ') return
 
     const currentElm = e.currentTarget
@@ -106,6 +108,7 @@ function init() {
   const closeTopMostOverlay = (e) => {
     const { elm: overlay } = getTopOverlay()
 
+    if (!overlay) return
     if (e.button !== 0 && e.button !== 1 && e.key !== 'Escape' && e.key !== ' ') return
 
     if (overlay.id === 'product-quickview') unmountQuickView()
@@ -128,7 +131,7 @@ function init() {
     }
   }
 
-  window.addEventListener('keyup', (e) => closeTopMostOverlay(e))
+  window.addEventListener('keydown', (e) => closeTopMostOverlay(e))
 
   $(document).on('click', '.overlay--wrapper', (e) => {
     const target = e.target
@@ -180,7 +183,7 @@ function init() {
     form.reset()
   }
 
-  $('.button--clear').on('click', (e) => handleFormClear(e))
+  $('.button--clear').on('mousedown', (e) => handleFormClear(e))
   $('.button--clear').on('keyup', (e) => handleFormClear(e))
 
   // Handle SKU selection
@@ -239,14 +242,14 @@ function init() {
     }
 
     if (!container.querySelector('[aria-checked="true"]')) {
-      previous.setAttribute('aria-checked', 'true')
+      previous?.setAttribute('aria-checked', 'true')
     }
   }
 
-  $(document).on('click', '.summary-item--skuItem', (e) => handleSKUSelection(e))
+  $(document).on('mousedown', '.summary-item--skuItem', (e) => handleSKUSelection(e))
   $(document).on('keyup', '.summary-item--skuItem', (e) => handleSKUSelection(e))
 
-  $(document).on('click', '.product-quickview--skuItem', (e) => handleSKUSelection(e))
+  $(document).on('mousedown', '.product-quickview--skuItem', (e) => handleSKUSelection(e))
   $(document).on('keyup', '.product-quickview--skuItem', (e) => handleSKUSelection(e))
 
   // Handle product quick-view
@@ -608,6 +611,7 @@ function init() {
       prodInput.classList.add('cart-summary--input')
       prodInput.setAttribute('type', 'number')
       prodInput.setAttribute('value', item.selectedQuantity)
+      prodInput.setAttribute('readonly', 'true')
       prodQty.appendChild(prodInput)
 
       const prodQtyMore = document.createElement('button')
@@ -638,11 +642,11 @@ function init() {
     target.remove()
   }
 
-  $(document).on('click', '.addToCart--button', (e) => handleAddToCart(e))
-  $(document).on('keyup', '.addToCart--button', (e) => handleAddToCart(e))
+  $(document).on('mousedown', '.addToCart--button', (e) => handleAddToCart(e))
+  $(document).on('keydown', '.addToCart--button', (e) => handleAddToCart(e))
 
-  $(document).on('click', '.cart-summary--removeButton', (e) => handleAddToCart(e))
-  $(document).on('keyup', '.cart-summary--removeButton', (e) => handleAddToCart(e))
+  $(document).on('mousedown', '.cart-summary--removeButton', (e) => handleAddToCart(e))
+  $(document).on('keydown', '.cart-summary--removeButton', (e) => handleAddToCart(e))
 
   // Handle Whatsapp interaction
   const sendToWhatsapp = (e) => {
@@ -666,7 +670,7 @@ function init() {
     window.open(`https://api.whatsapp.com/send/?phone=${number}&text=${message}`)
   }
 
-  $('.sendToWhatsapp--button').on('click', (e) => sendToWhatsapp(e))
+  $('.sendToWhatsapp--button').on('mousedown', (e) => sendToWhatsapp(e))
   $('.sendToWhatsapp--button').on('keyup', (e) => sendToWhatsapp(e))
 
   // Handle Event to open minicart
@@ -692,6 +696,11 @@ function init() {
 
   // Handle quantity selector on minicart
   const handleQuantity = (e) => {
+    if (e.button !== 0 && e.button !== 1 && e.key !== 'Enter' && e.key !== ' ') return
+
+    e.preventDefault()
+    e.stopImmediatePropagation()
+
     const target = e.currentTarget
     const container = target.closest('.cart-summary--item')
     const input = container.querySelector('input.cart-summary--input')
@@ -706,6 +715,6 @@ function init() {
     addToCart([{ productId, selectedItem, selectedQuantity }])
   }
 
-  $(document).on('click', '.cart-summary--quantitySelector', (e) => handleQuantity(e))
-  $(document).on('keyup', '.cart-summary--quantitySelector', (e) => handleQuantity(e))
+  $(document).on('mousedown', '.cart-summary--quantitySelector', (e) => handleQuantity(e))
+  $(document).on('keydown', '.cart-summary--quantitySelector', (e) => handleQuantity(e))
 }
