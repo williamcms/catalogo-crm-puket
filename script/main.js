@@ -207,7 +207,7 @@ function init() {
     const container = e.target.parentNode
     const previous = container.querySelector('[aria-checked="true"]')
 
-    const availableElm = container.querySelectorAll('button:not([aria-disabled])')
+    const availableElm = container.querySelectorAll('button:not([aria-disabled="true"])')
     const minElm = 0
     const maxElm = availableElm.length - 1
 
@@ -237,7 +237,7 @@ function init() {
       return
     }
 
-    if (current.getAttribute('aria-disabled') === null) {
+    if (current.getAttribute('aria-disabled') === null || current.getAttribute('aria-disabled') === 'false') {
       current.setAttribute('aria-checked', 'true')
       current.focus()
     }
@@ -425,6 +425,8 @@ function init() {
     if (e.button !== 0 && e.button !== 1 && e.key !== 'Enter' && e.key !== ' ') return
 
     const target = e.currentTarget
+
+    if ($(target).attr('aria-disabled') === 'true') return
 
     const selectedQuantity = $(target).hasClass('cart-summary--removeButton') ? 0 : 1
 

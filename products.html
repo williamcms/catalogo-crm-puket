@@ -276,7 +276,7 @@
                   <div class="summary-item--floatingItem summary-item--floatingItem-addToCart">
                     <!--
                       Se não houver qualquer sku disponível para seleção:
-                      - Incluir aria-disabled no botão
+                      - Incluir aria-disabled como true no botão
                       - Alterar os dois textos "Adicionar à Sacola" para "Produto Indisponível" 
                     -->
                     <button class="addToCart--button" aria-controls="product-id-1234">
@@ -301,13 +301,19 @@
                   <!-- 
                     Adicionar aria-checked como true para o primeiro item disponível
                     Adicionar aria-checked como false para demais itens
-                    Adicionar aria-disabled para itens indisponíveis
+                    Adicionar aria-disabled como true para itens indisponíveis
                     
-                    aria-checked="true" não é definido com aria-disabled
+                    aria-checked="true" não é definido com aria-disabled="true"
                    -->
-                  <button role="radio" aria-checked="false" class="summary-item--skuItem" aria-disabled>PP</button>
-                  <button role="radio" aria-checked="false" class="summary-item--skuItem" aria-disabled>P</button>
-                  <button role="radio" aria-checked="false" class="summary-item--skuItem" aria-disabled>M</button>
+                  <button role="radio" aria-checked="false" class="summary-item--skuItem" aria-disabled="true">
+                    PP
+                  </button>
+                  <button role="radio" aria-checked="false" class="summary-item--skuItem" aria-disabled="true">
+                    P
+                  </button>
+                  <button role="radio" aria-checked="false" class="summary-item--skuItem" aria-disabled="true">
+                    M
+                  </button>
                   <button role="radio" aria-checked="true" class="summary-item--skuItem">G</button>
                   <button role="radio" aria-checked="false" class="summary-item--skuItem">GG</button>
                 </div>
@@ -374,10 +380,10 @@
                   <div class="summary-item--floatingItem summary-item--floatingItem-addToCart">
                     <!--
                       Se não houver qualquer sku disponível para seleção:
-                      - Incluir aria-disabled no botão
+                      - Incluir aria-disabled como true no botão
                       - Alterar os dois textos "Adicionar à Sacola" para "Produto Indisponível" 
                     -->
-                    <button class="addToCart--button" aria-controls="product-id-4567" aria-disabled>
+                    <button class="addToCart--button" aria-controls="product-id-4567" aria-disabled="true">
                       <span class="only-sr">Produto Indisponível</span>
                       <span class="summary-item--addToCartText desktop-only" aria-hidden="true">
                         Produto Indisponível
@@ -399,14 +405,22 @@
                   <!-- 
                     Adicionar aria-checked como true para o primeiro item disponível
                     Adicionar aria-checked como false para demais itens
-                    Adicionar aria-disabled para itens indisponíveis
+                    Adicionar aria-disabled como true para itens indisponíveis
                     
-                    aria-checked="true" não é definido com aria-disabled
+                    aria-checked="true" não é definido com aria-disabled="true"
                    -->
-                  <button role="radio" aria-checked="false" class="summary-item--skuItem" aria-disabled>8</button>
-                  <button role="radio" aria-checked="false" class="summary-item--skuItem" aria-disabled>10</button>
-                  <button role="radio" aria-checked="false" class="summary-item--skuItem" aria-disabled>12</button>
-                  <button role="radio" aria-checked="false" class="summary-item--skuItem" aria-disabled>14</button>
+                  <button role="radio" aria-checked="false" class="summary-item--skuItem" aria-disabled="true">
+                    8
+                  </button>
+                  <button role="radio" aria-checked="false" class="summary-item--skuItem" aria-disabled="true">
+                    10
+                  </button>
+                  <button role="radio" aria-checked="false" class="summary-item--skuItem" aria-disabled="true">
+                    12
+                  </button>
+                  <button role="radio" aria-checked="false" class="summary-item--skuItem" aria-disabled="true">
+                    14
+                  </button>
                 </div>
               </div>
 
@@ -468,7 +482,7 @@
                   <div class="summary-item--floatingItem summary-item--floatingItem-addToCart">
                     <!--
                       Se não houver qualquer sku disponível para seleção:
-                      - Incluir aria-disabled no botão
+                      - Incluir aria-disabled como true no botão
                       - Alterar os dois textos "Adicionar à Sacola" para "Produto Indisponível" 
                     -->
                     <button class="addToCart--button" aria-controls="product-id-7891">
@@ -493,13 +507,17 @@
                   <!-- 
                     Adicionar aria-checked como true para o primeiro item disponível
                     Adicionar aria-checked como false para demais itens
-                    Adicionar aria-disabled para itens indisponíveis
+                    Adicionar aria-disabled como true para itens indisponíveis
                     
-                    aria-checked="true" não é definido com aria-disabled
+                    aria-checked="true" não é definido com aria-disabled="true"
                    -->
                   <button role="radio" aria-checked="true" class="summary-item--skuItem">PP</button>
-                  <button role="radio" aria-checked="false" class="summary-item--skuItem" aria-disabled>P</button>
-                  <button role="radio" aria-checked="false" class="summary-item--skuItem" aria-disabled>M</button>
+                  <button role="radio" aria-checked="false" class="summary-item--skuItem" aria-disabled="true">
+                    P
+                  </button>
+                  <button role="radio" aria-checked="false" class="summary-item--skuItem" aria-disabled="true">
+                    M
+                  </button>
                   <button role="radio" aria-checked="false" class="summary-item--skuItem">G</button>
                   <button role="radio" aria-checked="false" class="summary-item--skuItem">GG</button>
                 </div>
@@ -566,7 +584,7 @@
                   <div class="summary-item--floatingItem summary-item--floatingItem-addToCart">
                     <!--
                       Se não houver qualquer sku disponível para seleção:
-                      - Incluir aria-disabled no botão
+                      - Incluir aria-disabled como true no botão
                       - Alterar os dois textos "Adicionar à Sacola" para "Produto Indisponível" 
                     -->
                     <button class="addToCart--button" aria-controls="product-id-1112">
@@ -591,12 +609,14 @@
                   <!-- 
                     Adicionar aria-checked como true para o primeiro item disponível
                     Adicionar aria-checked como false para demais itens
-                    Adicionar aria-disabled para itens indisponíveis
+                    Adicionar aria-disabled como true para itens indisponíveis
                     
-                    aria-checked="true" não é definido com aria-disabled
+                    aria-checked="true" não é definido com aria-disabled="true"
                    -->
                   <button role="radio" aria-checked="true" class="summary-item--skuItem">8</button>
-                  <button role="radio" aria-checked="false" class="summary-item--skuItem" aria-disabled>10</button>
+                  <button role="radio" aria-checked="false" class="summary-item--skuItem" aria-disabled="true">
+                    10
+                  </button>
                   <button role="radio" aria-checked="false" class="summary-item--skuItem">12</button>
                   <button role="radio" aria-checked="false" class="summary-item--skuItem">14</button>
                 </div>
@@ -660,7 +680,7 @@
                   <div class="summary-item--floatingItem summary-item--floatingItem-addToCart">
                     <!--
                       Se não houver qualquer sku disponível para seleção:
-                      - Incluir aria-disabled no botão
+                      - Incluir aria-disabled como true no botão
                       - Alterar os dois textos "Adicionar à Sacola" para "Produto Indisponível" 
                     -->
                     <button class="addToCart--button" aria-controls="product-id-1314">
@@ -685,13 +705,17 @@
                   <!-- 
                     Adicionar aria-checked como true para o primeiro item disponível
                     Adicionar aria-checked como false para demais itens
-                    Adicionar aria-disabled para itens indisponíveis
+                    Adicionar aria-disabled como true para itens indisponíveis
                     
-                    aria-checked="true" não é definido com aria-disabled
+                    aria-checked="true" não é definido com aria-disabled="true"
                    -->
                   <button role="radio" aria-checked="true" class="summary-item--skuItem">PP</button>
-                  <button role="radio" aria-checked="false" class="summary-item--skuItem" aria-disabled>P</button>
-                  <button role="radio" aria-checked="false" class="summary-item--skuItem" aria-disabled>M</button>
+                  <button role="radio" aria-checked="false" class="summary-item--skuItem" aria-disabled="true">
+                    P
+                  </button>
+                  <button role="radio" aria-checked="false" class="summary-item--skuItem" aria-disabled="true">
+                    M
+                  </button>
                   <button role="radio" aria-checked="false" class="summary-item--skuItem">G</button>
                   <button role="radio" aria-checked="false" class="summary-item--skuItem">GG</button>
                 </div>
@@ -758,7 +782,7 @@
                   <div class="summary-item--floatingItem summary-item--floatingItem-addToCart">
                     <!--
                       Se não houver qualquer sku disponível para seleção:
-                      - Incluir aria-disabled no botão
+                      - Incluir aria-disabled como true no botão
                       - Alterar os dois textos "Adicionar à Sacola" para "Produto Indisponível" 
                     -->
                     <button class="addToCart--button" aria-controls="product-id-1516">
@@ -783,12 +807,14 @@
                   <!-- 
                     Adicionar aria-checked como true para o primeiro item disponível
                     Adicionar aria-checked como false para demais itens
-                    Adicionar aria-disabled para itens indisponíveis
+                    Adicionar aria-disabled como true para itens indisponíveis
                     
-                    aria-checked="true" não é definido com aria-disabled
+                    aria-checked="true" não é definido com aria-disabled="true"
                    -->
                   <button role="radio" aria-checked="true" class="summary-item--skuItem">8</button>
-                  <button role="radio" aria-checked="false" class="summary-item--skuItem" aria-disabled>10</button>
+                  <button role="radio" aria-checked="false" class="summary-item--skuItem" aria-disabled="true">
+                    10
+                  </button>
                   <button role="radio" aria-checked="false" class="summary-item--skuItem">12</button>
                   <button role="radio" aria-checked="false" class="summary-item--skuItem">14</button>
                 </div>
@@ -852,7 +878,7 @@
                   <div class="summary-item--floatingItem summary-item--floatingItem-addToCart">
                     <!--
                       Se não houver qualquer sku disponível para seleção:
-                      - Incluir aria-disabled no botão
+                      - Incluir aria-disabled como true no botão
                       - Alterar os dois textos "Adicionar à Sacola" para "Produto Indisponível" 
                     -->
                     <button class="addToCart--button" aria-controls="product-id-1718">
@@ -877,13 +903,17 @@
                   <!-- 
                     Adicionar aria-checked como true para o primeiro item disponível
                     Adicionar aria-checked como false para demais itens
-                    Adicionar aria-disabled para itens indisponíveis
+                    Adicionar aria-disabled como true para itens indisponíveis
                     
-                    aria-checked="true" não é definido com aria-disabled
+                    aria-checked="true" não é definido com aria-disabled="true"
                    -->
                   <button role="radio" aria-checked="true" class="summary-item--skuItem">PP</button>
-                  <button role="radio" aria-checked="false" class="summary-item--skuItem" aria-disabled>P</button>
-                  <button role="radio" aria-checked="false" class="summary-item--skuItem" aria-disabled>M</button>
+                  <button role="radio" aria-checked="false" class="summary-item--skuItem" aria-disabled="true">
+                    P
+                  </button>
+                  <button role="radio" aria-checked="false" class="summary-item--skuItem" aria-disabled="true">
+                    M
+                  </button>
                   <button role="radio" aria-checked="false" class="summary-item--skuItem">G</button>
                   <button role="radio" aria-checked="false" class="summary-item--skuItem">GG</button>
                 </div>
@@ -950,7 +980,7 @@
                   <div class="summary-item--floatingItem summary-item--floatingItem-addToCart">
                     <!--
                       Se não houver qualquer sku disponível para seleção:
-                      - Incluir aria-disabled no botão
+                      - Incluir aria-disabled como true no botão
                       - Alterar os dois textos "Adicionar à Sacola" para "Produto Indisponível" 
                     -->
                     <button class="addToCart--button" aria-controls="product-id-1920">
@@ -975,12 +1005,14 @@
                   <!-- 
                     Adicionar aria-checked como true para o primeiro item disponível
                     Adicionar aria-checked como false para demais itens
-                    Adicionar aria-disabled para itens indisponíveis
+                    Adicionar aria-disabled como true para itens indisponíveis
                     
-                    aria-checked="true" não é definido com aria-disabled
+                    aria-checked="true" não é definido com aria-disabled="true"
                    -->
                   <button role="radio" aria-checked="true" class="summary-item--skuItem">8</button>
-                  <button role="radio" aria-checked="false" class="summary-item--skuItem" aria-disabled>10</button>
+                  <button role="radio" aria-checked="false" class="summary-item--skuItem" aria-disabled="true">
+                    10
+                  </button>
                   <button role="radio" aria-checked="false" class="summary-item--skuItem">12</button>
                   <button role="radio" aria-checked="false" class="summary-item--skuItem">14</button>
                 </div>
@@ -1054,7 +1086,7 @@
             aria-controls="product-quickview"
             id="send-to-cart"
           >
-            <span class="form--buttonText">Adicionar ao Carrinho</span>
+            <span class="form--buttonText"></span>
           </button>
         </div>
       </div>

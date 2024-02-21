@@ -51,7 +51,7 @@
       border: none;
     }
 
-    &[aria-disabled] {
+    &[aria-disabled='true'] {
       color: $c-gray;
       background-color: $c-background-neutral;
 
@@ -398,7 +398,7 @@
                         height: 2.625rem;
                         cursor: pointer;
 
-                        &[aria-disabled] {
+                        &[aria-disabled='true'] {
                           background-color: $c-gray-500;
                         }
 
@@ -562,7 +562,7 @@
               }
 
               &:not(.slick-initialized) {
-                overflow-y: scroll;
+                overflow-x: scroll;
 
                 .product-quickview--imageElement {
                   max-width: 33%;
@@ -682,6 +682,10 @@
             padding: 0.75rem;
             width: 100%;
             cursor: pointer;
+
+            &[aria-disabled='true'] {
+              background-color: $c-gray-500;
+            }
 
             @include desktop {
               min-width: 18.75rem;
