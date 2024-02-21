@@ -472,7 +472,7 @@ function init() {
         state.items[isIdentical] = { ...prev, ...item, selectedQuantity: item.selectedQuantity }
       }
 
-      state.totalizers = state.items.reduce((acc, item) => acc + parseFloat(item.price), 0)
+      state.totalizers = state.items.reduce((acc, item) => acc + item.selectedQuantity * parseFloat(item.price), 0)
     }
 
     localStorage.setItem('puket-minicartState', JSON.stringify(state))
