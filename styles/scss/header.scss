@@ -85,8 +85,15 @@
         }
 
         .header--cart {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
           .cart--button {
             position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             background-color: transparent;
             border: none;
             cursor: pointer;
