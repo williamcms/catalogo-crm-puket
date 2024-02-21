@@ -394,6 +394,10 @@
                         height: 2.625rem;
                         cursor: pointer;
 
+                        &[aria-disabled] {
+                          background-color: $c-gray-500;
+                        }
+
                         .summary-item--addToCartImage,
                         .summary-item--addToCartText {
                           pointer-events: none;
