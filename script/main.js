@@ -260,6 +260,12 @@ function init() {
     const trigger = e?.currentTarget
     const modal = document.getElementById('product-quickview')
 
+    // Get current selection of SKU
+    const skuSelected = trigger.querySelector('.summary-item--skuItem[aria-checked="true"]')?.textContent
+
+    // Get current addToCart text
+    const addToCartText = trigger.querySelector('.summary-item--addToCartText')?.textContent
+
     // Product data
     const scriptElement = trigger.querySelector('script[type="application/ld+json"]')
     const productData = JSON.parse(scriptElement.textContent.trim())
@@ -284,6 +290,7 @@ function init() {
     const _elmPrice = modal.querySelector('.product-quickview--productPrice')
     const _elmSku = modal.querySelector('.product-quickview--skuList')
     const _elmDescription = modal.querySelector('.product-quickview--descriptionText')
+    const _elmAddToCart = modal.querySelector('.addToCart--button')
 
     // Slick settings
     const settings = {
@@ -372,10 +379,10 @@ function init() {
 
     _elmSku.appendChild(label)
 
-    $(productVariations).each((i, item) => {
+    $(productVariations).each((_, item) => {
       let elm = document.createElement('button')
 
-      if (item.isAvailable && first === null) {
+      if (item.isAvailable && first === null && item.name === skuSelected) {
         elm.setAttribute('aria-checked', 'true')
         first = item
       }
@@ -385,6 +392,14 @@ function init() {
       elm.setAttribute('role', 'radio')
       elm.textContent = item.name
       elm.className = 'product-quickview--skuItem'
+
+      if (first === null) {
+        _elmAddToCart.setAttribute('aria-disabled', 'true')
+      } else {
+        _elmAddToCart.setAttribute('aria-disabled', 'false')
+      }
+
+      _elmAddToCart.textContent = addToCartText
 
       _elmSku.appendChild(elm)
     })
