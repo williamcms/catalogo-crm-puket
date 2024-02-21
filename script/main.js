@@ -406,7 +406,7 @@ function init() {
     const _installments = _elmPrice.querySelector('.product-quickview--installments')
     const _elmDescription = modal.querySelector('.product-quickview--descriptionText')
 
-    $(_elmImages).slick('unslick')
+    if ($(_elmImages).hasClass('slick-initialized')) $(_elmImages).slick('unslick')
 
     _elmScript.innerHTML = ''
     _elmImages.innerHTML = ''
@@ -438,6 +438,7 @@ function init() {
     const productData = scriptElement ? JSON.parse(scriptElement?.textContent.trim()) : { productId }
 
     if (selectedItem) addToCart([{ ...productData, selectedItem, selectedQuantity }])
+    if (id === 'product-quickview') handleOverlay(e)
   }
 
   const addToCart = (items) => {
