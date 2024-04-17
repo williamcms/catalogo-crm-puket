@@ -7,6 +7,7 @@ function addContent() {
 
   const schema = {
     menu: $('.menu--container > ul.menu--list'),
+    productList: $('.products--wrapper > .products--container > .products--listage'),
   }
 
   const store = {
@@ -53,6 +54,48 @@ function addContent() {
       html += `<li class="menu--item menu--allItems"><a href="${url}" target="_self" class="menu--itemLink">Ver todas as categorias</a></li>`
 
       schema.menu?.html(html)
+    })
+  })()
+  ;(searchProducts = () => {
+    postData(
+      {
+        CodigoCliente: store.clientId,
+        IDCatalogo: catalog.id,
+        Pesquisa: $('#Busca').val(),
+        IDRequisicao: $('#idrequisicao').val(),
+        Ordenar: undefined,
+        QuantidadeRegistrosPagina: undefined,
+        PaginaAtual: undefined,
+        Linhas: undefined,
+        Tipos: undefined,
+        Segmentos: undefined,
+        Grupos: undefined,
+        SubGrupos: undefined,
+        Categorias: undefined,
+        SubCategorias: undefined,
+        Sexos: undefined,
+        Tamanhos: undefined,
+        Solucoes: undefined,
+        Campanhas: undefined,
+        Colecoes: undefined,
+        Listas: undefined,
+      },
+      '/Produtos/ListaProdutos'
+    ).then((data) => {
+      console.log(data)
+      if (!data) return
+
+      // Treatment to use lazyload
+      const html = $(data).each(() => {
+        var $this = $(this).find('.summary-item--imageElement')
+        $this
+          .attr({
+            'data-src': $this.attr('src'),
+          })
+          .removeAttr('src')
+      })
+
+      schema.productList?.html(html)
     })
   })()
 }
