@@ -364,10 +364,15 @@
 
                 .summary-item--imageContainer {
                   line-height: 0;
+                  max-height: 24rem;
+                  max-width: 100%;
 
                   .summary-item--imageElement {
+                    display: block;
                     height: auto;
+                    max-height: inherit;
                     border-radius: 0.25rem;
+                    margin: 0 auto;
                   }
                 }
 
