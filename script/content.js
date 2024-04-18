@@ -21,7 +21,8 @@ function addContent() {
   const schema = {
     menu: '.menu--container > ul.menu--list',
     menuItems: '.menu--container > ul.menu--list a.menu--itemLink',
-    search: '.header--search input[type="search"]',
+    searchForm: '.header--search #header-search',
+    searchInput: '.header--search input[type="search"]',
     searchButton: '.header--search button.search--button',
     productList: '.products--wrapper > .products--container > .products--listage',
   }
@@ -30,7 +31,7 @@ function addContent() {
     clientId: params?.CodCliFor ?? '105964',
     catalogId: params?.IDCatalogo ?? '25338',
     pageItem: params?.Linha ?? null,
-    search: params?.Linha ? null : search,
+    search: search,
     order: 'ASC',
   }
 
@@ -116,7 +117,7 @@ function addContent() {
     })
   }
 
-  console.log('params', params)
+  console.log('params', params, getParams())
 
   // Initial fetch
   searchProducts()
@@ -146,12 +147,20 @@ function addContent() {
       const newUrl = `${location.pathname}?${params.toString()}`
 
       window.history.pushState({ path: newUrl }, '', newUrl)
-      setParams(getParams())
+      setParams()
     }
+  }
+
+  function debounceSearch(e) {
+    e.preventDefault()
+
+    const searchValue = $(schema.searchInput).val()
+
+    setSearch(searchValue)
   }
 
   // Fetch products triggers
   $(document).one('click', schema.menuItems, handleMenuClick)
 
-  $(schema.searchButton)?.one('click', () => searchProducts())
+  $(schema.searchForm)?.one('submit', debounceSearch)
 }
