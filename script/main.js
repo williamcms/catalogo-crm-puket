@@ -1,5 +1,19 @@
 document?.addEventListener('includeHTMLLoaded', init, false)
 
+const states = new Map()
+
+const useState = (initialValue, context) => {
+  const dispatch = (v) => {
+    const currentState = states.get(context.callee)
+    currentState[0] = typeof v === 'function' ? v(currentState[0]) : v
+
+    context.callee.call(context)
+  }
+  const current = states.get(context.callee) || [initialValue, dispatch]
+  states.set(context.callee, current)
+  return current
+}
+
 const isMobile = () => {
   var isMobile = false
 

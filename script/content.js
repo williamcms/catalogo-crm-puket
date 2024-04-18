@@ -2,20 +2,35 @@ document?.addEventListener('includeHTMLLoaded', addContent, false)
 
 const IS_DEV = location.hostname === 'localhost' || location.hostname === '127.0.0.1'
 
+const getParams = () =>
+  location.search
+    .substring(1)
+    .split('&')
+    .reduce((acc, pair) => {
+      const [key, value] = pair.split('=')
+      acc[key] = value
+      return acc
+    }, {})
+
 function addContent() {
   const host = IS_DEV ? 'https://ti.grupounico.com' : location.origin
 
+  const [params, setParams] = useState(getParams(), arguments)
+  const [search, setSearch] = useState('', arguments)
+
   const schema = {
-    menu: $('.menu--container > ul.menu--list'),
-    productList: $('.products--wrapper > .products--container > .products--listage'),
+    menu: '.menu--container > ul.menu--list',
+    menuItems: '.menu--container > ul.menu--list a.menu--itemLink',
+    search: '.header--search input[type="search"]',
+    searchButton: '.header--search button.search--button',
+    productList: '.products--wrapper > .products--container > .products--listage',
   }
 
-  const store = {
-    clientId: $('#clientId').val(),
-  }
-
-  const catalog = {
-    id: $('#catalogId').val(),
+  const runtime = {
+    clientId: params?.CodCliFor ?? '105964',
+    catalogId: params?.IDCatalogo ?? '25338',
+    pageItem: params?.Linha ?? null,
+    search: params?.Linha ? null : search,
     order: 'ASC',
   }
 
@@ -35,38 +50,41 @@ function addContent() {
   ;(loadMenu = () => {
     postData(
       {
-        CodigoCliente: store.clientId,
-        IDCatalogo: catalog.id,
+        CodigoCliente: runtime.clientId,
+        IDCatalogo: runtime.catalogId,
       },
       '/Produtos/Linhas'
     ).then((data) => {
       if (data?.length === 0) return
 
       let html = ''
-      let url = `/Produtos/Catalogo?CodCliFor=${store.clientId}&IDCatalogo=${catalog.id}`
+      let url = `?CodCliFor=${runtime.clientId}&IDCatalogo=${runtime.catalogId}`
 
       data?.forEach(({ codigo, descricao }) => {
         let urlModified = `${url}&Linha=${codigo}`
 
-        html += `<li class="menu--item"><a href="${urlModified}" target="_self" class="menu--itemLink">${descricao}</a></li>`
+        html += `<li class="menu--item"><a href="${urlModified}" target="_self" data-item="${codigo}" class="menu--itemLink">${descricao}</a></li>`
       })
 
-      html += `<li class="menu--item menu--allItems"><a href="${url}" target="_self" class="menu--itemLink">Ver todas as categorias</a></li>`
+      html += `<li class="menu--item desktop-only"><a href="${url}" target="_self" data-item="null" class="menu--itemLink">TODOS</a></li>`
 
-      schema.menu?.html(html)
+      html += `<li class="menu--item menu--allItems"><a href="${url}" target="_self" data-item="null" class="menu--itemLink">Ver todas as categorias</a></li>`
+
+      $(schema.menu)?.html(html)
     })
   })()
-  ;(searchProducts = () => {
+
+  const searchProducts = () => {
+    console.log('searchProducts', runtime)
     postData(
       {
-        CodigoCliente: store.clientId,
-        IDCatalogo: catalog.id,
-        Pesquisa: $('#Busca').val(),
-        IDRequisicao: $('#idrequisicao').val(),
+        CodigoCliente: runtime.clientId,
+        IDCatalogo: runtime.catalogId,
+        Pesquisa: runtime.search,
         Ordenar: undefined,
         QuantidadeRegistrosPagina: undefined,
         PaginaAtual: undefined,
-        Linhas: undefined,
+        Linhas: runtime.pageItem,
         Tipos: undefined,
         Segmentos: undefined,
         Grupos: undefined,
@@ -82,7 +100,6 @@ function addContent() {
       },
       '/Produtos/ListaProdutos'
     ).then((data) => {
-      console.log(data)
       if (!data) return
 
       // Treatment to use lazyload
@@ -95,7 +112,46 @@ function addContent() {
           .removeAttr('src')
       })
 
-      schema.productList?.html(html)
+      $(schema.productList)?.html(html)
     })
-  })()
+  }
+
+  console.log('params', params)
+
+  // Initial fetch
+  searchProducts()
+
+  function handleMenuClick(e) {
+    e.preventDefault()
+
+    const {
+      target: {
+        dataset: { item },
+      },
+    } = e
+
+    console.log('$(schema.menuItems)', runtime, item)
+
+    if (history.pushState) {
+      const params = new URLSearchParams(window.location.search)
+
+      // Set the new value for the "Linha" parameter
+      if (item && item !== 'null') {
+        params.set('Linha', item)
+      } else {
+        // If item is not provided, remove the parameter
+        params.delete('Linha')
+      }
+
+      const newUrl = `${location.pathname}?${params.toString()}`
+
+      window.history.pushState({ path: newUrl }, '', newUrl)
+      setParams(getParams())
+    }
+  }
+
+  // Fetch products triggers
+  $(document).one('click', schema.menuItems, handleMenuClick)
+
+  $(schema.searchButton)?.one('click', () => searchProducts())
 }
