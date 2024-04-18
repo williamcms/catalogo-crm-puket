@@ -77,44 +77,39 @@ function addContent() {
 
   const searchProducts = () => {
     console.log('searchProducts', runtime)
-    postData(
-      {
-        CodigoCliente: runtime.clientId,
-        IDCatalogo: runtime.catalogId,
-        Pesquisa: runtime.search,
-        Ordenar: undefined,
-        QuantidadeRegistrosPagina: undefined,
-        PaginaAtual: undefined,
-        Linhas: runtime.pageItem,
-        Tipos: undefined,
-        Segmentos: undefined,
-        Grupos: undefined,
-        SubGrupos: undefined,
-        Categorias: undefined,
-        SubCategorias: undefined,
-        Sexos: undefined,
-        Tamanhos: undefined,
-        Solucoes: undefined,
-        Campanhas: undefined,
-        Colecoes: undefined,
-        Listas: undefined,
-      },
-      '/Produtos/ListaProdutos'
-    ).then((data) => {
-      if (!data) return
+    const PRODUCT_PARAMS = {
+      CodigoCliente: runtime.clientId,
+      IDCatalogo: runtime.catalogId,
+      Pesquisa: runtime.search,
+      Ordenar: undefined,
+      QuantidadeRegistrosPagina: undefined,
+      PaginaAtual: undefined,
+      Linhas: runtime.pageItem,
+      Grupos: undefined,
+      SubGrupos: undefined,
+      Categorias: undefined,
+      SubCategorias: undefined,
+      Sexos: undefined,
+      Tamanhos: undefined,
+      Solucoes: undefined, //personagem
+    }
 
-      // Treatment to use lazyload
-      const html = $(data).each(() => {
-        var $this = $(this).find('.summary-item--imageElement')
-        $this
-          .attr({
-            'data-src': $this.attr('src'),
-          })
-          .removeAttr('src')
+    postData(PRODUCT_PARAMS, '/Produtos/ListaProdutos')
+      .then((data) => {
+        if (!data) return
+
+        // Treatment to use lazyload
+        const html = $(data).each(() => {
+          var $this = $(this).find('.summary-item--imageElement')
+          $this
+            .attr({
+              'data-src': $this.attr('src'),
+            })
+            .removeAttr('src')
+        })
+
+        $(schema.productList)?.html(html)
       })
-
-      $(schema.productList)?.html(html)
-    })
   }
 
   console.log('params', params, getParams())
