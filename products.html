@@ -23,14 +23,7 @@
       <!-- Altera a seleção de produtos exibidos de acordo com o tamanho -->
       <div class="product-controls--size">
         <label class="only-sr">Tamanho</label>
-        <select name="size" class="size--select">
-          <option value="">Tamanho</option>
-          <option value="PP">PP</option>
-          <option value="P">P</option>
-          <option value="M">M</option>
-          <option value="G">G</option>
-          <option value="GG">GG</option>
-        </select>
+        <select name="size" class="size--select"></select>
       </div>
 
       <div class="product-controls--filter">
@@ -118,9 +111,9 @@
               </div>
             </details>
             <!-- Filtro Tamanho -->
-            <details class="filter--listItem">
+            <details class="filter--listItem size">
               <summary class="filter--itemName">Tamanho</summary>
-              <div class="filter--listOptions">
+              <div class="filter--listOptions size--select">
                 <div class="filter--optionItem">
                   <input type="checkbox" name="" id="filter-tamanho-1" />
                   <label for="filter-tamanho-1">Filtro 1 (999)</label>

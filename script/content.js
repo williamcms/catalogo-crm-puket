@@ -25,6 +25,8 @@ function addContent() {
     searchInput: '.header--search input[type="search"]',
     searchButton: '.header--search button.search--button',
     productList: '.products--wrapper > .products--container > .products--listage',
+    productControlSize: '.product-controls--size > .size--select',
+    productFilterSize: '.filter--listItem > .filter--listOptions',
   }
 
   const runtime = {
@@ -75,6 +77,21 @@ function addContent() {
     })
   })()
 
+  const loadSizeList = (productParams) => {
+    let htmlSelect = '<option value="">Tamanho</option>'
+    let htmlFilter = ''
+
+    postData(productParams, '/Produtos/Tamanhos').then((data) => {
+      data?.forEach(({ codigo, descricao }, i) => {
+        htmlSelect += `<option value="${codigo}">${descricao}</option>`
+        htmlFilter += `<div class="filter--optionItem"><input type="checkbox" name="tamanhos[]" value="${codigo}" id="tamanhos-${codigo}" /><label for="tamanhos-${codigo}">${descricao}</label></div>`
+      })
+
+      $(schema.productControlSize).html(htmlSelect)
+      $(schema.productFilterSize).html(htmlFilter)
+    })
+  }
+
   const searchProducts = () => {
     console.log('searchProducts', runtime)
     const PRODUCT_PARAMS = {
@@ -110,6 +127,7 @@ function addContent() {
 
         $(schema.productList)?.html(html)
       })
+      .then(() => loadSizeList(PRODUCT_PARAMS))
   }
 
   console.log('params', params, getParams())
