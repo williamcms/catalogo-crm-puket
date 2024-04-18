@@ -36,6 +36,36 @@ const { format: formatPrice } = new Intl.NumberFormat('pt-BR', {
   minimumFractionDigits: 2,
 })
 
+const createElement = (tag, attributes, children) => {
+  const elm = document.createElement(tag)
+
+  for (const key in attributes) {
+    if (key === 'className') {
+      elm.setAttribute('class', attributes[key])
+    } else {
+      elm.setAttribute(key, attributes[key])
+    }
+  }
+
+  if (children) {
+    if (typeof children === 'string') {
+      elm.textContent = children
+    } else if (Array.isArray(children)) {
+      children.forEach((child) => {
+        if (typeof child === 'string') {
+          elm.appendChild(document.createTextNode(child))
+        } else {
+          elm.appendChild(child)
+        }
+      })
+    } else {
+      elm.appendChild(children)
+    }
+  }
+
+  return elm
+}
+
 function init() {
   // Set aria-expanded for needed overlays
   if (isMobile()) {
