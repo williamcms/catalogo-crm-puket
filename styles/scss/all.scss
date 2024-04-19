@@ -172,3 +172,33 @@ img {
     }
   }
 }
+
+@keyframes loadingItem {
+  0% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.skeleton-layout {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #f4f4f4;
+  overflow: hidden;
+
+  &::after {
+    animation: 1.6s linear 0.5s infinite normal none running loadingItem;
+    background: linear-gradient(90deg, transparent, #e6e6e6, transparent);
+    content: '';
+    position: absolute;
+    transform: translateX(-100%);
+    inset: 0rem;
+  }
+}

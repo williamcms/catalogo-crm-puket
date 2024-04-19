@@ -1,6 +1,19 @@
 document?.addEventListener('includeHTMLLoaded', addContent, false)
 
 const IS_DEV = location.hostname === 'localhost' || location.hostname === '127.0.0.1'
+const MIN_PRODUCTS = 20
+
+const skeleton = (props) => {
+  let { items = 20, className = '', width = '100px', height = '100px' } = props ?? {}
+
+  typeof className === 'string' && (className += ' skeleton-layout')
+
+  let html = [...Array(items)].map(() =>
+    createElement('div', { className: className, style: `width:${width}; height:${height}` })
+  )
+
+  return html
+}
 
 const getParams = () =>
   location.search
@@ -47,10 +60,14 @@ function addContent() {
       traditional: true,
     })
 
+    console.log(path, response)
+
     return response
   }
 
   ;(loadMenu = () => {
+    $(schema.menu)?.html(skeleton({ items: 6, className: 'menu--item', width: '95px', height: '22px' }))
+
     postData(
       {
         CodigoCliente: runtime.clientId,
@@ -82,7 +99,7 @@ function addContent() {
     let htmlFilter = ''
 
     postData(productParams, '/Produtos/Tamanhos').then((data) => {
-      data?.forEach(({ codigo, descricao }, i) => {
+      data?.forEach(({ codigo, descricao }) => {
         htmlSelect += `<option value="${codigo}">${descricao}</option>`
         htmlFilter += `<div class="filter--optionItem"><input type="checkbox" name="tamanhos[]" value="${codigo}" id="tamanhos-${codigo}" /><label for="tamanhos-${codigo}">${descricao}</label></div>`
       })
@@ -99,7 +116,7 @@ function addContent() {
       IDCatalogo: runtime.catalogId,
       Pesquisa: runtime.search,
       Ordenar: undefined,
-      QuantidadeRegistrosPagina: undefined,
+      QuantidadeRegistrosPagina: MIN_PRODUCTS,
       PaginaAtual: undefined,
       Linhas: runtime.pageItem,
       Grupos: undefined,
@@ -111,9 +128,14 @@ function addContent() {
       Solucoes: undefined, //personagem
     }
 
+    const width = isMobile() ? '185px' : '286px'
+    const height = isMobile() ? '381px' : '526px'
+
+    $(schema.productList)?.html(skeleton({ items: MIN_PRODUCTS, className: 'products--listItem', width, height }))
+
     postData(PRODUCT_PARAMS, '/Produtos/ListaProdutos')
       .then((data) => {
-        if (!data) return
+        if (!data || String(data).indexOf('products--listItem') === -1) return
 
         // Treatment to use lazyload
         const html = $(data).each(() => {
