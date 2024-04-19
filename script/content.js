@@ -33,7 +33,7 @@ function addContent() {
     clientId: params?.CodCliFor ?? '105964',
     catalogId: params?.IDCatalogo ?? '25338',
     pageItem: params?.Linha ?? null,
-    search: search,
+    search: typeof search !== 'string' ? '' : search,
     order: 'ASC',
   }
 
