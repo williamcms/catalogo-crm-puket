@@ -44,7 +44,7 @@ function addContent() {
 
   const runtime = {
     clientId: params?.CodCliFor ?? '105964',
-    catalogId: params?.IDCatalogo ?? '25338',
+    catalogId: params?.IDCatalogo ?? '25439',
     pageItem: params?.Linha ?? null,
     search: typeof search !== 'string' ? '' : search,
     order: 'ASC',
