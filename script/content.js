@@ -169,17 +169,17 @@ function addContent() {
     console.log('$(schema.menuItems)', runtime, item)
 
     if (history.pushState) {
-      const params = new URLSearchParams(window.location.search)
+      const urlParams = new URLSearchParams(window.location.search)
 
       // Set the new value for the "Linha" parameter
       if (item && item !== 'null') {
-        params.set('Linha', item)
+        urlParams.set('Linha', item)
       } else {
         // If item is not provided, remove the parameter
-        params.delete('Linha')
+        urlParams.delete('Linha')
       }
 
-      const newUrl = `${location.pathname}?${params.toString()}`
+      const newUrl = `${location.pathname}?${urlParams.toString()}`
 
       window.history.pushState({ path: newUrl }, '', newUrl)
       setParams()
