@@ -26,6 +26,7 @@ const getParams = () =>
     }, {})
 
 const convertToArray = (value = '', separator = null) => {
+  if (value === '') return []
   if (typeof value === 'string' && separator != null) return String(value).split(separator)
   else if (typeof value === 'string') return new Array(String(value))
   else return value
@@ -34,6 +35,7 @@ const convertToArray = (value = '', separator = null) => {
 function addContent() {
   const host = IS_DEV ? 'https://ti.grupounico.com' : location.origin
 
+  // Triggers reload of addContent state (re-excute all functions)
   const [params, setParams] = useState(getParams(), arguments)
   const [search, setSearch] = useState('', arguments)
 
@@ -59,15 +61,15 @@ function addContent() {
   const runtime = {
     clientId: params?.CodCliFor ?? '105964',
     catalogId: params?.IDCatalogo ?? '25439',
-    pageItem: convertToArray(params?.Linhas) ?? null,
+    pageItem: params?.Pagina ?? null,
     search: typeof search !== 'string' ? '' : search,
     filters: {
-      categories: [],
-      models: [],
-      sizes: [],
-      sex: [],
-      colors: [],
-      characters: [],
+      Linhas: convertToArray(params?.Linhas) ?? null,
+      Grupos: convertToArray(params?.Grupos) ?? null,
+      Tamanhos: convertToArray(params?.Tamanhos) ?? null,
+      Sexos: convertToArray(params?.Sexos) ?? null,
+      Cores: convertToArray(params?.Cores) ?? null,
+      Solucoes: convertToArray(params?.Solucoes) ?? null,
     },
     order: 'ASC',
   }
@@ -121,6 +123,40 @@ function addContent() {
 
       window.history.pushState({ path: newUrl }, '', newUrl)
     }
+  }
+
+  function handleFilterClear() {
+    const allValues = new Array()
+
+    $(schema.productFilterInputs).each((_, item) => {
+      const $this = $(item)
+
+      const name = $this.attr('name').replace('[]', '')
+
+      allValues.push(name)
+    })
+
+    if (history.pushState) {
+      const urlParams = new URLSearchParams(window.location.search)
+
+      allValues.forEach((item) => urlParams.delete(item))
+
+      const newUrl = `${location.pathname}?${urlParams.toString()}`
+
+      window.history.pushState({ path: newUrl }, '', newUrl)
+
+      setParams(getParams())
+    }
+  }
+
+  function handleFilterApply(e) {
+    e.preventDefault()
+
+    const { Linhas, Grupos, Tamanhos, Sexos, Cores, Solucoes } = runtime.filters
+    const hasFilters =
+      Linhas.length || Grupos.length || Tamanhos.length || Sexos.length || Cores.length || Solucoes.length
+
+    if (hasFilters) setParams(getParams())
   }
 
   const addToFilter = ({ data, field, local }) => {
@@ -202,7 +238,7 @@ function addContent() {
 
   const loadColorList = (productParams) => {
     postData(productParams, '/Produtos/Cores').then((data) => {
-      addToFilter({ data, field: 'colors', local: schema.productFilterColor })
+      addToFilter({ data, field: 'Cores', local: schema.productFilterColor })
     })
   }
 
@@ -220,14 +256,16 @@ function addContent() {
       Ordenar: undefined,
       QuantidadeRegistrosPagina: MIN_PRODUCTS,
       PaginaAtual: undefined,
-      Linhas: runtime.pageItem,
-      Grupos: undefined,
+      Linhas: runtime.filters.Linhas,
+      Grupos: runtime.filters.Grupos,
       SubGrupos: undefined,
       Categorias: undefined,
       SubCategorias: undefined,
-      Sexos: undefined,
-      Tamanhos: undefined,
-      Solucoes: undefined,
+      // not working
+      // Cores: runtime.filters.Cores,
+      Sexos: runtime.filters.Sexos,
+      Tamanhos: runtime.filters.Tamanhos,
+      Solucoes: runtime.filters.Solucoes,
     }
 
     const width = isMobile() ? '185px' : '286px'
@@ -301,4 +339,7 @@ function addContent() {
   $(document).one('click', schema.menuItems, handleMenuClick)
 
   $(schema.searchForm)?.one('submit', debounceSearch)
+
+  $(schema.productFilterClear)?.one('click', handleFilterClear)
+  $(schema.productFilterApply)?.one('click', handleFilterApply)
 }
