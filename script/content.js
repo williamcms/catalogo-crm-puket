@@ -163,6 +163,12 @@ function addContent() {
     })
   }
 
+  const loadCharacterList = (productParams) => {
+    postData(productParams, '/Produtos/Solucoes').then((data) => {
+      addToFilter({ data, field: 'characters', local: schema.productFilterCharacter })
+    })
+  }
+
   const searchProducts = () => {
     const PRODUCT_PARAMS = {
       CodigoCliente: runtime.clientId,
@@ -208,6 +214,7 @@ function addContent() {
         loadSizeList(PRODUCT_PARAMS)
         loadSexList(PRODUCT_PARAMS)
         loadColorList(PRODUCT_PARAMS)
+        loadCharacterList(PRODUCT_PARAMS)
       })
   }
 
