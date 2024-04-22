@@ -206,7 +206,7 @@ function addContent() {
       const newUrl = `${location.pathname}?${urlParams.toString()}`
 
       window.history.pushState({ path: newUrl }, '', newUrl)
-      setParams()
+      setParams(getParams())
     }
   }
 
