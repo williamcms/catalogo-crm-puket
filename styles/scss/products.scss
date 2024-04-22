@@ -364,13 +364,13 @@
 
                 .summary-item--imageContainer {
                   line-height: 0;
-                  aspect-ratio: 363/500;
                   max-width: 100%;
 
                   .summary-item--imageElement {
                     display: block;
                     height: auto;
                     max-height: inherit;
+                    aspect-ratio: 363/500;
                     border-radius: 0.25rem;
                     margin: 0 auto;
                   }
