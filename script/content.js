@@ -56,7 +56,7 @@ function addContent() {
   const runtime = {
     clientId: params?.CodCliFor ?? '105964',
     catalogId: params?.IDCatalogo ?? '25439',
-    pageItem: convertToArray(params?.Linha) ?? null,
+    pageItem: convertToArray(params?.Linhas) ?? null,
     search: typeof search !== 'string' ? '' : search,
     order: 'ASC',
   }
@@ -112,7 +112,7 @@ function addContent() {
       let url = `?CodCliFor=${runtime.clientId}&IDCatalogo=${runtime.catalogId}`
 
       data?.forEach(({ codigo, descricao }) => {
-        let urlModified = `${url}&Linha=${codigo}`
+        let urlModified = `${url}&Linhas=${codigo}`
 
         htmlMenu += `<li class="menu--item"><a href="${urlModified}" target="_self" data-item="${codigo}" class="menu--itemLink">${descricao}</a></li>`
       })
@@ -127,13 +127,13 @@ function addContent() {
 
   const loadCategoriesList = (productParams) => {
     postData(productParams, '/Produtos/Linhas').then((data) => {
-      addToFilter({ data, field: 'categories', local: schema.productFilterCategory })
+      addToFilter({ data, field: 'Linhas', local: schema.productFilterCategory })
     })
   }
 
   const loadModelsList = (productParams) => {
     postData(productParams, '/Produtos/Grupos').then((data) => {
-      addToFilter({ data, field: 'models', local: schema.productFilterModel })
+      addToFilter({ data, field: 'Grupos', local: schema.productFilterModel })
     })
   }
 
@@ -141,7 +141,7 @@ function addContent() {
     let htmlSelect = '<option value="">Tamanho</option>'
 
     postData(productParams, '/Produtos/Tamanhos').then((data) => {
-      addToFilter({ data, field: 'sizes', local: schema.productFilterSize })
+      addToFilter({ data, field: 'Tamanhos', local: schema.productFilterSize })
 
       data?.forEach(({ codigo, descricao }) => {
         htmlSelect += `<option value="${codigo}">${descricao}</option>`
@@ -153,7 +153,7 @@ function addContent() {
 
   const loadSexList = (productParams) => {
     postData(productParams, '/Produtos/Sexo').then((data) => {
-      addToFilter({ data, field: 'sex', local: schema.productFilterSex })
+      addToFilter({ data, field: 'Sexos', local: schema.productFilterSex })
     })
   }
 
@@ -165,7 +165,7 @@ function addContent() {
 
   const loadCharacterList = (productParams) => {
     postData(productParams, '/Produtos/Solucoes').then((data) => {
-      addToFilter({ data, field: 'characters', local: schema.productFilterCharacter })
+      addToFilter({ data, field: 'Solucoes', local: schema.productFilterCharacter })
     })
   }
 
@@ -184,7 +184,7 @@ function addContent() {
       SubCategorias: undefined,
       Sexos: undefined,
       Tamanhos: undefined,
-      Solucoes: undefined, //personagem
+      Solucoes: undefined,
     }
 
     const width = isMobile() ? '185px' : '286px'
@@ -233,12 +233,10 @@ function addContent() {
     if (history.pushState) {
       const urlParams = new URLSearchParams(window.location.search)
 
-      // Set the new value for the "Linha" parameter
       if (item && item !== 'null') {
-        urlParams.set('Linha', item)
+        urlParams.set('Linhas', item)
       } else {
-        // If item is not provided, remove the parameter
-        urlParams.delete('Linha')
+        urlParams.delete('Linhas')
       }
 
       const newUrl = `${location.pathname}?${urlParams.toString()}`
