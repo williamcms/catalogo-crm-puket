@@ -82,6 +82,20 @@ function addContent() {
     return response
   }
 
+  const addToFilter = ({ data, field, local }) => {
+    if (data?.length === 0) return
+
+    let htmlFilter = ''
+
+    data?.forEach(({ codigo, descricao }) => {
+      const randID = Math.random().toString(36).substring(2, 9)
+
+      htmlFilter += `<div class="filter--optionItem"><input type="checkbox" name="${field}[]" value="${codigo}" id="${randID}-${codigo}" /><label for="${randID}-${codigo}">${descricao}</label></div>`
+    })
+
+    $(local).html(htmlFilter)
+  }
+
   ;(loadMenu = () => {
     $(schema.menu)?.html(skeleton({ items: 6, className: 'menu--item', width: '95px', height: '22px' }))
 
@@ -113,30 +127,21 @@ function addContent() {
 
   const loadCategoriesList = (productParams) => {
     postData(productParams, '/Produtos/Linhas').then((data) => {
-      if (data?.length === 0) return
-
-      let htmlFilter = ''
-
-      data?.forEach(({ codigo, descricao }) => {
-        htmlFilter += `<div class="filter--optionItem"><input type="checkbox" name="categories[]" value="${codigo}" id="tamanhos-${codigo}" /><label for="tamanhos-${codigo}">${descricao}</label></div>`
-      })
-
-      $(schema.productFilterCategory).html(htmlFilter)
+      addToFilter({ data, field: 'categories', local: schema.productFilterCategory })
     })
   }
 
   const loadSizeList = (productParams) => {
     let htmlSelect = '<option value="">Tamanho</option>'
-    let htmlFilter = ''
 
     postData(productParams, '/Produtos/Tamanhos').then((data) => {
+      addToFilter({ data, field: 'sizes', local: schema.productFilterSize })
+
       data?.forEach(({ codigo, descricao }) => {
         htmlSelect += `<option value="${codigo}">${descricao}</option>`
-        htmlFilter += `<div class="filter--optionItem"><input type="checkbox" name="size[]" value="${codigo}" id="size-${codigo}" /><label for="size-${codigo}">${descricao}</label></div>`
       })
 
       $(schema.productControlSize).html(htmlSelect)
-      $(schema.productFilterSize).html(htmlFilter)
     })
   }
 
