@@ -25,6 +25,12 @@ const getParams = () =>
       return acc
     }, {})
 
+const convertToArray = (value = '', separator = null) => {
+  if (typeof value === 'string' && separator != null) return String(value).split(separator)
+  else if (typeof value === 'string') return new Array(String(value))
+  else return value
+}
+
 function addContent() {
   const host = IS_DEV ? 'https://ti.grupounico.com' : location.origin
 
@@ -45,7 +51,7 @@ function addContent() {
   const runtime = {
     clientId: params?.CodCliFor ?? '105964',
     catalogId: params?.IDCatalogo ?? '25439',
-    pageItem: params?.Linha ?? null,
+    pageItem: convertToArray(params?.Linha) ?? null,
     search: typeof search !== 'string' ? '' : search,
     order: 'ASC',
   }
@@ -60,7 +66,13 @@ function addContent() {
       traditional: true,
     })
 
-    console.log(path, response)
+    console.log({
+      path: path,
+      data: data,
+      params: params,
+      runtime: runtime,
+      response: path !== '/Produtos/ListaProdutos' && response,
+    })
 
     return response
   }
@@ -77,22 +89,36 @@ function addContent() {
     ).then((data) => {
       if (data?.length === 0) return
 
-      let html = ''
+      let htmlMenu = ''
       let url = `?CodCliFor=${runtime.clientId}&IDCatalogo=${runtime.catalogId}`
 
       data?.forEach(({ codigo, descricao }) => {
         let urlModified = `${url}&Linha=${codigo}`
 
-        html += `<li class="menu--item"><a href="${urlModified}" target="_self" data-item="${codigo}" class="menu--itemLink">${descricao}</a></li>`
+        htmlMenu += `<li class="menu--item"><a href="${urlModified}" target="_self" data-item="${codigo}" class="menu--itemLink">${descricao}</a></li>`
       })
 
-      html += `<li class="menu--item desktop-only"><a href="${url}" target="_self" data-item="null" class="menu--itemLink">Todos</a></li>`
+      htmlMenu += `<li class="menu--item desktop-only"><a href="${url}" target="_self" data-item="null" class="menu--itemLink">Todos</a></li>`
 
-      html += `<li class="menu--item menu--allItems"><a href="${url}" target="_self" data-item="null" class="menu--itemLink">Ver todas as categorias</a></li>`
+      htmlMenu += `<li class="menu--item menu--allItems"><a href="${url}" target="_self" data-item="null" class="menu--itemLink">Ver todas as categorias</a></li>`
 
-      $(schema.menu)?.html(html)
+      $(schema.menu)?.html(htmlMenu)
     })
   })()
+
+  const loadCategoriesList = (productParams) => {
+    postData(productParams, '/Produtos/Linhas').then((data) => {
+      if (data?.length === 0) return
+
+      let htmlFilter = ''
+
+      data?.forEach(({ codigo, descricao }) => {
+        htmlFilter += `<div class="filter--optionItem"><input type="checkbox" name="categories[]" value="${codigo}" id="tamanhos-${codigo}" /><label for="tamanhos-${codigo}">${descricao}</label></div>`
+      })
+
+      $(schema.productFilterCategory).html(htmlFilter)
+    })
+  }
 
   const loadSizeList = (productParams) => {
     let htmlSelect = '<option value="">Tamanho</option>'
@@ -101,7 +127,7 @@ function addContent() {
     postData(productParams, '/Produtos/Tamanhos').then((data) => {
       data?.forEach(({ codigo, descricao }) => {
         htmlSelect += `<option value="${codigo}">${descricao}</option>`
-        htmlFilter += `<div class="filter--optionItem"><input type="checkbox" name="tamanhos[]" value="${codigo}" id="tamanhos-${codigo}" /><label for="tamanhos-${codigo}">${descricao}</label></div>`
+        htmlFilter += `<div class="filter--optionItem"><input type="checkbox" name="size[]" value="${codigo}" id="size-${codigo}" /><label for="size-${codigo}">${descricao}</label></div>`
       })
 
       $(schema.productControlSize).html(htmlSelect)
@@ -149,7 +175,10 @@ function addContent() {
 
         $(schema.productList)?.html(html)
       })
-      .then(() => loadSizeList(PRODUCT_PARAMS))
+      .then(() => {
+        loadCategoriesList(PRODUCT_PARAMS)
+        loadSizeList(PRODUCT_PARAMS)
+      })
   }
 
   console.log('params', params, getParams())
