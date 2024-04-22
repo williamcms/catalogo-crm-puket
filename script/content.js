@@ -157,6 +157,12 @@ function addContent() {
     })
   }
 
+  const loadColorList = (productParams) => {
+    postData(productParams, '/Produtos/Cores').then((data) => {
+      addToFilter({ data, field: 'colors', local: schema.productFilterColor })
+    })
+  }
+
   const searchProducts = () => {
     const PRODUCT_PARAMS = {
       CodigoCliente: runtime.clientId,
@@ -201,6 +207,7 @@ function addContent() {
         loadModelsList(PRODUCT_PARAMS)
         loadSizeList(PRODUCT_PARAMS)
         loadSexList(PRODUCT_PARAMS)
+        loadColorList(PRODUCT_PARAMS)
       })
   }
 
