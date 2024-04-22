@@ -136,7 +136,6 @@ function addContent() {
   }
 
   const searchProducts = () => {
-    console.log('searchProducts', runtime)
     const PRODUCT_PARAMS = {
       CodigoCliente: runtime.clientId,
       IDCatalogo: runtime.catalogId,
@@ -181,8 +180,6 @@ function addContent() {
       })
   }
 
-  console.log('params', params, getParams())
-
   // Initial fetch
   searchProducts()
 
@@ -194,8 +191,6 @@ function addContent() {
         dataset: { item },
       },
     } = e
-
-    console.log('$(schema.menuItems)', runtime, item)
 
     if (history.pushState) {
       const urlParams = new URLSearchParams(window.location.search)
