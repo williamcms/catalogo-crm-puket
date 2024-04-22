@@ -151,6 +151,12 @@ function addContent() {
     })
   }
 
+  const loadSexList = (productParams) => {
+    postData(productParams, '/Produtos/Sexo').then((data) => {
+      addToFilter({ data, field: 'sex', local: schema.productFilterSex })
+    })
+  }
+
   const searchProducts = () => {
     const PRODUCT_PARAMS = {
       CodigoCliente: runtime.clientId,
@@ -194,6 +200,7 @@ function addContent() {
         loadCategoriesList(PRODUCT_PARAMS)
         loadModelsList(PRODUCT_PARAMS)
         loadSizeList(PRODUCT_PARAMS)
+        loadSexList(PRODUCT_PARAMS)
       })
   }
 
