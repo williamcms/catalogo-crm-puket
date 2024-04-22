@@ -45,7 +45,12 @@ function addContent() {
     searchButton: '.header--search button.search--button',
     productList: '.products--wrapper > .products--container > .products--listage',
     productControlSize: '.product-controls--size > .size--select',
-    productFilterSize: '.filter--listItem > .filter--listOptions',
+    productFilterCategory: '.filter--listItem.category > .filter--listOptions',
+    productFilterModel: '.filter--listItem.model > .filter--listOptions',
+    productFilterSize: '.filter--listItem.size > .filter--listOptions',
+    productFilterSex: '.filter--listItem.sex > .filter--listOptions',
+    productFilterColor: '.filter--listItem.color > .filter--listOptions',
+    productFilterCharacter: '.filter--listItem.character > .filter--listOptions',
   }
 
   const runtime = {
