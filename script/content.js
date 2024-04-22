@@ -51,6 +51,9 @@ function addContent() {
     productFilterSex: '.filter--listItem.sex > .filter--listOptions',
     productFilterColor: '.filter--listItem.color > .filter--listOptions',
     productFilterCharacter: '.filter--listItem.character > .filter--listOptions',
+    productFilterInputs: '.filter--listItem > .filter--listOptions input',
+    productFilterClear: '.filter-list--footer > .button--clear',
+    productFilterApply: '.filter-list--footer > .button--apply',
   }
 
   const runtime = {
@@ -58,6 +61,14 @@ function addContent() {
     catalogId: params?.IDCatalogo ?? '25439',
     pageItem: convertToArray(params?.Linhas) ?? null,
     search: typeof search !== 'string' ? '' : search,
+    filters: {
+      categories: [],
+      models: [],
+      sizes: [],
+      sex: [],
+      colors: [],
+      characters: [],
+    },
     order: 'ASC',
   }
 
@@ -82,6 +93,36 @@ function addContent() {
     return response
   }
 
+  function handleFilterChange(e) {
+    const target = $(e.target)
+
+    const allValues = new Array()
+    const name = target.attr('name').replace('[]', '')
+
+    $(schema.productFilterInputs + `[name="${name}[]"]`).each((_, item) => {
+      const $this = $(item)
+
+      const value = $this.val()
+      const checked = $this.is(':checked')
+
+      checked && allValues.push(value)
+    })
+
+    if (history.pushState) {
+      const urlParams = new URLSearchParams(window.location.search)
+
+      if (allValues.length) {
+        urlParams.set(name, encodeURI(allValues.toString()))
+      } else {
+        urlParams.delete(name)
+      }
+
+      const newUrl = `${location.pathname}?${urlParams.toString()}`
+
+      window.history.pushState({ path: newUrl }, '', newUrl)
+    }
+  }
+
   const addToFilter = ({ data, field, local }) => {
     if (data?.length === 0) return
 
@@ -94,6 +135,8 @@ function addContent() {
     })
 
     $(local).html(htmlFilter)
+
+    $(local)?.find('input')?.on('change', handleFilterChange)
   }
 
   ;(loadMenu = () => {
