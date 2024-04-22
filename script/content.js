@@ -131,6 +131,12 @@ function addContent() {
     })
   }
 
+  const loadModelsList = (productParams) => {
+    postData(productParams, '/Produtos/Grupos').then((data) => {
+      addToFilter({ data, field: 'models', local: schema.productFilterModel })
+    })
+  }
+
   const loadSizeList = (productParams) => {
     let htmlSelect = '<option value="">Tamanho</option>'
 
@@ -186,6 +192,7 @@ function addContent() {
       })
       .then(() => {
         loadCategoriesList(PRODUCT_PARAMS)
+        loadModelsList(PRODUCT_PARAMS)
         loadSizeList(PRODUCT_PARAMS)
       })
   }
