@@ -232,6 +232,63 @@
       <div>Carregando...</div>
     </div>
 
+    <div class="product--pagination">
+      <ul class="product--paginationNav">
+        <!-- 
+          O item atual da páginação deve sempre conter a atributo aria-current="page" no botão. Caso não haja mais páginas para seguir ou voltar, o botão "Próximo/Anterior" deve possuir aria-disabled="true", perdendo esse atributo caso o usuário tenha págins disponíveis para navegar. Cada botão deve ter o atributo "data-page", no qual pode conter um dos valores: {prev}, {algum número}, {next}.
+
+          A navegação deve sempre mostrar número atual + 4 números, sendo dois anteriores e dois posteriores, se não houver números próximos, deve exibir anteriores, ex: 
+          Se o número atual é 1 (max 8), exibir: prev. 1 2 3 4 5 prox. (1 com aria-current) (prev com aria-disabled)
+          Se o número atual é 5 (max 8), exibir: prev. 3 4 5 6 7 prox. (5 com aria-current)
+          Se o número atual é 7 (max 8), exibir: prev. 4 5 6 7 8 prox. (7 com aria-current)
+          Se o número atual é 8 (max 8), exibir: prev. 4 5 6 7 8 prox. (8 com aria-current) (prox com aria-disabled)
+
+          Se o número atual é 1 (max 1), exibir: prev. 1 prox. (1 com aria-current) (prev/prox com aria-disabled)
+         -->
+        <li class="product--paginationItem">
+          <button class="product--paginationButton" data-page="prev" aria-label="Página Anterior" aria-disabled="true">
+            <span class="product--paginationLabel">Anterior</span>
+          </button>
+        </li>
+
+        <li class="product--paginationItem">
+          <button class="product--paginationButton" data-page="1" aria-label="Página 1" aria-current="page">
+            <span class="product--paginationLabel">1</span>
+          </button>
+        </li>
+
+        <li class="product--paginationItem">
+          <button class="product--paginationButton" data-page="2" aria-label="Página 2">
+            <span class="product--paginationLabel">2</span>
+          </button>
+        </li>
+
+        <li class="product--paginationItem">
+          <button class="product--paginationButton" data-page="3" aria-label="Página 3">
+            <span class="product--paginationLabel">3</span>
+          </button>
+        </li>
+
+        <li class="product--paginationItem">
+          <button class="product--paginationButton" data-page="4" aria-label="Página 4">
+            <span class="product--paginationLabel">4</span>
+          </button>
+        </li>
+
+        <li class="product--paginationItem">
+          <button class="product--paginationButton" data-page="5" aria-label="Página 5">
+            <span class="product--paginationLabel">5</span>
+          </button>
+        </li>
+
+        <li class="product--paginationItem">
+          <button class="product--paginationButton" data-page="next" aria-label="Próxima Página">
+            <span class="product--paginationLabel">Próximo</span>
+          </button>
+        </li>
+      </ul>
+    </div>
+
     <div
       class="product--quickview overlay--wrapper"
       style="display: none"

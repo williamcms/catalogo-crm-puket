@@ -57,6 +57,7 @@ function addContent() {
     productFilterInputs: '.filter--listItem > .filter--listOptions input',
     productFilterClear: '.filter-list--footer > .button--clear',
     productFilterApply: '.filter-list--footer > .button--apply',
+    pagination: '.product--pagination .product--paginationButton',
   }
 
   const runtime = {
@@ -252,7 +253,7 @@ function addContent() {
       Pesquisa: runtime.search,
       Ordenar: undefined,
       QuantidadeRegistrosPagina: MIN_PRODUCTS,
-      PaginaAtual: undefined,
+      PaginaAtual: runtime.pageItem,
       Linhas: runtime.filters.Linhas,
       Grupos: runtime.filters.Grupos,
       SubGrupos: undefined,
@@ -332,6 +333,37 @@ function addContent() {
     setSearch(searchValue)
   }
 
+  function handlePagination(e) {
+    const {
+      currentTarget,
+      currentTarget: { dataset },
+    } = e
+
+    const MIN_PAGE = 1
+    const pageItem = Number(runtime.pageItem) || MIN_PAGE
+    const page = dataset?.page
+
+    const isDisabled = currentTarget.getAttribute('aria-disabled')
+    const isCurrentItem = currentTarget.getAttribute('aria-current')
+    const isCurrentPage = Number(page) === MIN_PAGE
+    const isLowerThanMinimum = page === 'prev' && pageItem == MIN_PAGE
+
+    if (isDisabled || isCurrentItem || isCurrentPage || isLowerThanMinimum) return
+
+    const pageTo = page === 'next' ? pageItem + 1 : page === 'prev' ? pageItem - 1 : page
+
+    if (history.pushState) {
+      const urlParams = new URLSearchParams(window.location.search)
+
+      urlParams.set('Pagina', Math.max(pageTo, MIN_PAGE))
+
+      const newUrl = `${location.pathname}?${urlParams.toString()}`
+
+      window.history.pushState({ path: newUrl }, '', newUrl)
+      setParams(getParams())
+    }
+  }
+
   // Fetch products triggers
   // These events should be removed before being added because they are at the root of the function,
   // and updating the state may cause them to duplicate
@@ -351,4 +383,6 @@ function addContent() {
   $(schema.productFilterApply)?.off('click')
   $(schema.productFilterApply)?.on('click', handleFilterApply)
 
+  $(document).off('click', schema.pagination)
+  $(document).on('click', schema.pagination, handlePagination)
 }

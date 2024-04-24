@@ -517,6 +517,68 @@
       }
     }
 
+    .product--pagination {
+      position: relative;
+      display: block;
+      margin: 1rem auto;
+
+      .product--paginationNav {
+        display: flex;
+        flex-direction: row;
+        list-style: none;
+
+        .product--paginationItem {
+          display: inline-block;
+
+          &:first-child {
+            .product--paginationButton {
+              border-radius: 0.5rem 0 0 0.5rem;
+            }
+          }
+
+          &:last-child {
+            .product--paginationButton {
+              border-radius: 0 0.5rem 0.5rem 0;
+            }
+          }
+
+          .product--paginationButton {
+            background-color: $c-purple-500;
+            width: fit-content;
+            padding: 0.625rem 1rem;
+            border: none;
+            cursor: pointer;
+
+            @include mobile {
+              padding: 0.625rem 0.75rem;
+            }
+
+            &[aria-disabled] {
+              background-color: $c-purple-300;
+            }
+
+            .product--paginationLabel {
+              font-size: 0.875rem;
+              color: $c-white;
+            }
+
+            &:hover:not([aria-disabled]),
+            &[aria-current] {
+              background-color: $c-purple-700;
+
+              .product--paginationLabel {
+                font-weight: 700;
+              }
+            }
+
+            &[aria-current] {
+              cursor: auto;
+            }
+          }
+        }
+      }
+    }
+
     .product--quickview {
       .product-quickview--container {
         position: absolute;
