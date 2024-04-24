@@ -47,7 +47,7 @@
 
     &[aria-checked='true'] {
       color: $c-white;
-      background-color: $c-purple;
+      background-color: $c-purple-500;
       border: none;
     }
 
@@ -80,7 +80,7 @@
 
         strong {
           font-weight: 700;
-          color: $c-purple;
+          color: $c-purple-500;
         }
       }
     }
@@ -151,7 +151,7 @@
           justify-content: center;
           align-items: center;
           gap: 0.5rem;
-          border: 0.0625rem solid $c-purple;
+          border: 0.0625rem solid $c-purple-500;
           border-radius: 12.5rem;
           padding: 0.4375rem 1rem;
           cursor: pointer;
@@ -159,11 +159,11 @@
           .filter--buttonText {
             font-size: 0.8125rem;
             font-weight: 700;
-            color: $c-purple;
+            color: $c-purple-500;
           }
 
           &:hover {
-            background-color: $c-purple;
+            background-color: $c-purple-500;
 
             .filter--buttonText {
               color: $c-white;
@@ -245,8 +245,8 @@
                 border-radius: 0.125rem;
 
                 &:checked {
-                  background-color: $c-purple;
-                  border: 0.0625rem solid $c-purple;
+                  background-color: $c-purple-500;
+                  border: 0.0625rem solid $c-purple-500;
                 }
               }
 
@@ -281,16 +281,16 @@
           padding: 0.75rem 1.5rem;
           border-radius: 12.5rem;
           background-color: $c-white;
-          border: 0.0625rem solid $c-purple;
+          border: 0.0625rem solid $c-purple-500;
           cursor: pointer;
 
           .form--buttonText {
             font-size: 0.875rem;
-            color: $c-purple;
+            color: $c-purple-500;
           }
 
           &.button--apply {
-            background-color: $c-purple;
+            background-color: $c-purple-500;
 
             .form--buttonText {
               color: $c-white;
@@ -483,7 +483,7 @@
                 .summary-item-price--sellingPrice {
                   font-size: 1.5rem;
                   font-weight: 700;
-                  color: $c-purple;
+                  color: $c-purple-500;
                   white-space: nowrap;
 
                   @include mobile {
@@ -618,7 +618,7 @@
             .product-quickview--sellingPrice {
               font-size: 1.5rem;
               font-weight: 700;
-              color: $c-purple;
+              color: $c-purple-500;
 
               &.hasListPrice {
                 color: $c-pink;

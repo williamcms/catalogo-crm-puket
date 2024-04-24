@@ -194,7 +194,7 @@
                   .cart-drawer-noItems--headline {
                     font-size: 1.125rem;
                     font-weight: 700;
-                    color: $c-purple;
+                    color: $c-purple-500;
                   }
 
                   .cart-drawer-noItems--subText {
@@ -322,7 +322,7 @@
                         .cart-summary--sellingPrice {
                           font-size: 0.875rem;
                           font-weight: 700;
-                          color: $c-purple;
+                          color: $c-purple-500;
 
                           @include desktop {
                             font-size: 1rem;
@@ -369,7 +369,7 @@
                     }
 
                     .totalizers--totalValue {
-                      color: $c-purple;
+                      color: $c-purple-500;
                     }
                   }
                 }
@@ -474,16 +474,16 @@
                     border-bottom: none;
 
                     .menu--itemLink {
-                      color: $c-purple;
+                      color: $c-purple-500;
                       text-align: center;
                       padding: 0.75rem 0;
                       width: 100%;
-                      border: 1px solid $c-purple;
+                      border: 1px solid $c-purple-500;
                       border-radius: 12.5rem;
 
                       &:hover {
                         color: $c-white;
-                        background-color: $c-purple;
+                        background-color: $c-purple-500;
                       }
                     }
                   }
