@@ -297,12 +297,47 @@ function init() {
   $(document).on('mousedown', '.product-quickview--skuItem', (e) => handleSKUSelection(e))
   $(document).on('keyup', '.product-quickview--skuItem', (e) => handleSKUSelection(e))
 
+  // Handle modal focus trapping
+  const handleModalFocus = (e, focusableElms) => {
+    if (e.key === 'Tab') {
+      if (e.shiftKey) {
+        if (document.activeElement === focusableElms?.first) {
+          focusableElms?.last.focus()
+          e.preventDefault()
+        }
+      } else {
+        if (document.activeElement === focusableElms?.last) {
+          focusableElms?.first.focus()
+          e.preventDefault()
+        }
+      }
+    }
+  }
+
+  // Reference to the function for trapping the modal focus
+  let trapModalRef = null
+
   // Handle product quick-view
   const mountQuickView = (e) => {
+    console.info('MOUNTED QUICKVIEW')
+
     if (e.button !== 0 && e.button !== 1 && e.key !== 'Enter' && e.key !== ' ') return
 
     const trigger = e?.currentTarget
     const modal = document.getElementById('product-quickview')
+
+    // Gather focusable elements inside the modal
+    var focusableElms = modal.querySelectorAll(
+      'a[href]:not([disabled]), button:not([disabled]), textarea:not([disabled]), input[type="text"]:not([disabled]), input[type="radio"]:not([disabled]), input[type="checkbox"]:not([disabled]), select:not([disabled])'
+    )
+
+    var firstModalFocus = focusableElms[0]
+    var lastModalFocus = focusableElms[focusableElms.length - 1]
+
+    modal.addEventListener(
+      'keydown',
+      (trapModalRef = (e) => handleModalFocus(e, { first: firstModalFocus, last: lastModalFocus }))
+    )
 
     // Get current selection of SKU
     const skuSelected = trigger.querySelector('.summary-item--skuItem[aria-checked="true"]')?.textContent
@@ -390,6 +425,8 @@ function init() {
           $(_elmImages)
             .not('.slick-initialized')
             .slick({ ...settings })
+
+          firstModalFocus.focus()
         }, 1000)
       })
 
@@ -456,7 +493,10 @@ function init() {
   }
 
   const unmountQuickView = () => {
+    console.info('UNMOUNTED QUICKVIEW')
     const modal = document.getElementById('product-quickview')
+
+    modal.removeEventListener('keydown', trapModalRef)
 
     const _elmScript = modal.querySelector('script[type="application/ld+json"]')
     const _elmImages = modal.querySelector('.product-quickview--images')
