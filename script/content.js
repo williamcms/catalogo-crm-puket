@@ -47,6 +47,7 @@ function addContent() {
     searchButton: '.header--search button.search--button',
     productList: '.products--wrapper > .products--container > .products--listage',
     productControlSize: '.product-controls--size > .size--select',
+    productFilterForm: '#filter-form',
     productFilterCategory: '.filter--listItem.category > .filter--listOptions',
     productFilterModel: '.filter--listItem.model > .filter--listOptions',
     productFilterSize: '.filter--listItem.size > .filter--listOptions',
@@ -152,11 +153,7 @@ function addContent() {
   function handleFilterApply(e) {
     e.preventDefault()
 
-    const { Linhas, Grupos, Tamanhos, Sexos, Cores, Solucoes } = runtime.filters
-    const hasFilters =
-      Linhas.length || Grupos.length || Tamanhos.length || Sexos.length || Cores.length || Solucoes.length
-
-    if (hasFilters) setParams(getParams())
+    setParams(getParams())
   }
 
   const addToFilter = ({ data, field, local }) => {
@@ -336,10 +333,22 @@ function addContent() {
   }
 
   // Fetch products triggers
-  $(document).one('click', schema.menuItems, handleMenuClick)
+  // These events should be removed before being added because they are at the root of the function,
+  // and updating the state may cause them to duplicate
+  $(document).off('click', schema.menuItems)
+  $(document).on('click', schema.menuItems, handleMenuClick)
 
-  $(schema.searchForm)?.one('submit', debounceSearch)
+  $(schema.searchForm)?.off('submit')
+  $(schema.searchForm)?.on('submit', debounceSearch)
 
-  $(schema.productFilterClear)?.one('click', handleFilterClear)
-  $(schema.productFilterApply)?.one('click', handleFilterApply)
+  // Prevent form submission, as the form tag is solely used to reset its fields
+  $(schema.productFilterForm)?.off('submit')
+  $(schema.productFilterForm)?.on('submit', (e) => e.preventDefault())
+
+  $(schema.productFilterClear)?.off('click')
+  $(schema.productFilterClear)?.on('click', handleFilterClear)
+
+  $(schema.productFilterApply)?.off('click')
+  $(schema.productFilterApply)?.on('click', handleFilterApply)
+
 }
