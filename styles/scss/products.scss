@@ -33,6 +33,9 @@
     border-radius: 12.5rem;
     background-color: $c-white;
 
+    // Prevent focus outline clipping
+    margin: 0.1875rem 0;
+
     @include desktop {
       font-size: 0.8125rem;
     }
@@ -587,6 +590,11 @@
 
               .product-quickview--imageElement {
                 padding: 0 0.5rem;
+
+                // Prevent focus outline clipping
+                &:focus-visible {
+                  outline-offset: -3px;
+                }
 
                 @include fold {
                   padding: 0 0.25rem;

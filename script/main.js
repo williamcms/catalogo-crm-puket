@@ -93,7 +93,7 @@ function init() {
   const handleOverlay = (e) => {
     e.stopImmediatePropagation()
 
-    if (e.button !== 0 && e.button !== 1 && e.key !== 'Enter' && e.key !== ' ' && e.type !== 'customtrigger') return
+    if (e.button !== 0 && e.button !== 1 && e.key !== 'Enter' && e.type !== 'customtrigger') return
 
     const currentElm = e.currentTarget
     const targetElm = e.target
@@ -154,7 +154,7 @@ function init() {
     const { elm: overlay } = getTopOverlay()
 
     if (!overlay) return
-    if (e.button !== 0 && e.button !== 1 && e.key !== 'Escape' && e.key !== ' ') return
+    if (e.button !== 0 && e.button !== 1 && e.key !== 'Escape') return
 
     if (overlay.id === 'product-quickview') unmountQuickView()
 
