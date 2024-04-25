@@ -87,7 +87,7 @@ function addContent() {
       traditional: true,
     })
 
-    console.log({
+    console.info({
       path: path,
       data: data,
       params: params,
@@ -98,29 +98,40 @@ function addContent() {
     return response
   }
 
-  function handleFilterChange(e) {
-    const target = $(e.target)
+  const useAvailableFilters = () => {
+    const filters = {}
 
-    const allValues = new Array()
-    const name = target.attr('name').replace('[]', '')
+    // Create a new variable based on the default filters
+    Object.keys(runtime.filters).forEach((key) => {
+      filters[key] = []
+    })
 
-    $(schema.productFilterInputs + `[name="${name}[]"]`).each((_, item) => {
+    $(schema.productFilterInputs).each((_, item) => {
       const $this = $(item)
 
+      const name = $this.attr('name').replace('[]', '')
       const value = $this.val()
       const checked = $this.is(':checked')
 
-      checked && allValues.push(value)
+      checked && filters[name].push(value)
     })
+
+    return filters
+  }
+
+  const handleFilterChange = () => {
+    const filters = useAvailableFilters()
 
     if (history.pushState) {
       const urlParams = new URLSearchParams(window.location.search)
 
-      if (allValues.length) {
-        urlParams.set(name, encodeURIComponent(allValues.toString()))
-      } else {
-        urlParams.delete(name)
-      }
+      Object.entries(filters).forEach(([name, values]) => {
+        if (values.length) {
+          urlParams.set(name, encodeURIComponent(values.toString()))
+        } else {
+          urlParams.delete(name)
+        }
+      })
 
       const newUrl = `${location.pathname}?${urlParams.toString()}`
 
@@ -128,7 +139,7 @@ function addContent() {
     }
   }
 
-  function handleFilterClear() {
+  const handleFilterClear = () => {
     const allValues = new Array()
 
     $(schema.productFilterInputs).each((_, item) => {
@@ -152,8 +163,11 @@ function addContent() {
     }
   }
 
-  function handleFilterApply(e) {
+  const handleFilterApply = (e) => {
     e.preventDefault()
+
+    // Double check available filters
+    handleFilterChange()
 
     setParams(getParams())
   }
@@ -301,7 +315,7 @@ function addContent() {
   // Initial fetch
   searchProducts()
 
-  function handleMenuClick(e) {
+  const handleMenuClick = (e) => {
     e.preventDefault()
 
     const {
@@ -326,7 +340,7 @@ function addContent() {
     }
   }
 
-  function debounceSearch(e) {
+  const debounceSearch = (e) => {
     e.preventDefault()
 
     const searchValue = $(schema.searchInput).val()
@@ -334,7 +348,7 @@ function addContent() {
     setSearch(searchValue)
   }
 
-  function handlePagination(e) {
+  const handlePagination = (e) => {
     const {
       currentTarget,
       currentTarget: { dataset },
