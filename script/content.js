@@ -3,13 +3,13 @@ document?.addEventListener('includeHTMLLoaded', addContent, false)
 const IS_DEV = location.hostname === 'localhost' || location.hostname === '127.0.0.1'
 const MIN_PRODUCTS = 20
 
-const skeleton = (props) => {
-  let { items = 20, className = '', width = '100px', height = '100px' } = props ?? {}
+const useSkeleton = (props) => {
+  const { items = 20, className = '', width = '100px', height = '100px' } = props ?? {}
 
-  typeof className === 'string' && (className += ' skeleton-layout')
+  const updatedClassName = typeof className === 'string' ? `${className} skeleton-layout` : 'skeleton-layout'
 
-  let html = [...Array(items)].map(() =>
-    createElement('div', { className: className, style: `width:${width}; height:${height}` })
+  const html = Array.from({ length: items }, () =>
+    createElement('div', { className: updatedClassName, style: `width:${width}; height:${height}` })
   )
 
   return html
@@ -189,7 +189,7 @@ function addContent() {
   }
 
   ;(loadMenu = () => {
-    $(schema.menu)?.html(skeleton({ items: 6, className: 'menu--item', width: '95px', height: '22px' }))
+    $(schema.menu)?.html(useSkeleton({ items: 6, className: 'menu--item', width: '95px', height: '22px' }))
 
     postData(
       {
@@ -284,7 +284,7 @@ function addContent() {
     const width = isMobile() ? '185px' : '286px'
     const height = isMobile() ? '381px' : '526px'
 
-    $(schema.productList)?.html(skeleton({ items: MIN_PRODUCTS, className: 'products--listItem', width, height }))
+    $(schema.productList)?.html(useSkeleton({ items: MIN_PRODUCTS, className: 'products--listItem', width, height }))
 
     postData(PRODUCT_PARAMS, '/Produtos/ListaProdutos')
       .then((data) => {
