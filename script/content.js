@@ -141,7 +141,7 @@ function addContent() {
     }
   }
 
-  const handleFilterClear = () => {
+  const useFilterClear = () => {
     const allValues = new Array()
 
     $(schema.productFilterInputs).each((_, item) => {
@@ -160,9 +160,15 @@ function addContent() {
       const newUrl = `${location.pathname}?${urlParams.toString()}`
 
       window.history.pushState({ path: newUrl }, '', newUrl)
-
-      setParams(getParams())
     }
+
+    return true
+  }
+
+  const handleFilterClear = () => {
+    useFilterClear()
+
+    setParams(getParams())
   }
 
   const handleFilterApply = (e) => {
@@ -388,6 +394,9 @@ function addContent() {
   const handleMenuClick = (e) => {
     e.preventDefault()
 
+    // Clear filters
+    useFilterClear()
+
     const {
       target: {
         dataset: { item },
@@ -414,6 +423,9 @@ function addContent() {
     e.preventDefault()
 
     const searchValue = $(schema.searchInput).val()
+
+    // Clear filters
+    useFilterClear()
 
     setSearch(searchValue)
   }
