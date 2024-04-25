@@ -136,7 +136,7 @@ function addContent() {
 
       const name = $this.attr('name').replace('[]', '')
 
-      allValues.push(name)
+      !allValues.includes(name) && allValues.push(name)
     })
 
     if (history.pushState) {
