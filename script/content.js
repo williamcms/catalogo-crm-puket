@@ -66,7 +66,6 @@ function addContent() {
   const runtime = {
     clientId: params?.CodCliFor ?? '105964',
     catalogId: params?.IDCatalogo ?? '25439',
-    pageItem: params?.Pagina ?? null,
     search: typeof search !== 'string' ? '' : search,
     filters: {
       Linhas: convertToArray(params?.Linhas, ',') ?? null,
@@ -75,6 +74,7 @@ function addContent() {
       Sexos: convertToArray(params?.Sexos, ',') ?? null,
       Cores: convertToArray(params?.Cores, ',') ?? null,
       Solucoes: convertToArray(params?.Solucoes, ',') ?? null,
+      Pagina: params?.Pagina ?? null,
     },
     order: 'ASC',
   }
@@ -334,7 +334,7 @@ function addContent() {
       Pesquisa: runtime.search,
       Ordenar: undefined,
       QuantidadeRegistrosPagina: MIN_PRODUCTS,
-      PaginaAtual: runtime.pageItem,
+      PaginaAtual: runtime.filters.Pagina,
       Linhas: runtime.filters.Linhas,
       Grupos: runtime.filters.Grupos,
       SubGrupos: undefined,
@@ -427,7 +427,7 @@ function addContent() {
     } = e
 
     const MIN_PAGE = 1
-    const pageItem = Number(runtime.pageItem) || MIN_PAGE
+    const pageItem = Number(runtime.filters.Pagina) || MIN_PAGE
     const page = dataset?.page
 
     const isDisabled = currentTarget.getAttribute('aria-disabled')
