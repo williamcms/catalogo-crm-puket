@@ -174,6 +174,28 @@ function addContent() {
     setParams(getParams())
   }
 
+  const handleSizeSelect = (e) => {
+    const $this = e.target
+    const name = 'Tamanhos'
+    const value = $this.options[$this.selectedIndex].value
+
+    if (history.pushState) {
+      const urlParams = new URLSearchParams(window.location.search)
+
+      if (value) {
+        urlParams.set(name, encodeURIComponent(value))
+      } else {
+        urlParams.delete(name)
+      }
+
+      const newUrl = `${location.pathname}?${urlParams.toString()}`
+
+      window.history.pushState({ path: newUrl }, '', newUrl)
+    }
+
+    setParams(getParams())
+  }
+
   const addToFilter = ({ data, field, local }) => {
     if (data?.length === 0) return
 
@@ -232,16 +254,30 @@ function addContent() {
   }
 
   const loadSizeList = (productParams) => {
-    let htmlSelect = '<option value="">Tamanho</option>'
+    const field = 'Tamanhos'
+    const selectContainer = createElement('select', { 'data-filter-field': field }, [
+      createElement('option', { value: '' }, field),
+    ])
 
-    postData(productParams, '/Produtos/Tamanhos').then((data) => {
-      addToFilter({ data, field: 'Tamanhos', local: schema.productFilterSize })
+    postData(productParams, `/Produtos/${field}`).then((data) => {
+      addToFilter({ data, field, local: schema.productFilterSize })
 
       data?.forEach(({ codigo, descricao }) => {
-        htmlSelect += `<option value="${codigo}">${descricao}</option>`
+        const isSelected = runtime.filters?.[field]?.includes(codigo)
+
+        const option = createElement(
+          'option',
+          {
+            value: codigo,
+            ...(isSelected && { selected: true }),
+          },
+          descricao
+        )
+        selectContainer.appendChild(option)
       })
 
-      $(schema.productControlSize).html(htmlSelect)
+      $(schema.productControlSize).html(selectContainer.outerHTML)
+      $(schema.productControlSize).one('change', handleSizeSelect)
     })
   }
 
