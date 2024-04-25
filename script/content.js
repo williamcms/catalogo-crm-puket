@@ -161,8 +161,6 @@ function addContent() {
 
       window.history.pushState({ path: newUrl }, '', newUrl)
     }
-
-    return true
   }
 
   const handleFilterClear = () => {
