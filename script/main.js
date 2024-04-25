@@ -370,6 +370,7 @@ function init() {
     const _elmSku = modal.querySelector('.product-quickview--skuList')
     const _elmDescription = modal.querySelector('.product-quickview--descriptionText')
     const _elmAddToCart = modal.querySelector('.addToCart--button')
+    const _elmAddToCartText = _elmAddToCart.querySelector('.buttonText')
 
     // Slick settings
     const settings = {
@@ -480,7 +481,7 @@ function init() {
         _elmAddToCart.setAttribute('aria-disabled', 'false')
       }
 
-      _elmAddToCart.textContent = addToCartText
+      _elmAddToCartText.textContent = addToCartText
 
       _elmSku.appendChild(elm)
     })

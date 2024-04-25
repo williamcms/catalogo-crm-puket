@@ -117,8 +117,7 @@
         top: 7.7813rem;
       }
 
-      select,
-      button {
+      select {
         appearance: none;
         border-radius: 0.125rem;
         font-size: 0.8125rem;
@@ -147,35 +146,6 @@
           font-weight: 600;
           width: 5.5rem;
           cursor: pointer;
-        }
-
-        &.filter--button {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          gap: 0.5rem;
-          border: 0.0625rem solid $c-purple-500;
-          border-radius: 12.5rem;
-          padding: 0.4375rem 1rem;
-          cursor: pointer;
-
-          .filter--buttonText {
-            font-size: 0.8125rem;
-            font-weight: 700;
-            color: $c-purple-500;
-          }
-
-          &:hover {
-            background-color: $c-purple-500;
-
-            .filter--buttonText {
-              color: $c-white;
-            }
-
-            .filter--image {
-              filter: invert(100%) saturate(0%) brightness(200%) contrast(200%);
-            }
-          }
         }
       }
 
