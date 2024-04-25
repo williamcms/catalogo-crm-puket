@@ -59,6 +59,8 @@ function addContent() {
     productFilterClear: '.filter-list--footer > .button--clear',
     productFilterApply: '.filter-list--footer > .button--apply',
     pagination: '.product--pagination .product--paginationButton',
+    notFoundClear: '.products--notFound .notFound--button.clearFilters',
+    notFoundTryAgain: '.products--notFound .notFound--button.tryAgain',
   }
 
   const runtime = {
@@ -261,6 +263,38 @@ function addContent() {
     })
   }
 
+  const renderNotFound = () => {
+    const _notFoundMessage = createElement(
+      'p',
+      { class: 'notFound--message' },
+      'Nenhum produto encontrado, tente verificar os filtros utilizados e tente novamente.'
+    )
+
+    const _tryAgainButton = createElement(
+      'button',
+      { class: 'button normal bg-fill small notFound--button tryAgain' },
+      [createElement('span', { class: 'buttonText' }, 'Tentar Novamente')]
+    )
+
+    const _clearFiltersButton = createElement(
+      'button',
+      { class: 'button normal small notFound--button clearFilters' },
+      [createElement('span', { class: 'buttonText' }, 'Limpar Filtros')]
+    )
+
+    const _buttonsContainer = createElement('div', { class: 'notFound--buttonsContainer' }, [
+      _tryAgainButton,
+      _clearFiltersButton,
+    ])
+
+    const _notFoundContainer = createElement('div', { class: 'products--notFound' }, [
+      _notFoundMessage,
+      _buttonsContainer,
+    ])
+
+    $(schema.productList)?.html(_notFoundContainer)
+  }
+
   const searchProducts = () => {
     const PRODUCT_PARAMS = {
       CodigoCliente: runtime.clientId,
@@ -288,7 +322,7 @@ function addContent() {
 
     postData(PRODUCT_PARAMS, '/Produtos/ListaProdutos')
       .then((data) => {
-        if (!data || String(data).indexOf('products--listItem') === -1) return
+        if (!data || String(data).indexOf('products--listItem') === -1) return renderNotFound()
 
         // Treatment to use lazyload
         const html = $(data).each(() => {
@@ -394,6 +428,9 @@ function addContent() {
 
   $(schema.productFilterClear)?.off('click')
   $(schema.productFilterClear)?.on('click', handleFilterClear)
+
+  $(document).on('click', schema.notFoundClear, handleFilterClear)
+  $(document).on('click', schema.notFoundTryAgain, handleFilterApply)
 
   $(schema.productFilterApply)?.off('click')
   $(schema.productFilterApply)?.on('click', handleFilterApply)

@@ -495,6 +495,25 @@
           }
         }
       }
+
+      .products--notFound {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+
+        .notFound--message {
+          font-size: 1.125rem;
+          font-weight: 700;
+          color: $c-purple-500;
+        }
+
+        .notFound--buttonsContainer {
+          display: flex;
+          flex-direction: row;
+          gap: 0.5rem;
+        }
+      }
     }
 
     .product--pagination {
