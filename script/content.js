@@ -142,20 +142,12 @@ function addContent() {
   }
 
   const useFilterClear = () => {
-    const allValues = new Array()
-
-    $(schema.productFilterInputs).each((_, item) => {
-      const $this = $(item)
-
-      const name = $this.attr('name').replace('[]', '')
-
-      !allValues.includes(name) && allValues.push(name)
-    })
+    const filters = useAvailableFilters()
 
     if (history.pushState) {
       const urlParams = new URLSearchParams(window.location.search)
 
-      allValues.forEach((item) => urlParams.delete(item))
+      Object.entries(filters).forEach(([name]) => urlParams.delete(name))
 
       const newUrl = `${location.pathname}?${urlParams.toString()}`
 
