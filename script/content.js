@@ -21,7 +21,8 @@ const getParams = () =>
     .split('&')
     .reduce((acc, pair) => {
       const [key, value] = pair.split('=')
-      acc[key] = decodeURIComponent(value)
+      acc[key] = decodeURIComponent(decodeURIComponent(value))
+
       return acc
     }, {})
 
@@ -116,7 +117,7 @@ function addContent() {
       const urlParams = new URLSearchParams(window.location.search)
 
       if (allValues.length) {
-        urlParams.set(name, encodeURI(allValues.toString()))
+        urlParams.set(name, encodeURIComponent(allValues.toString()))
       } else {
         urlParams.delete(name)
       }
