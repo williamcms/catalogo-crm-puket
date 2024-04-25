@@ -21,7 +21,7 @@ const getParams = () =>
     .split('&')
     .reduce((acc, pair) => {
       const [key, value] = pair.split('=')
-      acc[key] = value
+      acc[key] = decodeURIComponent(value)
       return acc
     }, {})
 
@@ -66,12 +66,12 @@ function addContent() {
     pageItem: params?.Pagina ?? null,
     search: typeof search !== 'string' ? '' : search,
     filters: {
-      Linhas: convertToArray(params?.Linhas) ?? null,
-      Grupos: convertToArray(params?.Grupos) ?? null,
-      Tamanhos: convertToArray(params?.Tamanhos) ?? null,
-      Sexos: convertToArray(params?.Sexos) ?? null,
-      Cores: convertToArray(params?.Cores) ?? null,
-      Solucoes: convertToArray(params?.Solucoes) ?? null,
+      Linhas: convertToArray(params?.Linhas, ',') ?? null,
+      Grupos: convertToArray(params?.Grupos, ',') ?? null,
+      Tamanhos: convertToArray(params?.Tamanhos, ',') ?? null,
+      Sexos: convertToArray(params?.Sexos, ',') ?? null,
+      Cores: convertToArray(params?.Cores, ',') ?? null,
+      Solucoes: convertToArray(params?.Solucoes, ',') ?? null,
     },
     order: 'ASC',
   }
@@ -165,7 +165,7 @@ function addContent() {
     data?.forEach(({ codigo, descricao }) => {
       const randID = Math.random().toString(36).substring(2, 9)
 
-      htmlFilter += `<div class="filter--optionItem"><input type="checkbox" name="${field}[]" value="${codigo}" id="${randID}-${codigo}" /><label for="${randID}-${codigo}">${descricao}</label></div>`
+      htmlFilter += `<div class="filter--optionItem"><input type="checkbox" name="${field}[]" value="${codigo}" id="${randID}-${codigo}" ${runtime.filters?.[field]?.includes(codigo) && 'checked'} /><label for="${randID}-${codigo}">${descricao}</label></div>`
     })
 
     $(local).html(htmlFilter)
