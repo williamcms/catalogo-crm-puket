@@ -94,7 +94,7 @@ function addContent() {
       data: data,
       params: params,
       runtime: runtime,
-      response: path !== '/Produtos/ListaProdutos' && response,
+      response: response,
     })
 
     return response
