@@ -47,6 +47,7 @@ function addContent() {
     searchInput: '.header--search input[type="search"]',
     searchButton: '.header--search button.search--button',
     productList: '.products--wrapper > .products--container > .products--listage',
+    productControlOrder: '.product-controls--orderBy > .orderBy--select',
     productControlSize: '.product-controls--size > .size--select',
     productFilterForm: '#filter-form',
     productFilterCategory: '.filter--listItem.category > .filter--listOptions',
@@ -68,6 +69,7 @@ function addContent() {
     catalogId: params?.IDCatalogo ?? '0',
     search: typeof search !== 'string' ? '' : search,
     filters: {
+      OrderCatalogo: convertToArray(params?.OrderCatalogo, ',') ?? null,
       Linhas: convertToArray(params?.Linhas, ',') ?? null,
       Grupos: convertToArray(params?.Grupos, ',') ?? null,
       Tamanhos: convertToArray(params?.Tamanhos, ',') ?? null,
@@ -76,7 +78,6 @@ function addContent() {
       Solucoes: convertToArray(params?.Solucoes, ',') ?? null,
       Pagina: params?.Pagina ?? null,
     },
-    order: 'ASC',
   }
 
   const postData = async (data = {}, path = '') => {
@@ -331,7 +332,7 @@ function addContent() {
       CodigoCliente: runtime.clientId,
       IDCatalogo: runtime.catalogId,
       Pesquisa: runtime.search,
-      Ordenar: undefined,
+      OrderCatalogo: runtime.filters.OrderCatalogo,
       QuantidadeRegistrosPagina: MIN_PRODUCTS,
       PaginaAtual: runtime.filters.Pagina,
       Linhas: runtime.filters.Linhas,
@@ -474,4 +475,7 @@ function addContent() {
 
   $(document).off('click', schema.pagination)
   $(document).on('click', schema.pagination, handlePagination)
+
+  $(schema.productControlOrder).off('change')
+  $(schema.productControlOrder).on('change', (e) => handleSelect(e, 'OrderCatalogo'))
 }
