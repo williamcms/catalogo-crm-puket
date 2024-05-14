@@ -21,7 +21,8 @@ const getParams = () =>
     .split('&')
     .reduce((acc, pair) => {
       const [key, value] = pair.split('=')
-      acc[key] = decodeURIComponent(decodeURIComponent(value))
+
+      if (!!key) acc[key] = decodeURIComponent(decodeURIComponent(value))
 
       return acc
     }, {})
