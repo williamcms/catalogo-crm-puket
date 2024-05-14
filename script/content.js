@@ -340,8 +340,7 @@ function addContent() {
       SubGrupos: undefined,
       Categorias: undefined,
       SubCategorias: undefined,
-      // not working
-      // Cores: runtime.filters.Cores,
+      Cores: runtime.filters.Cores,
       Sexos: runtime.filters.Sexos,
       Tamanhos: runtime.filters.Tamanhos,
       Solucoes: runtime.filters.Solucoes,
