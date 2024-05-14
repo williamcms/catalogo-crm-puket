@@ -42,6 +42,8 @@ function addContent() {
   const [search, setSearch] = useState('', arguments)
 
   const schema = {
+    headerLocation: '.header--locale > .locale--location',
+    minicartSend: '.cart--drawer .sendToWhatsapp--button',
     menu: '.menu--container > ul.menu--list',
     menuItems: '.menu--container > ul.menu--list a.menu--itemLink',
     searchForm: '.header--search #header-search',
@@ -101,6 +103,46 @@ function addContent() {
 
     return response
   }
+
+  const useStore = () => {
+    const STORE_PARAMS = {
+      CodigoCliente: runtime.clientId,
+    }
+
+    return postData(STORE_PARAMS, '/Produtos/Cliente')
+  }
+
+  const formatPhoneNumber = (phoneNumber) => {
+    if (!phoneNumber) return false
+
+    const cleanedPhoneNumber = phoneNumber.replace(/\D/g, '')
+
+    // Check if the phone number starts with a '+'
+    if (phoneNumber.startsWith('+')) {
+      return cleanedPhoneNumber
+    } else {
+      return '+55' + cleanedPhoneNumber
+    }
+  }
+
+  const mountStoreInfo = async () => {
+    const store = await useStore()
+
+    const location = document.querySelector(schema.headerLocation)
+    const whatsappButton = document.querySelector(schema.minicartSend)
+
+    const formattedPhone = formatPhoneNumber(store?.celular)
+
+    location.textContent = store?.clienteAtacado
+
+    if (formatPhoneNumber) {
+      whatsappButton.setAttribute('data-whatsapp', formattedPhone)
+    } else {
+      whatsappButton.remove()
+    }
+  }
+
+  mountStoreInfo()
 
   const useAvailableFilters = () => {
     const filters = {}
