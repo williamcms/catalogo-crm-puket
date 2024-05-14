@@ -65,7 +65,7 @@ function addContent() {
 
   const runtime = {
     clientId: params?.CodCliFor ?? '105964',
-    catalogId: params?.IDCatalogo ?? '25439',
+    catalogId: params?.IDCatalogo ?? '0',
     search: typeof search !== 'string' ? '' : search,
     filters: {
       Linhas: convertToArray(params?.Linhas, ',') ?? null,
