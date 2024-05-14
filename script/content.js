@@ -170,9 +170,8 @@ function addContent() {
     setParams(getParams())
   }
 
-  const handleSizeSelect = (e) => {
+  const handleSelect = (e, name = 'Tamanhos') => {
     const $this = e.target
-    const name = 'Tamanhos'
     const value = $this.options[$this.selectedIndex].value
 
     if (history.pushState) {
@@ -273,7 +272,7 @@ function addContent() {
       })
 
       $(schema.productControlSize).html(selectContainer.outerHTML)
-      $(schema.productControlSize).one('change', handleSizeSelect)
+      $(schema.productControlSize).one('change', (e) => handleSelect(e, 'Tamanhos'))
     })
   }
 
