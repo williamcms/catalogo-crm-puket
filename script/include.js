@@ -1,4 +1,4 @@
-;(function includeHTML() {
+function includeHTML() {
   var i, file, xhttp
   const component = document.querySelectorAll('div[include-html]')
   let count = component.length
@@ -10,6 +10,7 @@
   for (i = 0; i < component.length; i++) {
     let elm = component[i]
     file = elm.getAttribute('include-html')
+
     if (file) {
       xhttp = new XMLHttpRequest()
       xhttp.onreadystatechange = function () {
@@ -22,6 +23,7 @@
           }
           elm.removeAttribute('include-html')
           count--
+
           if (count === 0) {
             document.dispatchEvent(new Event('includeHTMLLoaded'))
           }
@@ -31,4 +33,8 @@
       xhttp.send()
     }
   }
-})()
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  includeHTML()
+})
