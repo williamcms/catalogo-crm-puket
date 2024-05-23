@@ -43,6 +43,7 @@ function addContent() {
 
   const schema = {
     headerLocation: '.header--locale > .locale--location',
+    headerLogo: '.header--logo > .logo--link',
     minicartSend: '.cart--drawer .sendToWhatsapp--button',
     menu: '.menu--container > ul.menu--list',
     menuItems: '.menu--container > ul.menu--list a.menu--itemLink',
@@ -508,6 +509,9 @@ function addContent() {
 
   $(schema.productFilterClear)?.off('click')
   $(schema.productFilterClear)?.on('click', handleFilterClear)
+
+  $(schema.headerLogo)?.off('click')
+  $(document).on('click', schema.headerLogo, handleFilterClear)
 
   $(document).on('click', schema.notFoundClear, handleFilterClear)
   $(document).on('click', schema.notFoundTryAgain, handleFilterApply)
