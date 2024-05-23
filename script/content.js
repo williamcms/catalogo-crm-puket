@@ -1,6 +1,5 @@
 document?.addEventListener('includeHTMLLoaded', addContent, false)
 
-const IS_DEV = location.hostname === 'localhost' || location.hostname === '127.0.0.1'
 const MIN_PRODUCTS = 20
 
 const useSkeleton = (props) => {
@@ -35,7 +34,7 @@ const convertToArray = (value = '', separator = null) => {
 }
 
 function addContent() {
-  const host = IS_DEV ? 'https://ti.grupounico.com' : location.origin
+  const host = 'https://ti.grupounico.com'
 
   // Triggers reload of addContent state (re-excute all functions)
   const [params, setParams] = useState(getParams(), arguments)
