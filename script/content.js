@@ -424,7 +424,7 @@ function addContent() {
   searchProducts()
 
   const handleMenuClick = (e) => {
-    e.preventDefault()
+    if (!isMobile()) e.preventDefault()
 
     // Clear filters
     useFilterClear()
