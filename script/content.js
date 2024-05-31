@@ -27,10 +27,10 @@ const getParams = () =>
     }, {})
 
 const convertToArray = (value = '', separator = null) => {
-  if (value === '') return []
-  if (typeof value === 'string' && separator != null) return String(value).split(separator)
-  else if (typeof value === 'string') return new Array(String(value))
-  else return value
+  if (!value || value === '') return []
+  if (typeof value === 'string' && separator !== null) return String(value).split(separator)
+
+  return new Array(String(value))
 }
 
 function addContent() {
