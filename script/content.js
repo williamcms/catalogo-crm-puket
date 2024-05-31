@@ -68,18 +68,18 @@ function addContent() {
   }
 
   const runtime = {
-    clientId: params?.CodCliFor ?? '105964',
-    catalogId: params?.IDCatalogo ?? '0',
+    clientId: String(params?.CodCliFor ?? ''),
+    catalogId: String(params?.IDCatalogo ?? '0'),
     search: typeof search !== 'string' ? '' : search,
     filters: {
-      OrderCatalogo: convertToArray(params?.OrderCatalogo, ',') ?? null,
-      Linhas: convertToArray(params?.Linhas, ',') ?? null,
-      Grupos: convertToArray(params?.Grupos, ',') ?? null,
-      Tamanhos: convertToArray(params?.Tamanhos, ',') ?? null,
-      Sexos: convertToArray(params?.Sexos, ',') ?? null,
-      Cores: convertToArray(params?.Cores, ',') ?? null,
-      Solucoes: convertToArray(params?.Solucoes, ',') ?? null,
-      Pagina: params?.Pagina ?? null,
+      OrderCatalogo: convertToArray(params?.OrderCatalogo, ','),
+      Linhas: convertToArray(params?.Linhas, ','),
+      Grupos: convertToArray(params?.Grupos, ','),
+      Tamanhos: convertToArray(params?.Tamanhos, ','),
+      Sexos: convertToArray(params?.Sexos, ','),
+      Cores: convertToArray(params?.Cores, ','),
+      Solucoes: convertToArray(params?.Solucoes, ','),
+      Pagina: Number(params?.Pagina ?? 0),
     },
   }
 
