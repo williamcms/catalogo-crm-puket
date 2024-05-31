@@ -469,17 +469,16 @@ function addContent() {
     } = e
 
     const MIN_PAGE = 1
-    const pageItem = Number(runtime.filters.Pagina) || MIN_PAGE
-    const page = dataset?.page
+    const currentPage = runtime.filters.Pagina || MIN_PAGE
+    const selectedPage = dataset?.page
 
-    const isDisabled = currentTarget.getAttribute('aria-disabled')
-    const isCurrentItem = currentTarget.getAttribute('aria-current')
-    const isCurrentPage = Number(page) === MIN_PAGE
-    const isLowerThanMinimum = page === 'prev' && pageItem == MIN_PAGE
+    const isDisabled = !!currentTarget.getAttribute('aria-disabled')
+    const isCurrentPage = !!currentTarget.getAttribute('aria-current')
+    const isLowerThanMinimum = selectedPage === 'prev' && currentPage === MIN_PAGE
 
-    if (isDisabled || isCurrentItem || isCurrentPage || isLowerThanMinimum) return
+    if (isDisabled || isCurrentPage || isLowerThanMinimum) return
 
-    const pageTo = page === 'next' ? pageItem + 1 : page === 'prev' ? pageItem - 1 : page
+    const pageTo = selectedPage === 'next' ? currentPage + 1 : selectedPage === 'prev' ? currentPage - 1 : selectedPage
 
     if (history.pushState) {
       const urlParams = new URLSearchParams(window.location.search)
