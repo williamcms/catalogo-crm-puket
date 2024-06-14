@@ -372,10 +372,14 @@ function init() {
     const _elmAddToCart = modal.querySelector('.addToCart--button')
     const _elmAddToCartText = _elmAddToCart.querySelector('.buttonText')
 
+    const prodImageQty = productImages.length
+    const prodImageMaxQty = isMobile() ? 1 : 3
+    const slidesToShow = prodImageQty > prodImageMaxQty ? prodImageMaxQty : prodImageQty
+
     // Slick settings
     const settings = {
       infinite: true,
-      slidesToShow: 3,
+      slidesToShow,
       responsive: [
         {
           breakpoint: 1024,
@@ -450,9 +454,6 @@ function init() {
       _sellingPrice.classList.add('hasListPrice')
     }
 
-    // Handle SKU
-    let first = null
-
     // Add Label
     let label = document.createElement('label')
 
@@ -461,12 +462,15 @@ function init() {
 
     _elmSku.appendChild(label)
 
-    $(productVariations).each((_, item) => {
+    const firstAvailableSKU = productVariations.find((item) => !!item.isAvailable)
+
+    console.log(firstAvailableSKU)
+
+    productVariations.forEach((item) => {
       let elm = document.createElement('button')
 
-      if (item.isAvailable && first === null && item.name === skuSelected) {
+      if (item.isAvailable && item.name === firstAvailableSKU?.name) {
         elm.setAttribute('aria-checked', 'true')
-        first = item
       }
 
       if (!item.isAvailable) elm.setAttribute('aria-disabled', 'true')
@@ -475,7 +479,7 @@ function init() {
       elm.textContent = item.name
       elm.className = 'product-quickview--skuItem'
 
-      if (first === null) {
+      if (!firstAvailableSKU) {
         _elmAddToCart.setAttribute('aria-disabled', 'true')
       } else {
         _elmAddToCart.setAttribute('aria-disabled', 'false')
@@ -524,7 +528,7 @@ function init() {
   }
 
   // Handle cart process
-  const handleAddToCart = (e) => {
+  const handleCartState = (e) => {
     if (e.button !== 0 && e.button !== 1 && e.key !== 'Enter' && e.key !== ' ') return
 
     const target = e.currentTarget
@@ -537,17 +541,18 @@ function init() {
     const trigger = document.getElementById(id)
 
     const productId = target.getAttribute('product')
-    const selectedItem =
-      trigger?.querySelector('button[aria-checked="true"]')?.textContent ?? target.getAttribute('variation')
+    const selectedVariation = trigger?.querySelector('button[aria-checked="true"]')?.textContent
+    const selectedVariationAlt = target.getAttribute('variation')
+    const selectedItem = String(selectedVariation ?? selectedVariationAlt).trim()
 
     const scriptElement = trigger?.querySelector('script[type="application/ld+json"]')
     const productData = scriptElement ? JSON.parse(scriptElement?.textContent.trim()) : { productId }
 
-    if (selectedItem) addToCart([{ ...productData, selectedItem, selectedQuantity }])
+    if (selectedItem) handleCartItems([{ ...productData, selectedItem, selectedQuantity }])
     if (id === 'product-quickview') $('#close-quickview').trigger('customtrigger')
   }
 
-  const addToCart = (items) => {
+  const handleCartItems = (items) => {
     let loop = 0
 
     document.dispatchEvent(new Event('OPEN_MINICART', { bubbles: true, cancelable: true }))
@@ -616,9 +621,12 @@ function init() {
     else noItemsMessage.style.display = 'none'
 
     state.items.forEach((item) => {
+      const selectedId = String(item?.productId).trim()
+      const selectedVariation = String(item?.selectedItem).trim()
+
       // Check for existing items
       const existingItem = cartContainer.querySelector(
-        `.cart-summary--item[id="${item.productId}"][variation="${item.selectedItem}"]`
+        `.cart-summary--item[id="${item.productId}"][variation="${selectedVariation}"]`
       )
 
       if (existingItem) {
@@ -671,8 +679,8 @@ function init() {
 
       // Feed with product data
       // Product Item ID
-      _cartItem.setAttribute('id', item.productId)
-      _cartItem.setAttribute('variation', item?.selectedItem)
+      _cartItem.setAttribute('id', selectedId)
+      _cartItem.setAttribute('variation', selectedVariation)
 
       // Product Image
       const prodImage = new Image()
@@ -690,13 +698,13 @@ function init() {
       // Button to remove product
       const prodRemove = document.createElement('button')
       prodRemove.classList.add('cart-summary--removeButton')
-      prodRemove.setAttribute('product', item.productId)
-      prodRemove.setAttribute('variation', item.selectedItem)
+      prodRemove.setAttribute('product', selectedId)
+      prodRemove.setAttribute('variation', selectedVariation)
       _removeBttn.appendChild(prodRemove)
 
       const prodRemoveText = document.createElement('span')
       prodRemoveText.classList.add('only-sr')
-      prodRemoveText.textContent = `Remover ${item.productId} da Sacola`
+      prodRemoveText.textContent = `Remover ${selectedId} da Sacola`
       prodRemove.appendChild(prodRemoveText)
 
       const prodRemoveSymbol = document.createElement('span')
@@ -707,7 +715,7 @@ function init() {
       // Selected SKU
       const prodSKU = document.createElement('span')
       prodSKU.classList.add('cart-summary--skuText')
-      prodSKU.textContent = `Tamanho: ${item.selectedItem}`
+      prodSKU.textContent = `Tamanho: ${selectedVariation}`
       _sku.appendChild(prodSKU)
 
       // Quantity selector
@@ -752,16 +760,17 @@ function init() {
 
   const removeItemFromCart = (item) => {
     const { productId, selectedItem } = item
-    const target = document.querySelector(`.cart-summary--item[id="${productId}"][variation="${selectedItem}"]`)
+    const selectedVariation = String(selectedItem).trim()
+    const target = document.querySelector(`.cart-summary--item[id="${productId}"][variation="${selectedVariation}"]`)
 
     target.remove()
   }
 
-  $(document).on('mousedown', '.addToCart--button', (e) => handleAddToCart(e))
-  $(document).on('keydown', '.addToCart--button', (e) => handleAddToCart(e))
+  $(document).on('mousedown', '.addToCart--button', (e) => handleCartState(e))
+  $(document).on('keydown', '.addToCart--button', (e) => handleCartState(e))
 
-  $(document).on('mousedown', '.cart-summary--removeButton', (e) => handleAddToCart(e))
-  $(document).on('keydown', '.cart-summary--removeButton', (e) => handleAddToCart(e))
+  $(document).on('mousedown', '.cart-summary--removeButton', (e) => handleCartState(e))
+  $(document).on('keydown', '.cart-summary--removeButton', (e) => handleCartState(e))
 
   // Handle Whatsapp interaction
   const sendToWhatsapp = (e) => {
@@ -827,7 +836,7 @@ function init() {
 
     const selectedQuantity = mode == 'MINUS' ? value - 1 : value + 1
 
-    addToCart([{ productId, selectedItem, selectedQuantity }])
+    handleCartItems([{ productId, selectedItem, selectedQuantity }])
   }
 
   $(document).on('mousedown', '.cart-summary--quantitySelector', (e) => handleQuantity(e))

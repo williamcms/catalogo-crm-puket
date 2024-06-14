@@ -28,11 +28,12 @@
     font-size: 0.6875rem;
     line-height: 0.75rem;
     color: $c-text;
-    min-width: 2.0625rem;
+    // min-width: 2.0625rem;
     height: 1.1875rem;
     border: 0.0625rem solid $c-gray;
     border-radius: 12.5rem;
     background-color: $c-white;
+    white-space: nowrap;
 
     // Prevent focus outline clipping
     margin: 0.1875rem 0;
