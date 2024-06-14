@@ -1,5 +1,3 @@
-document?.addEventListener('includeHTMLLoaded', addContent, false)
-
 const MIN_PRODUCTS = 20
 
 const useSkeleton = (props) => {
@@ -523,3 +521,5 @@ function addContent() {
   $(schema.productControlOrder).off('change')
   $(schema.productControlOrder).on('change', (e) => handleSelect(e, 'OrderCatalogo'))
 }
+
+document.addEventListener('includeHTMLLoaded', addContent, false)

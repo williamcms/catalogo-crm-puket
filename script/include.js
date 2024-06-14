@@ -35,6 +35,6 @@ function includeHTML() {
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+$(document).ready(() => {
   includeHTML()
 })

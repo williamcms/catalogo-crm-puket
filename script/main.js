@@ -1,4 +1,4 @@
-document?.addEventListener('includeHTMLLoaded', init, false)
+document?.addEventListener('DOMContentLoaded', init, false)
 
 const states = new Map()
 
@@ -842,3 +842,5 @@ function init() {
   $(document).on('mousedown', '.cart-summary--quantitySelector', (e) => handleQuantity(e))
   $(document).on('keydown', '.cart-summary--quantitySelector', (e) => handleQuantity(e))
 }
+
+document.addEventListener('includeHTMLLoaded', init, false)
