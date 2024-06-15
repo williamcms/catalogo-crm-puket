@@ -339,9 +339,6 @@ function init() {
       (trapModalRef = (e) => handleModalFocus(e, { first: firstModalFocus, last: lastModalFocus }))
     )
 
-    // Get current selection of SKU
-    const skuSelected = trigger.querySelector('.summary-item--skuItem[aria-checked="true"]')?.textContent
-
     // Get current addToCart text
     const addToCartText = trigger.querySelector('.summary-item--addToCartText')?.textContent
 
@@ -374,12 +371,12 @@ function init() {
 
     const prodImageQty = productImages.length
     const prodImageMaxQty = isMobile() ? 1 : 3
-    const slidesToShow = prodImageQty > prodImageMaxQty ? prodImageMaxQty : prodImageQty
 
     // Slick settings
     const settings = {
       infinite: true,
-      slidesToShow,
+      slidesToShow: 3,
+      swipeToSlide: true,
       responsive: [
         {
           breakpoint: 1024,
@@ -415,7 +412,7 @@ function init() {
         let elm = new Image()
 
         elm.src = item
-        elm.alt = `Imagem ${i} do produto ${productName}`
+        elm.alt = `Imagem ${i + 1} do produto ${productName}`
         elm.className = 'product-quickview--imageElement'
 
         _elmImages.appendChild(elm)
@@ -425,11 +422,15 @@ function init() {
       .done(() => {
         setTimeout(() => {
           // Additional check to initialized sliders
-          if ($(_elmImages).hasClass('slick-initialized')) $(_elmImages).slick('unslick')
+          if ($(_elmImages).hasClass('slick-initialized')) {
+            $(_elmImages).slick('unslick')
+          }
 
-          $(_elmImages)
-            .not('.slick-initialized')
-            .slick({ ...settings })
+          if (prodImageQty > prodImageMaxQty) {
+            $(_elmImages)
+              .not('.slick-initialized')
+              .slick({ ...settings })
+          }
 
           firstModalFocus.focus()
         }, 1000)
