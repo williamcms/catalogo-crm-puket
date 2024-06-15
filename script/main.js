@@ -465,8 +465,6 @@ function init() {
 
     const firstAvailableSKU = productVariations.find((item) => !!item.isAvailable)
 
-    console.log(firstAvailableSKU)
-
     productVariations.forEach((item) => {
       let elm = document.createElement('button')
 
@@ -757,7 +755,9 @@ function init() {
   }
 
   // Calls initial cart mount
-  mountCart()
+  setTimeout(() => {
+    if (document.querySelector('#cart-drawer .cart-drawer--items')) mountCart()
+  }, 500)
 
   const removeItemFromCart = (item) => {
     const { productId, selectedItem } = item
