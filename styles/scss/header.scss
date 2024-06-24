@@ -492,7 +492,7 @@
                   }
 
                   &:hover {
-                    color: $c-orange;
+                    color: $c-purple-500;
                   }
                 }
               }
@@ -521,14 +521,15 @@
             flex-direction: row;
           }
 
-          .locale--store {
-            font-weight: 600;
-          }
-
           .locale--store,
           .locale--location {
             font-size: 0.8125rem;
+            font-weight: 600;
             color: $c-white;
+          }
+
+          .locale--store {
+            font-weight: 300;
           }
         }
       }
