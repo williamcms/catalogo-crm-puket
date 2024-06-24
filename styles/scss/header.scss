@@ -252,6 +252,7 @@
                         .cart-summary--nameText {
                           font-size: 0.8125rem;
                           color: $c-text;
+                          line-break: anywhere;
 
                           @include line-clamp(2);
 
