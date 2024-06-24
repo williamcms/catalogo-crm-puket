@@ -492,8 +492,15 @@ function init() {
     // Reset scroll
     setTimeout(() => _elmImages.scrollIntoView({ behavior: 'instant', block: 'center' }), 100)
 
+    function decodeHTMLEntities(text) {
+      const parser = new DOMParser()
+      const fragment = parser.parseFromString(text, 'text/html')
+
+      return fragment.documentElement.textContent
+    }
+
     // Handle Description
-    _elmDescription.innerHTML = productDetails
+    _elmDescription.innerHTML = decodeHTMLEntities(productDetails)
   }
 
   const unmountQuickView = () => {
