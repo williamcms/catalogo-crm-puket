@@ -582,23 +582,35 @@ function init() {
     if (!state.hasOwnProperty('totalizers')) state = { ...state, totalizers: 0 }
 
     if (item) {
-      const isIdentical = state.items.findIndex(
-        (storedItem) => storedItem.productId === item.productId && storedItem.selectedItem === item.selectedItem
-      )
+      const isIdentical = state.items.findIndex((storedItem) => {
+        console.log({ storedItem, item })
+        console.log('storedItem.productId === item.productId', storedItem.productId === item.productId)
+        console.log('storedItem.selectedItem === item.selectedItem', storedItem.selectedItem === item.selectedItem)
+        console.log('all', storedItem.productId === item.productId && storedItem.selectedItem === item.selectedItem)
 
-      if (isIdentical === -1) {
-        console.info('ADDED NEW ITEM >', item)
-        state.items.push(item)
-      } else if (item.selectedQuantity === 0) {
+        return storedItem.productId === item.productId && storedItem.selectedItem === item.selectedItem
+      })
+
+      console.log(isIdentical, { item, state })
+
+      const itemExists = isIdentical !== -1
+
+      if (itemExists && item.selectedQuantity === 0) {
         console.info('REMOVED ITEM >', item)
         state.items.splice(isIdentical, 1)
+      } else if (!itemExists) {
+        console.info('ADDED NEW ITEM >', item)
+        state.items.push(item)
       } else {
         console.info('UPDATED ITEM >', item)
         let prev = state.items[isIdentical]
         state.items[isIdentical] = { ...prev, ...item, selectedQuantity: item.selectedQuantity }
       }
 
-      state.totalizers = state.items.reduce((acc, item) => acc + item.selectedQuantity * parseFloat(item.price), 0)
+      state.totalizers = state.items.reduce(
+        (acc, item) => acc + (item.selectedQuantity ?? 1) * parseFloat(item.price ?? 0),
+        0
+      )
     }
 
     localStorage.setItem('puket-minicartState', JSON.stringify(state))
@@ -753,7 +765,7 @@ function init() {
       // Product Price
       const prodPrice = document.createElement('div')
       prodPrice.classList.add('cart-summary--sellingPrice')
-      prodPrice.textContent = formatPrice(item.price)
+      prodPrice.textContent = formatPrice(item.price ?? 0)
       _price.appendChild(prodPrice)
 
       // Create an entry on the minicart
