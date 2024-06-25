@@ -816,7 +816,7 @@ function init() {
     const body = document.querySelector('body')
     const overlay = document.getElementById('cart-drawer')
 
-    const overlayState = overlay.style.display === 'none' || overlay.style.display === ''
+    const overlayState = !overlay.classList.contains('isOpen')
     const openingBttn = document.getElementById(overlay.getAttribute('aria-controlledby'))
 
     if (!overlayState) return
