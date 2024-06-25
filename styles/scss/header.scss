@@ -30,7 +30,7 @@
 
         @include mobile {
           flex-wrap: wrap;
-          gap: 0.3125rem;
+          gap: 0.5rem;
           padding: 0 1.25rem;
         }
 
@@ -41,14 +41,6 @@
         }
 
         .header--hamburger-menu {
-          @include mobile {
-            display: block !important;
-          }
-
-          @include fold {
-            display: block !important;
-          }
-
           .hamburger-menu--button {
             background-color: transparent;
             border: none;
@@ -114,6 +106,8 @@
 
         .header--logo {
           .logo--link {
+            display: flex;
+
             .logo--imageElement {
               width: 100%;
             }
