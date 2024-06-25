@@ -587,14 +587,17 @@ function init() {
       })
 
       const itemExists = isIdentical !== -1
+      const itemIncrement = item.selectedQuantity > 0
 
-      if (itemExists && item.selectedQuantity === 0) {
+      if (itemExists && !itemIncrement) {
         console.info('REMOVED ITEM >', item)
         state.items.splice(isIdentical, 1)
-      } else if (!itemExists && item.selectedQuantity > 0) {
+        // Removes DOM element
+        removeItemFromCart(item)
+      } else if (!itemExists && itemIncrement) {
         console.info('ADDED NEW ITEM >', item)
         state.items.push(item)
-      } else if (item.selectedQuantity > 0) {
+      } else if (itemIncrement) {
         console.info('UPDATED ITEM >', item)
         let prev = state.items[isIdentical]
         state.items[isIdentical] = { ...prev, ...item, selectedQuantity: item.selectedQuantity }
