@@ -637,6 +637,9 @@ function init() {
     state.items.forEach((item) => {
       const selectedId = String(item?.productId).trim()
       const selectedVariation = String(item?.selectedItem).trim()
+      const selectedQuantity = item?.selectedQuantity ?? 1
+      const itemPrice = item?.price ?? 0
+      const itemPriceTotal = itemPrice * selectedQuantity
 
       // Check for existing items
       const existingItem = cartContainer.querySelector(
@@ -644,7 +647,10 @@ function init() {
       )
 
       if (existingItem) {
-        return existingItem.querySelector('.cart-summary--input').setAttribute('value', item?.selectedQuantity)
+        existingItem.querySelector('.cart-summary--sellingPrice').textContent = formatPrice(itemPriceTotal)
+        existingItem.querySelector('.cart-summary--input').setAttribute('value', item?.selectedQuantity)
+
+        return
       }
 
       // Create basic structure
@@ -761,7 +767,7 @@ function init() {
       // Product Price
       const prodPrice = document.createElement('div')
       prodPrice.classList.add('cart-summary--sellingPrice')
-      prodPrice.textContent = formatPrice(item.price ?? 0)
+      prodPrice.textContent = formatPrice(itemPriceTotal)
       _price.appendChild(prodPrice)
 
       // Create an entry on the minicart
