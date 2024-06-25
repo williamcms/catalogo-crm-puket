@@ -604,6 +604,7 @@
 
             .product-quickview--images {
               display: flex;
+              overflow: hidden;
 
               @include desktop {
                 justify-content: center;

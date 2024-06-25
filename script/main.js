@@ -67,20 +67,6 @@ const createElement = (tag, attributes, children) => {
 }
 
 function init() {
-  // Set aria-expanded for needed overlays
-  if (isMobile()) {
-    const overlayButtons = document.querySelectorAll('.overlay--button')
-    overlayButtons.forEach((item) => {
-      const target = item.getAttribute('aria-controls')
-      const overlay = document.querySelector(`#${target}`)
-
-      if (!overlay?.style.display === '') return
-
-      if (overlay) overlay.style.display = 'none'
-      item.setAttribute('aria-expanded', 'false')
-    })
-  }
-
   // Handle overlay opening
   $(document).on('mousedown', '.overlay--button', (e) => handleOverlay(e))
   $(document).on('keyup', '.overlay--button', (e) => handleOverlay(e))
@@ -93,7 +79,7 @@ function init() {
   const handleOverlay = (e) => {
     e.stopImmediatePropagation()
 
-    if (e.button !== 0 && e.button !== 1 && e.key !== 'Enter' && e.type !== 'customtrigger') return
+    if (e.button !== 0 && e.button !== 1 && e.key !== 'Enter' && e.key !== ' ' && e.type !== 'customtrigger') return
 
     const currentElm = e.currentTarget
     const targetElm = e.target
@@ -110,8 +96,13 @@ function init() {
 
     const overlay = document.getElementById(targetToOpen)
 
-    const overlayState = overlay.style.display === 'none' || overlay.style.display === ''
-    const openingBttn = document.getElementById(overlay.getAttribute('aria-controlledby'))
+    const overlayState = !overlay.classList.contains('isOpen')
+
+    const overlayBttnElm = e.currentTarget
+    const overlayBttnValid = overlayBttnElm.getAttribute('id') && overlayBttnElm.classList.contains('overlay--button')
+    const openingBttn = document.getElementById(
+      overlayBttnValid ? overlayBttnElm.getAttribute('id') : overlay.getAttribute('aria-controlledby')
+    )
 
     // Assign an id to the targeted overlay when needed
     if (currentElm.getAttribute('data-dynamicId') === 'true') {
@@ -119,12 +110,11 @@ function init() {
       overlay.setAttribute('aria-controlledby', customId)
     }
 
-    overlay.style.display = overlayState ? 'block' : 'none'
     overlay.classList.toggle('isOpen', overlayState)
     overlay.classList.toggle('isClosed', !overlayState)
     body.classList.toggle('noscroll', overlayState)
 
-    if (!$(currentElm).hasClass('overlay--close')) currentElm.setAttribute('aria-expanded', overlayState)
+    openingBttn?.setAttribute('aria-expanded', overlayState)
     overlay.setAttribute('aria-hidden', !overlayState)
 
     // Unmount quick-view when the overlay state changes
@@ -162,11 +152,11 @@ function init() {
       const body = document.querySelector('body')
       const openingBttn = document.getElementById(overlay.getAttribute('aria-controlledby'))
 
-      overlay.style.display = 'none'
       overlay.setAttribute('aria-hidden', 'true')
       overlay.classList.remove('isOpen')
       overlay.classList.add('isClosed')
       body.classList.toggle('noscroll', false)
+      openingBttn.setAttribute('aria-expanded', 'false')
       openingBttn.focus()
 
       // Removed assigned id to targeted overlay
@@ -221,6 +211,8 @@ function init() {
   // Handle form reset
   const handleFormClear = (e) => {
     e.preventDefault()
+
+    if (e.button !== 0 && e.button !== 1 && e.key !== 'Enter' && e.key !== ' ') return
 
     const target = e.currentTarget.getAttribute('aria-controls')
     const form = document.getElementById(target)
@@ -829,7 +821,6 @@ function init() {
 
     if (!overlayState) return
 
-    overlay.style.display = 'block'
     overlay.classList.toggle('isOpen', true)
     body.classList.toggle('noscroll', true)
 

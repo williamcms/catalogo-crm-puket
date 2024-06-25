@@ -1,12 +1,13 @@
 <div class="header--wrapper sticky">
   <div class="header--container">
     <div class="header--row header--row-1">
-      <div class="header--hamburger-menu" style="display: none">
+      <div class="header--hamburger-menu mobile-only">
         <button
           class="hamburger-menu--button overlay--button"
           aria-controls="main-menu"
           id="hamburger-menu-button"
           accesskey="3"
+          aria-expanded="false"
         >
           <img src="./assets/hamburger-menu.svg" class="hamburger-menu--image" aria-hidden="true" />
           <span class="only-sr">Abrir Menu</span>
@@ -39,6 +40,7 @@
           aria-expanded="false"
           id="cart-button"
           accesskey="2"
+          aria-expanded="false"
         >
           <img src="./assets/minicart.svg" title="Minicart" class="cart--image" aria-hidden="true" />
           <!-- Mostra a quantidade de itens no carrinho -->
@@ -47,12 +49,7 @@
           <span class="only-sr">produtos na sacola</span>
         </button>
 
-        <div
-          class="cart--drawer overlay--wrapper"
-          style="display: none"
-          id="cart-drawer"
-          aria-controlledby="cart-button"
-        >
+        <div class="cart--drawer overlay--wrapper" id="cart-drawer" aria-controlledby="cart-button">
           <div class="cart-drawer--container overlay--container">
             <div class="cart-drawer--header overlay--header sticky">
               <button class="overlay--close" id="close-drawer" aria-controls="cart-drawer">

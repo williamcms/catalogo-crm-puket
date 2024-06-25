@@ -33,6 +33,7 @@
           aria-label="Abrir Filtros"
           aria-expanded="false"
           id="filter-button"
+          aria-expanded="false"
         >
           <span class="buttonText">Filtrar</span>
           <img src="./assets/filter.svg" class="buttonIcon" aria-hidden="true" />
@@ -40,7 +41,7 @@
       </div>
     </div>
 
-    <div class="filter--list overlay--wrapper" style="display: none" id="filter-list" aria-controlledby="filter-button">
+    <div class="filter--list overlay--wrapper" id="filter-list" aria-controlledby="filter-button">
       <!-- 
         Altera a seleção de produtos exibidos de acordo com os filtros selecionados
         Sugestão:
@@ -118,7 +119,6 @@
 
     <div
       class="product--quickview overlay--wrapper"
-      style="display: none"
       id="product-quickview"
       aria-controlledby="product-card"
       tabindex="-1"
