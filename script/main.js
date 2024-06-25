@@ -583,25 +583,18 @@ function init() {
 
     if (item) {
       const isIdentical = state.items.findIndex((storedItem) => {
-        console.log({ storedItem, item })
-        console.log('storedItem.productId === item.productId', storedItem.productId === item.productId)
-        console.log('storedItem.selectedItem === item.selectedItem', storedItem.selectedItem === item.selectedItem)
-        console.log('all', storedItem.productId === item.productId && storedItem.selectedItem === item.selectedItem)
-
         return storedItem.productId === item.productId && storedItem.selectedItem === item.selectedItem
       })
-
-      console.log(isIdentical, { item, state })
 
       const itemExists = isIdentical !== -1
 
       if (itemExists && item.selectedQuantity === 0) {
         console.info('REMOVED ITEM >', item)
         state.items.splice(isIdentical, 1)
-      } else if (!itemExists) {
+      } else if (!itemExists && item.selectedQuantity > 0) {
         console.info('ADDED NEW ITEM >', item)
         state.items.push(item)
-      } else {
+      } else if (item.selectedQuantity > 0) {
         console.info('UPDATED ITEM >', item)
         let prev = state.items[isIdentical]
         state.items[isIdentical] = { ...prev, ...item, selectedQuantity: item.selectedQuantity }
@@ -783,7 +776,7 @@ function init() {
     const selectedVariation = String(selectedItem).trim()
     const target = document.querySelector(`.cart-summary--item[id="${productId}"][variation="${selectedVariation}"]`)
 
-    target.remove()
+    if (target) target.remove()
   }
 
   $(document).on('mousedown', '.addToCart--button', (e) => handleCartState(e))
