@@ -169,6 +169,9 @@ function addContent() {
       const urlParams = new URLSearchParams(window.location.search)
 
       Object.entries(filters).forEach(([name, values]) => {
+        // Add an exception to the search value since it won't be in the filter options
+        if (name === 'Busca') return
+
         if (values.length) {
           urlParams.set(name, encodeURIComponent(values.toString()))
         } else {
