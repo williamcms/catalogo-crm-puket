@@ -67,7 +67,6 @@ function addContent() {
   const runtime = {
     clientId: String(params?.CodCliFor ?? ''),
     catalogId: String(params?.IDCatalogo ?? '0'),
-    search: String(params?.search ?? ''),
     filters: {
       OrderCatalogo: convertToArray(params?.OrderCatalogo, ','),
       Linhas: convertToArray(params?.Linhas, ','),
@@ -77,6 +76,7 @@ function addContent() {
       Cores: convertToArray(params?.Cores, ','),
       Solucoes: convertToArray(params?.Solucoes, ','),
       Pagina: Number(params?.Pagina ?? 0),
+      Busca: String(params?.Busca ?? ''),
     },
   }
 
@@ -371,7 +371,7 @@ function addContent() {
     const PRODUCT_PARAMS = {
       CodigoCliente: runtime.clientId,
       IDCatalogo: runtime.catalogId,
-      Pesquisa: runtime.search,
+      Pesquisa: runtime.filters.Busca,
       OrderCatalogo: runtime.filters.OrderCatalogo,
       QuantidadeRegistrosPagina: MIN_PRODUCTS,
       PaginaAtual: runtime.filters.Pagina,
@@ -460,9 +460,9 @@ function addContent() {
       const urlParams = new URLSearchParams(window.location.search)
 
       if (searchValue && searchValue !== '') {
-        urlParams.set('search', searchValue)
+        urlParams.set('Busca', searchValue)
       } else {
-        urlParams.delete('search')
+        urlParams.delete('Busca')
       }
 
       const newUrl = `${location.pathname}?${urlParams.toString()}`
