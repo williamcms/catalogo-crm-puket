@@ -36,7 +36,6 @@ function addContent() {
 
   // Triggers reload of addContent state (re-excute all functions)
   const [params, setParams] = useState(getParams(), arguments)
-  const [search, setSearch] = useState('', arguments)
 
   const schema = {
     headerLocation: '.header--locale > .locale--location',
@@ -68,7 +67,7 @@ function addContent() {
   const runtime = {
     clientId: String(params?.CodCliFor ?? ''),
     catalogId: String(params?.IDCatalogo ?? '0'),
-    search: typeof search !== 'string' ? '' : search,
+    search: String(params?.search ?? ''),
     filters: {
       OrderCatalogo: convertToArray(params?.OrderCatalogo, ','),
       Linhas: convertToArray(params?.Linhas, ','),
@@ -457,7 +456,20 @@ function addContent() {
     // Clear filters
     useFilterClear()
 
-    setSearch(searchValue)
+    if (history.pushState) {
+      const urlParams = new URLSearchParams(window.location.search)
+
+      if (searchValue && searchValue !== '') {
+        urlParams.set('search', searchValue)
+      } else {
+        urlParams.delete('search')
+      }
+
+      const newUrl = `${location.pathname}?${urlParams.toString()}`
+
+      window.history.pushState({ path: newUrl }, '', newUrl)
+      setParams(getParams())
+    }
   }
 
   const handlePagination = (e) => {
