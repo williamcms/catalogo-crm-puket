@@ -40,6 +40,12 @@ body {
   border: 0;
 }
 
+span {
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+}
+
 .mobile-only {
   display: none !important;
 
@@ -199,6 +205,7 @@ img {
 
   .buttonText {
     font-size: 0.875rem;
+    line-height: 0.875rem;
     white-space: nowrap;
   }
 
@@ -238,6 +245,28 @@ img {
       font-size: 0.8125rem;
       font-weight: 700;
       color: $c-purple-500;
+    }
+
+    @include desktop {
+      &[aria-expanded='true'] {
+        .hide {
+          display: inline-block;
+        }
+
+        .show {
+          display: none;
+        }
+      }
+
+      &[aria-expanded='false'] {
+        .hide {
+          display: none;
+        }
+
+        .show {
+          display: inline-block;
+        }
+      }
     }
 
     &:hover {

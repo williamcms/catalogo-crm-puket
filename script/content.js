@@ -46,10 +46,11 @@ function addContent() {
     searchForm: '.header--search #header-search',
     searchInput: '.header--search input[type="search"]',
     searchButton: '.header--search button.search--button',
-    productList: '.products--wrapper > .products--container > .products--listage',
+    productList: '.products--wrapper > .products--container .products--listage',
     productControlOrder: '.product-controls--orderBy > .orderBy--select',
     productControlSize: '.product-controls--size > .size--select',
     productFilterForm: '#filter-form',
+    productFilterContainer: '.filter--list',
     productFilterCategory: '.filter--listItem.category > .filter--listOptions',
     productFilterModel: '.filter--listItem.model > .filter--listOptions',
     productFilterSize: '.filter--listItem.size > .filter--listOptions',
@@ -251,34 +252,34 @@ function addContent() {
     $(local)?.find('input')?.on('change', handleFilterChange)
   }
 
-  ;(loadMenu = () => {
-    $(schema.menu)?.html(useSkeleton({ items: 6, className: 'menu--item', width: '95px', height: '22px' }))
+    ; (loadMenu = () => {
+      $(schema.menu)?.html(useSkeleton({ items: 6, className: 'menu--item', width: '95px', height: '22px' }))
 
-    postData(
-      {
-        CodigoCliente: runtime.clientId,
-        IDCatalogo: runtime.catalogId,
-      },
-      '/Produtos/Linhas'
-    ).then((data) => {
-      if (data?.length === 0) return
+      postData(
+        {
+          CodigoCliente: runtime.clientId,
+          IDCatalogo: runtime.catalogId,
+        },
+        '/Produtos/Linhas'
+      ).then((data) => {
+        if (data?.length === 0) return
 
-      let htmlMenu = ''
-      let url = `?CodCliFor=${runtime.clientId}&IDCatalogo=${runtime.catalogId}`
+        let htmlMenu = ''
+        let url = `?CodCliFor=${runtime.clientId}&IDCatalogo=${runtime.catalogId}`
 
-      htmlMenu += `<li class="menu--item desktop-only"><a href="${url}" target="_self" data-item="null" class="menu--itemLink">Todos</a></li>`
+        htmlMenu += `<li class="menu--item desktop-only"><a href="${url}" target="_self" data-item="null" class="menu--itemLink">Todos</a></li>`
 
-      htmlMenu += `<li class="menu--item menu--allItems"><a href="${url}" target="_self" data-item="null" class="menu--itemLink">Ver todas as categorias</a></li>`
+        htmlMenu += `<li class="menu--item menu--allItems"><a href="${url}" target="_self" data-item="null" class="menu--itemLink">Ver todas as categorias</a></li>`
 
-      data?.forEach(({ codigo, descricao }) => {
-        let urlModified = `${url}&Linhas=${codigo}`
+        data?.forEach(({ codigo, descricao }) => {
+          let urlModified = `${url}&Linhas=${codigo}`
 
-        htmlMenu += `<li class="menu--item"><a href="${urlModified}" target="_self" data-item="${codigo}" class="menu--itemLink">${descricao}</a></li>`
+          htmlMenu += `<li class="menu--item"><a href="${urlModified}" target="_self" data-item="${codigo}" class="menu--itemLink">${descricao}</a></li>`
+        })
+
+        $(schema.menu)?.html(htmlMenu)
       })
-
-      $(schema.menu)?.html(htmlMenu)
-    })
-  })()
+    })()
 
   const loadCategoriesList = (productParams) => {
     postData(productParams, '/Produtos/Linhas').then((data) => {
@@ -535,6 +536,8 @@ function addContent() {
 
   $(schema.productControlOrder).off('change')
   $(schema.productControlOrder).on('change', (e) => handleSelect(e, 'OrderCatalogo'))
+
+  !isMobile() && $(schema.productFilterContainer).addClass('isOpen')
 }
 
 document.addEventListener('includeHTMLLoaded', addContent, false)

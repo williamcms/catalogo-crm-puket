@@ -84,6 +84,8 @@ function init() {
     const currentElm = e.currentTarget
     const targetElm = e.target
 
+    const isDesktopFilter = !isMobile() && currentElm.getAttribute('id') === 'filter-button'
+
     // Prevent default behavior propagation from affecting interaction elements
     if ($(targetElm).hasClass('summary-item--skuItem')) return
     if ($(targetElm).hasClass('addToCart--button')) return
@@ -112,7 +114,7 @@ function init() {
 
     overlay.classList.toggle('isOpen', overlayState)
     overlay.classList.toggle('isClosed', !overlayState)
-    body.classList.toggle('noscroll', overlayState)
+    if (!isDesktopFilter) body.classList.toggle('noscroll', overlayState)
 
     openingBttn?.setAttribute('aria-expanded', overlayState)
     overlay.setAttribute('aria-hidden', !overlayState)

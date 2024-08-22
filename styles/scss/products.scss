@@ -490,6 +490,53 @@
       }
     }
 
+    @include desktop {
+      .product-sided-container {
+        display: flex;
+
+        .filter--list,
+        .products--listage {
+          flex: 1 0 auto;
+          z-index: 1;
+        }
+
+        .filter--list {
+          flex: 1 0 auto;
+          position: relative;
+          height: auto;
+          min-width: 17.875rem;
+          width: fit-content;
+          overflow: unset;
+
+          .overlay--close,
+          .filter-list--footer {
+            display: none;
+          }
+
+          .filter--form {
+            display: block;
+            position: sticky;
+            top: 10.5rem;
+            z-index: 10;
+
+            .filter-list--container {
+              width: 100%;
+              height: calc(100dvh - 10.5rem);
+
+              .filter-list--items {
+                overflow: auto;
+              }
+            }
+          }
+        }
+
+        .products--listage {
+          flex-shrink: 1;
+          width: 100%;
+        }
+      }
+    }
+
     .product--pagination {
       flex-basis: 100%;
       position: relative;

@@ -35,86 +35,93 @@
           id="filter-button"
           aria-expanded="false"
         >
-          <span class="buttonText">Filtrar</span>
+          <span class="buttonText">
+            <span class="desktop-only">
+              <span class="hide">Ocultar</span><span class="show">Exibir</span> Filtros
+            </span>
+            <span class="mobile-only">Filtrar</span>
+          </span>
           <img src="./assets/filter.svg" class="buttonIcon" aria-hidden="true" />
         </button>
       </div>
     </div>
 
-    <div class="filter--list overlay--wrapper" id="filter-list" aria-controlledby="filter-button">
-      <!-- 
+    <div class="product-sided-container">
+      <div class="filter--list overlay--wrapper" id="filter-list" aria-controlledby="filter-button">
+        <!-- 
         Altera a seleção de produtos exibidos de acordo com os filtros selecionados
         Sugestão:
         @ID: filter-{ tipo/nome do filtro }-{ nome } => filter-categoria-meias
         @FOR: mesmo valor de @ID
         @TEXTO: Nome do filtro (número de itens) 
       -->
-      <form class="filter--form" id="filter-form">
-        <div class="filter-list--container overlay--container">
-          <div class="filter-list--header overlay--header">
-            <button class="overlay--close" id="close-filter" aria-controls="filter-list">
-              <span aria-hidden>&times;</span>
-              <span class="only-sr">Fechar Filtros</span>
-            </button>
-            <div class="overlay--headerText" aria-hidden>Filtrar por</div>
+        <form class="filter--form" id="filter-form">
+          <div class="filter-list--container overlay--container">
+            <div class="filter-list--header overlay--header">
+              <button class="overlay--close" id="close-filter" aria-controls="filter-list">
+                <span aria-hidden>&times;</span>
+                <span class="only-sr">Fechar Filtros</span>
+              </button>
+              <div class="overlay--headerText" aria-hidden>Filtrar por</div>
+            </div>
+            <div class="filter-list--items overlay-content">
+              <!-- Filtro Categoria -->
+              <details class="filter--listItem category">
+                <summary class="filter--itemName">Categoria</summary>
+                <div class="filter--listOptions">Carregando Filtros...</div>
+              </details>
+              <!-- Filtro Modelo -->
+              <details class="filter--listItem model">
+                <summary class="filter--itemName">Modelo</summary>
+                <div class="filter--listOptions">Carregando Filtros...</div>
+              </details>
+              <!-- Filtro Tamanho -->
+              <details class="filter--listItem size">
+                <summary class="filter--itemName">Tamanho</summary>
+                <div class="filter--listOptions">Carregando Filtros...</div>
+              </details>
+              <!-- Filtro Sexo -->
+              <details class="filter--listItem sex">
+                <summary class="filter--itemName">Sexo</summary>
+                <div class="filter--listOptions">Carregando Filtros...</div>
+              </details>
+              <!-- Filtro Cores -->
+              <details class="filter--listItem color">
+                <summary class="filter--itemName">Cores</summary>
+                <div class="filter--listOptions">Carregando Filtros...</div>
+              </details>
+              <!-- Filtro Personagem -->
+              <details class="filter--listItem character">
+                <summary class="filter--itemName">Personagem</summary>
+                <div class="filter--listOptions">Carregando Filtros...</div>
+              </details>
+              <!-- ...outros filtros, caso existam -->
+            </div>
+            <div class="filter-list--footer overlay--footer sticky">
+              <button
+                class="button normal form--button button--clear"
+                type="reset"
+                aria-controls="filter-form"
+                id="clear-filter"
+              >
+                <span class="buttonText">Limpar Filtros</span>
+              </button>
+              <button
+                class="button normal bg-fill form--button button--apply"
+                type="submit"
+                aria-controls="filter-form"
+                id="apply-filter"
+              >
+                <span class="buttonText">Aplicar Filtro</span>
+              </button>
+            </div>
           </div>
-          <div class="filter-list--items overlay-content">
-            <!-- Filtro Categoria -->
-            <details class="filter--listItem category">
-              <summary class="filter--itemName">Categoria</summary>
-              <div class="filter--listOptions">Carregando Filtros...</div>
-            </details>
-            <!-- Filtro Modelo -->
-            <details class="filter--listItem model">
-              <summary class="filter--itemName">Modelo</summary>
-              <div class="filter--listOptions">Carregando Filtros...</div>
-            </details>
-            <!-- Filtro Tamanho -->
-            <details class="filter--listItem size">
-              <summary class="filter--itemName">Tamanho</summary>
-              <div class="filter--listOptions">Carregando Filtros...</div>
-            </details>
-            <!-- Filtro Sexo -->
-            <details class="filter--listItem sex">
-              <summary class="filter--itemName">Sexo</summary>
-              <div class="filter--listOptions">Carregando Filtros...</div>
-            </details>
-            <!-- Filtro Cores -->
-            <details class="filter--listItem color">
-              <summary class="filter--itemName">Cores</summary>
-              <div class="filter--listOptions">Carregando Filtros...</div>
-            </details>
-            <!-- Filtro Personagem -->
-            <details class="filter--listItem character">
-              <summary class="filter--itemName">Personagem</summary>
-              <div class="filter--listOptions">Carregando Filtros...</div>
-            </details>
-            <!-- ...outros filtros, caso existam -->
-          </div>
-          <div class="filter-list--footer overlay--footer sticky">
-            <button
-              class="button normal form--button button--clear"
-              type="reset"
-              aria-controls="filter-form"
-              id="clear-filter"
-            >
-              <span class="buttonText">Limpar Filtros</span>
-            </button>
-            <button
-              class="button normal bg-fill form--button button--apply"
-              type="submit"
-              aria-controls="filter-form"
-              id="apply-filter"
-            >
-              <span class="buttonText">Aplicar Filtro</span>
-            </button>
-          </div>
-        </div>
-      </form>
-    </div>
+        </form>
+      </div>
 
-    <div class="products--listage">
-      <div>Carregando...</div>
+      <div class="products--listage">
+        <div>Carregando...</div>
+      </div>
     </div>
 
     <div
