@@ -131,7 +131,7 @@ function addContent() {
 
     const formattedPhone = formatPhoneNumber(store?.celular)
 
-    location.textContent = store?.clienteAtacado
+    location.textContent = store?.fantasia
 
     if (formatPhoneNumber) {
       whatsappButton.setAttribute('data-whatsapp', formattedPhone)
